@@ -33,15 +33,28 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
       elevation: isToShowElevation ? 0.5.h : 0,
       shadowColor: KColor.stroke.color,
       backgroundColor: KColor.primary.color,
-      leadingWidth: isShowMenubar ? 70 : null,
+      leadingWidth: isShowMenubar ? 0 : null,
       toolbarHeight: 65.h,
       title: isShowMenubar == true
-          ? GlobalSvgLoader(
-              svgFor: SvgFor.asset,
-              imagePath: KAssetName.menu.imagePath,
-              height: 35.h,
-              width: 35.w,
-              fit: BoxFit.scaleDown,
+          ? Row(
+              children: [
+                GlobalSvgLoader(
+                  svgFor: SvgFor.asset,
+                  imagePath: KAssetName.menu.imagePath,
+                  height: 35.h,
+                  width: 35.w,
+                  fit: BoxFit.scaleDown,
+                ),
+                SizedBox(
+                  width: 5.w,
+                ),
+                GlobalText(
+                  str: title ?? "",
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: KColor.white.color,
+                ),
+              ],
             )
           : GlobalText(
               str: title ?? "",

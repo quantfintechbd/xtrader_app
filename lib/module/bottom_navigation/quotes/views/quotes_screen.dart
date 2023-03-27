@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_appbar.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
+import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/styles/k_assets.dart';
 
@@ -16,7 +18,8 @@ class QuotesScreen extends StatelessWidget {
       drawer: ColoredBox(color: Colors.green),
       appBar: GlobalAppbar(
         isShowMenubar: true,
-        title: "Home",
+        title: "Quotes",
+        isToShowElevation: true,
         actions: [
           Padding(
             padding: EdgeInsets.all(10),
@@ -36,9 +39,38 @@ class QuotesScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          child: Text("Quotes Setup"),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SizedBox(
+              height: 25.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GlobalText(
+                  str: "SYMBOL",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.sp,
+                  color: KColor.stroke.color,
+                ),
+                GlobalText(
+                  str: "ASK",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.sp,
+                  color: KColor.stroke.color,
+                ),
+                GlobalText(
+                  str: "BID",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.sp,
+                  color: KColor.stroke.color,
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
