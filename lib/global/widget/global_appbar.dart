@@ -38,19 +38,24 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
       title: isShowMenubar == true
           ? Row(
               children: [
-                GlobalSvgLoader(
-                  svgFor: SvgFor.asset,
-                  imagePath: KAssetName.menu.imagePath,
-                  height: 35.h,
-                  width: 35.w,
-                  fit: BoxFit.scaleDown,
+                InkWell(
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  child: GlobalSvgLoader(
+                    svgFor: SvgFor.asset,
+                    imagePath: KAssetName.menu.imagePath,
+                    height: 35.h,
+                    width: 35.w,
+                    fit: BoxFit.scaleDown,
+                  ),
                 ),
                 SizedBox(
                   width: 5.w,
                 ),
                 GlobalText(
                   str: title ?? "",
-                  fontSize: 20,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w700,
                   color: KColor.white.color,
                 ),
@@ -58,8 +63,10 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
             )
           : GlobalText(
               str: title ?? "",
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w700,
+              fontSize: 20.sp,
+              fontFamily: AppConstant.FONTFAMILY.key,
+              color: KColor.white.color,
             ),
       centerTitle: centerTitle,
       leading: isLeading == false
@@ -77,28 +84,13 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
                     }
                   : backActionOverride,
               child: Padding(
-                padding: EdgeInsets.only(top: 5.h, left: 5.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GlobalSvgLoader(
-                      imagePath: KAssetName.backArrow.imagePath,
-                      svgFor: SvgFor.asset,
-                      width: 12.w,
-                      height: 16.h,
-                      fit: BoxFit.scaleDown,
-                    ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    GlobalText(
-                      str: "Back",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                      fontFamily: AppConstant.FONTFAMILY.key,
-                      decoration: TextDecoration.underline,
-                    )
-                  ],
+                padding: EdgeInsets.only(left: 15.w),
+                child: GlobalSvgLoader(
+                  imagePath: KAssetName.backArrow.imagePath,
+                  svgFor: SvgFor.asset,
+                  width: 24.w,
+                  height: 24.h,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),

@@ -24,6 +24,7 @@ class GlobalTextFormField extends StatelessWidget {
   final String? initialValue;
   final TextInputAction? textInputAction;
   final Function(String)? onChanged;
+  final FloatingLabelBehavior? floatingLabelBehavior;
 
   const GlobalTextFormField({
     Key? key,
@@ -47,6 +48,7 @@ class GlobalTextFormField extends StatelessWidget {
     this.style,
     this.onChanged,
     this.textInputAction = TextInputAction.done,
+    this.floatingLabelBehavior,
   }) : super(key: key);
 
   @override
@@ -73,6 +75,8 @@ class GlobalTextFormField extends StatelessWidget {
           bottom: 0.h,
           left: 0.w,
         ),
+        floatingLabelBehavior:
+            floatingLabelBehavior ?? FloatingLabelBehavior.always,
         prefixIcon: prefixIcon,
         hintText: hintText,
         label: mandatoryLabel == true

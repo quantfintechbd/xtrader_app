@@ -38,7 +38,7 @@ initServices() async {
   AppUrlExtention.setUrl(
     UrlLink.isDev,
   );
-  ThemeUtil.appTheme = XtraderTheme.light;
+  ThemeUtil.appTheme = XtraderTheme.dark;
   await PrefHelper.init();
   await AppVersion.getVersion();
   await NetworkConnection.instance.InternetAvailable();

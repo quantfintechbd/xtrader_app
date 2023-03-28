@@ -14,6 +14,9 @@ enum KColor {
   textHintColor,
   d6d6d6,
   sixA6a6a,
+  spaceCadet,
+  separator,
+  popupBg,
 }
 
 extension KColorExtention on KColor {
@@ -43,6 +46,21 @@ extension KColorExtention on KColor {
         return const Color(0xffD6D6D6);
       case KColor.sixA6a6a:
         return const Color(0xff6A6A6A);
+      case KColor.spaceCadet:
+        return _themedColor(
+          forDark: const Color(0xff18335B),
+          forlight: const Color(0xffE1E1E1),
+        );
+      case KColor.separator:
+        return _themedColor(
+          forDark: const Color(0xff545458).withOpacity(0.65),
+          forlight: const Color(0xffEBEBEB),
+        );
+      case KColor.popupBg:
+        return _themedColor(
+          forDark: const Color(0xff0B1A31),
+          forlight: const Color(0xffFFFFFF),
+        );
       default:
         return Colors.blue;
     }

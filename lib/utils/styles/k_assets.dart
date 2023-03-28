@@ -12,6 +12,14 @@ enum KAssetName {
   edit,
   menu,
   backArrow,
+  search,
+  addGreen,
+  remove,
+  close,
+  bag,
+  barchart,
+  upArrow,
+  moon
 }
 
 extension AssetsExtention on KAssetName {
@@ -43,7 +51,22 @@ extension AssetsExtention on KAssetName {
         return '$_svgDir/menu.svg';
       case KAssetName.backArrow:
         return '$_svgDir/backArrow.svg';
-
+      case KAssetName.search:
+        return '$_svgDir/icon_search.svg';
+      case KAssetName.addGreen:
+        return '$_svgDir/add_green.svg';
+      case KAssetName.remove:
+        return '$_svgDir/icon_remove.svg';
+      case KAssetName.close:
+        return '$_svgDir/icon_close.svg';
+      case KAssetName.bag:
+        return _themedAsset("bag.svg", AssetType.svg);
+      case KAssetName.barchart:
+        return _themedAsset("bar-chart.svg", AssetType.svg);
+      case KAssetName.upArrow:
+        return '$_svgDir/up-arrow.svg';
+      case KAssetName.moon:
+        return '$_svgDir/moon.svg';
       default:
         return "";
     }
