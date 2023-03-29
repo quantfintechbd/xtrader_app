@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_util.dart';
+import '../theme/theme_util.dart';
 
 enum KColor {
   primary,
@@ -17,6 +17,7 @@ enum KColor {
   spaceCadet,
   separator,
   popupBg,
+  mineShaft
 }
 
 extension KColorExtention on KColor {
@@ -60,6 +61,11 @@ extension KColorExtention on KColor {
         return _themedColor(
           forDark: const Color(0xff0B1A31),
           forlight: const Color(0xffFFFFFF),
+        );
+      case KColor.mineShaft:
+        return _themedColor(
+          forDark: const Color(0xff232323),
+          forlight: const Color(0xffF7F7F7),
         );
       default:
         return Colors.blue;

@@ -9,10 +9,10 @@ class QuotesItemView extends StatelessWidget {
   const QuotesItemView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return GestureDetector(
       onLongPress: () {
-        ViewUtil.bottomSheet(context: context, content: ItemBottomSheet());
+        ViewUtil.bottomSheet(context: context, content: QuotesBottomSheet());
       },
       child: Column(
         children: [
@@ -32,7 +32,8 @@ class QuotesItemView extends StatelessWidget {
                           str: "AUDCAD",
                           fontWeight: FontWeight.w700,
                           fontSize: 16.sp,
-                          color: KColor.textColorDark.color,
+                          color:
+                              Theme.of(context).textTheme.displayLarge?.color,
                         ),
                         SizedBox(
                           height: 16.h,
@@ -41,7 +42,8 @@ class QuotesItemView extends StatelessWidget {
                           str: "20 Mar, 17:48:51",
                           fontWeight: FontWeight.w400,
                           fontSize: 10.sp,
-                          color: KColor.scondaryTextColor.color,
+                          color:
+                              Theme.of(context).textTheme.displaySmall?.color,
                         ),
                       ],
                     ),

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/global/widget/app_drawer.dart';
+import 'package:xtrader_app/global/widget/global_appbar.dart';
+import 'package:xtrader_app/global/widget/global_svg_loader.dart';
+import 'package:xtrader_app/utils/app_routes.dart';
+import 'package:xtrader_app/utils/enum.dart';
+import 'package:xtrader_app/utils/navigation.dart';
 
-import 'package:xtrader_app/utils/styles/k_colors.dart';
-import 'package:xtrader_app/utils/styles/k_text_style.dart';
-
+import '../../../../utils/styles/styles.dart';
 import '../controller/bottom_navigation_controller.dart';
 
 class BottomNavigationScreen extends ConsumerWidget {
@@ -15,15 +19,14 @@ class BottomNavigationScreen extends ConsumerWidget {
     final controller = ref.read(bottomNavigationProvider.notifier);
     final state = ref.watch(bottomNavigationProvider);
     return Scaffold(
+      backgroundColor: KColor.scafoldBg.color,
+      drawer: GlobalAppDrawer(),
+      appBar: controller.getAppBar(context),
       body: controller.screen,
       bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          // sets the background color of the `BottomNavigationBar`
+        data: ThemeData(
           canvasColor: KColor.scafoldBg.color,
-          // sets the active color of the `BottomNavigationBar` if `Brightness` is light
-          primaryColor: KColor.primary.color,
-          // textTheme: Theme.of(context).textTheme.copyWith(),
-        ), // sets the inactive color of the `BottomNavigationBar`
+        ),
         child: BottomNavigationBar(
           onTap: (value) {
             controller.changeTap(value);
@@ -32,7 +35,7 @@ class BottomNavigationScreen extends ConsumerWidget {
           currentIndex: state.selectedTab,
           items: state.barItems,
           selectedLabelStyle: KTextStyle.customTextStyle(
-              color: KColor.primary.color,
+              color: Colors.green,
               fontSize: 14.sp,
               fontWeight: FontWeight.w500),
           unselectedLabelStyle: KTextStyle.customTextStyle(

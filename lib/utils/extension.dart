@@ -73,7 +73,7 @@ extension Context on BuildContext {
 //this extention is for localization
 //its a shorter version of AppLocalizations
   //AppLocalizations get loc => AppLocalizations.of(this)!;
-
+  ThemeData get theme => Theme.of(this);
   //get media query
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 

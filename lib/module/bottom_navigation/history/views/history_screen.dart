@@ -11,34 +11,9 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: KColor.scafoldBg.color,
-      appBar: GlobalAppbar(
-        isShowMenubar: true,
-        title: "Home",
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: GlobalSvgLoader(
-              imagePath: KAssetName.add.imagePath,
-              svgFor: SvgFor.asset,
-              fit: BoxFit.contain,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: GlobalSvgLoader(
-              imagePath: KAssetName.edit.imagePath,
-              svgFor: SvgFor.asset,
-              fit: BoxFit.contain,
-            ),
-          ),
-        ],
-      ),
-      body: Center(
-        child: Container(
-          child: Text("History Setup"),
-        ),
+    return Center(
+      child: Container(
+        child: Text("History Setup"),
       ),
     );
   }

@@ -1,13 +1,17 @@
-import 'package:xtrader_app/utils/theme_util.dart';
+import 'package:xtrader_app/utils/theme/theme_util.dart';
 
 enum KAssetName {
   landingBackground,
   logo,
   homeInactive,
   historyInactive,
+  historyActive,
   chartsInactive,
+  chartsActive,
   quotesActive,
+  quotesInactive,
   tradeInactive,
+  tradeActive,
   add,
   edit,
   menu,
@@ -19,6 +23,7 @@ enum KAssetName {
   bag,
   barchart,
   upArrow,
+  rightArrow,
   moon
 }
 
@@ -35,14 +40,22 @@ extension AssetsExtention on KAssetName {
         return _themedAsset("logo.png", AssetType.png);
       case KAssetName.chartsInactive:
         return '$_svgDir/icon_charts_inactive.svg';
+      case KAssetName.chartsActive:
+        return '$_svgDir/icon_charts_active.svg';
       case KAssetName.historyInactive:
         return '$_svgDir/icon_history_inactive.svg';
+      case KAssetName.historyActive:
+        return '$_svgDir/icon_history_active.svg';
       case KAssetName.homeInactive:
         return '$_svgDir/icon_home_inactive.svg';
       case KAssetName.quotesActive:
         return '$_svgDir/icon_quotes_active.svg';
+      case KAssetName.quotesInactive:
+        return '$_svgDir/icon_quotes_inactive.svg';
       case KAssetName.tradeInactive:
         return '$_svgDir/icon_trade_inactive.svg';
+      case KAssetName.tradeActive:
+        return '$_svgDir/icon_trade_active.svg';
       case KAssetName.add:
         return '$_svgDir/add.svg';
       case KAssetName.edit:
@@ -65,6 +78,8 @@ extension AssetsExtention on KAssetName {
         return _themedAsset("bar-chart.svg", AssetType.svg);
       case KAssetName.upArrow:
         return '$_svgDir/up-arrow.svg';
+      case KAssetName.rightArrow:
+        return '$_svgDir/right-arrow.svg';
       case KAssetName.moon:
         return '$_svgDir/moon.svg';
       default:

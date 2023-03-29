@@ -14,7 +14,9 @@ import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/network_connection.dart';
 import 'package:xtrader_app/utils/styles/k_colors.dart';
-import 'package:xtrader_app/utils/theme_util.dart';
+import 'package:xtrader_app/utils/styles/k_text_style.dart';
+import 'package:xtrader_app/utils/theme/theme_controller.dart';
+import 'package:xtrader_app/utils/theme/theme_util.dart';
 
 import 'constant/constant_key.dart';
 
@@ -38,7 +40,7 @@ initServices() async {
   AppUrlExtention.setUrl(
     UrlLink.isDev,
   );
-  ThemeUtil.appTheme = XtraderTheme.dark;
+  // ThemeUtil.appTheme = XtraderTheme.dark;
   await PrefHelper.init();
   await AppVersion.getVersion();
   await NetworkConnection.instance.InternetAvailable();
@@ -54,30 +56,63 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 800),
       minTextAdapt: true,
       builder: (ctx, child) {
-        return MaterialApp(
-          title: 'xtrader_app',
-          navigatorKey: Navigation.key,
-          debugShowCheckedModeBanner: false,
-          //localization
-          supportedLocales: AppLocalizations.supportedLocales,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          locale: (PrefHelper.getLanguage() == 1)
-              ? const Locale('en', 'US')
-              : const Locale('bn', 'BD'),
-          theme: ThemeData(
-            progressIndicatorTheme: ProgressIndicatorThemeData(
-              color: KColor.secondary.color,
+        return Consumer(builder: (context, ref, snap) {
+          final themeController = ref.watch(themeProvider);
+          return MaterialApp(
+            title: 'xtrader_app',
+            navigatorKey: Navigation.key,
+            debugShowCheckedModeBanner: false,
+            //localization
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: (PrefHelper.getLanguage() == 1)
+                ? const Locale('en', 'US')
+                : const Locale('bn', 'BD'),
+            theme: ThemeData(
+              progressIndicatorTheme: ProgressIndicatorThemeData(
+                color: KColor.secondary.color,
+              ),
+              fontFamily: AppConstant.FONTFAMILY.key,
+              primaryColor: KColor.primary.color,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              colorScheme: ThemeData().colorScheme.copyWith(
+                    tertiaryContainer: KColor.mineShaft.color,
+                    secondary: KColor.secondary.color,
+                    tertiary: KColor.scondaryTextColor.color,
+                  ),
+              textTheme: TextTheme(
+                displayLarge: KTextStyle.customTextStyle(
+                    color: KColor.textColorDark.color),
+                displaySmall: KTextStyle.customTextStyle(
+                    color: KColor.scondaryTextColor.color),
+              ),
+              // primarySwatch: KColor.primary.color as MaterialColor,
             ),
-            fontFamily: AppConstant.FONTFAMILY.key,
-            primaryColor: KColor.primary.color,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            colorScheme: ThemeData().colorScheme.copyWith(
-                  secondary: KColor.secondary.color,
-                ),
-            // primarySwatch: KColor.primary.color as MaterialColor,
-          ),
-          home: child,
-        );
+            darkTheme: ThemeData(
+              progressIndicatorTheme: ProgressIndicatorThemeData(
+                color: KColor.secondary.color,
+              ),
+              fontFamily: AppConstant.FONTFAMILY.key,
+              primaryColor: KColor.primary.color,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              colorScheme: ThemeData().colorScheme.copyWith(
+                    tertiaryContainer: KColor.mineShaft.color,
+                    secondary: KColor.secondary.color,
+                    tertiary: KColor.scondaryTextColor.color,
+                  ),
+              textTheme: TextTheme(
+                displayLarge: KTextStyle.customTextStyle(
+                    color: KColor.textColorDark.color),
+                displaySmall: KTextStyle.customTextStyle(
+                    color: KColor.scondaryTextColor.color),
+              ),
+            ),
+            themeMode: themeController.theme == XtraderTheme.light
+                ? ThemeMode.light
+                : ThemeMode.dark,
+            home: child,
+          );
+        });
       },
       child: LandingScreen(),
     );

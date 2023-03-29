@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
+import 'package:xtrader_app/utils/theme/theme_controller.dart';
+import 'package:xtrader_app/utils/theme/theme_util.dart';
 
 class GlobalAppDrawer extends StatelessWidget {
   const GlobalAppDrawer({
@@ -100,11 +103,20 @@ class GlobalAppDrawer extends StatelessWidget {
                 fontSize: 14.sp,
               ),
               minLeadingWidth: 10,
-              trailing: Switch(
-                activeColor: KColor.textColorDark.color,
-                onChanged: (bool value) {},
-                value: true,
-              ),
+              trailing: Consumer(builder: (context, ref, snap) {
+                final state = ref.watch(themeProvider);
+                final themeController = ref.read(themeProvider.notifier);
+                return Switch(
+                  activeColor: KColor.primary.color,
+                  inactiveThumbColor: KColor.primary.color,
+                  inactiveTrackColor: KColor.primary.color.withOpacity(0.5),
+                  onChanged: (bool value) {
+                    themeController.setTheme(
+                        value ? XtraderTheme.light : XtraderTheme.dark);
+                  },
+                  value: state.theme == XtraderTheme.light,
+                );
+              }),
             ),
           ],
         ),

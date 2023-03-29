@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:xtrader_app/global/widget/global_appbar.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/module/bottom_navigation/charts/views/charts_screen.dart';
 import 'package:xtrader_app/module/bottom_navigation/history/views/history_screen.dart';
-import 'package:xtrader_app/module/bottom_navigation/home/views/home_screen.dart';
+
 import 'package:xtrader_app/module/bottom_navigation/quotes/views/quotes_screen.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/views/trades_screen.dart';
 import 'package:xtrader_app/utils/enum.dart';
@@ -12,13 +13,21 @@ import 'package:xtrader_app/utils/styles/k_colors.dart';
 @immutable
 class BottomNavigationState {
   final int selectedTab;
+
+  BottomNavigationState({required this.selectedTab});
+
+  BottomNavigationState copyWith({int? selectedTab}) {
+    return BottomNavigationState(
+      selectedTab: selectedTab ?? this.selectedTab,
+    );
+  }
+
   List<BottomNavigationBarItem> barItems = [
     BottomNavigationBarItem(
       label: 'Quotes',
       icon: GlobalSvgLoader(
-        imagePath: KAssetName.quotesActive.imagePath,
+        imagePath: KAssetName.quotesInactive.imagePath,
         svgFor: SvgFor.asset,
-        color: KColor.white.color,
       ),
       activeIcon: GlobalSvgLoader(
         imagePath: KAssetName.quotesActive.imagePath,
@@ -32,9 +41,8 @@ class BottomNavigationState {
         svgFor: SvgFor.asset,
       ),
       activeIcon: GlobalSvgLoader(
-        imagePath: KAssetName.chartsInactive.imagePath,
+        imagePath: KAssetName.chartsActive.imagePath,
         svgFor: SvgFor.asset,
-        color: KColor.primary.color,
       ),
     ),
     BottomNavigationBarItem(
@@ -44,9 +52,8 @@ class BottomNavigationState {
         svgFor: SvgFor.asset,
       ),
       activeIcon: GlobalSvgLoader(
-        imagePath: KAssetName.tradeInactive.imagePath,
+        imagePath: KAssetName.tradeActive.imagePath,
         svgFor: SvgFor.asset,
-        color: KColor.primary.color,
       ),
     ),
     BottomNavigationBarItem(
@@ -56,9 +63,8 @@ class BottomNavigationState {
         svgFor: SvgFor.asset,
       ),
       activeIcon: GlobalSvgLoader(
-        imagePath: KAssetName.historyInactive.imagePath,
+        imagePath: KAssetName.historyActive.imagePath,
         svgFor: SvgFor.asset,
-        color: KColor.primary.color,
       ),
     ),
   ];
@@ -69,12 +75,4 @@ class BottomNavigationState {
     TradesScreen(),
     HistoryScreen(),
   ];
-
-  BottomNavigationState({required this.selectedTab});
-
-  BottomNavigationState copyWith({int? selectedTab}) {
-    return BottomNavigationState(
-      selectedTab: selectedTab ?? this.selectedTab,
-    );
-  }
 }

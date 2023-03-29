@@ -17,93 +17,56 @@ class QuotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: KColor.scafoldBg.color,
-      drawer: GlobalAppDrawer(),
-      appBar: GlobalAppbar(
-        isShowMenubar: true,
-        title: "Quotes",
-        isToShowElevation: true,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigation.push(context, appRoutes: AppRoutes.addSymbol);
-            },
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: GlobalSvgLoader(
-                imagePath: KAssetName.add.imagePath,
-                svgFor: SvgFor.asset,
-                fit: BoxFit.contain,
-              ),
-            ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SizedBox(
+            height: 25.h,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigation.push(context, appRoutes: AppRoutes.removeSymbol);
-            },
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: GlobalSvgLoader(
-                imagePath: KAssetName.edit.imagePath,
-                svgFor: SvgFor.asset,
-                fit: BoxFit.contain,
+          Row(
+            children: [
+              Expanded(
+                child: GlobalText(
+                  str: "SYMBOL",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.sp,
+                  color: KColor.stroke.color,
+                  textAlign: TextAlign.left,
+                ),
               ),
-            ),
+              Expanded(
+                child: GlobalText(
+                  str: "ASK",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.sp,
+                  color: KColor.stroke.color,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Expanded(
+                child: GlobalText(
+                  str: "BID",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.sp,
+                  color: KColor.stroke.color,
+                  textAlign: TextAlign.right,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return QuotesItemView();
+                }),
           ),
         ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SizedBox(
-              height: 25.h,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: GlobalText(
-                    str: "SYMBOL",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                    color: KColor.stroke.color,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Expanded(
-                  child: GlobalText(
-                    str: "ASK",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                    color: KColor.stroke.color,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Expanded(
-                  child: GlobalText(
-                    str: "BID",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                    color: KColor.stroke.color,
-                    textAlign: TextAlign.right,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return QuotesItemView();
-                  }),
-            ),
-          ],
-        ),
       ),
     );
   }

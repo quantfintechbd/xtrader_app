@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
-import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
-import 'package:xtrader_app/utils/styles/k_assets.dart';
+import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 
-import '../../../../../utils/navigation.dart';
+import '../../../../../global/widget/global_text.dart';
 
-class QuotesBottomSheet extends StatelessWidget {
-  const QuotesBottomSheet({super.key});
+class TradesBottomSheet extends StatelessWidget {
+  const TradesBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +28,37 @@ class QuotesBottomSheet extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
-                GlobalText(
-                  str: "AUDCAD",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.sp,
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "EURUSD,",
+                        style: KTextStyle.customTextStyle(
+                          color: KColor.textColorDark.color,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.sp,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "Sell 0.01",
+                        style: KTextStyle.customTextStyle(
+                          color: KColor.textColorDark.color,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Spacer(),
+                GlobalText(
+                  str: "5.07",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
                 InkWell(
                   onTap: () {
                     Navigation.pop(context);
@@ -55,15 +77,11 @@ class QuotesBottomSheet extends StatelessWidget {
             color: KColor.separator.color,
           ),
           ListTile(
-            leading: GlobalSvgLoader(
-              imagePath: KAssetName.bag.imagePath,
-              svgFor: SvgFor.asset,
-            ),
             title: GlobalText(
-              str: "New Order",
+              str: "Close Postion",
               fontWeight: FontWeight.w500,
+              fontSize: 16.sp,
             ),
-            minLeadingWidth: 10,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -73,16 +91,26 @@ class QuotesBottomSheet extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: GlobalSvgLoader(
-              imagePath: KAssetName.barchart.imagePath,
-              svgFor: SvgFor.asset,
+            title: GlobalText(
+              str: "Modify Position",
+              fontWeight: FontWeight.w500,
+              fontSize: 16.sp,
             ),
+          ),
+          ListTile(
+            title: GlobalText(
+              str: "New Order",
+              fontWeight: FontWeight.w500,
+              fontSize: 16.sp,
+            ),
+          ),
+          ListTile(
             title: GlobalText(
               str: "Chart",
               fontWeight: FontWeight.w500,
+              fontSize: 16.sp,
             ),
-            minLeadingWidth: 10,
-          )
+          ),
         ],
       ),
     );
