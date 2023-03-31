@@ -35,7 +35,7 @@ extension AssetsExtention on KAssetName {
 
     switch (this) {
       case KAssetName.landingBackground:
-        return _themedAsset("landing-bg.svg", AssetType.svg);
+        return _themedAsset("landing-bg.png", AssetType.png);
       case KAssetName.logo:
         return _themedAsset("logo.png", AssetType.png);
       case KAssetName.chartsInactive:

@@ -21,11 +21,11 @@ class LandingScreen extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: GlobalSvgLoader(
-              imagePath: KAssetName.landingBackground.imagePath,
-              svgFor: SvgFor.asset,
+            child: Image.asset(
+              KAssetName.landingBackground.imagePath,
               fit: BoxFit.fill,
             ),
+            // child: GlobalSvgLoader(
           ),
           SafeArea(
             child: Padding(

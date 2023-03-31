@@ -17,7 +17,8 @@ enum KColor {
   spaceCadet,
   separator,
   popupBg,
-  mineShaft
+  mineShaft,
+  mineShaftCommmon,
 }
 
 extension KColorExtention on KColor {
@@ -67,6 +68,8 @@ extension KColorExtention on KColor {
           forDark: const Color(0xff232323),
           forlight: const Color(0xffF7F7F7),
         );
+      case KColor.mineShaftCommmon:
+        return const Color(0xff232323);
       default:
         return Colors.blue;
     }

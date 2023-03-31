@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/global/widget/global_text.dart';
 
 import '../../utils/styles/styles.dart';
 
@@ -47,14 +48,12 @@ class GlobalDropdown extends StatelessWidget {
         ),
       ),
       isExpanded: true,
-      hint: Text(
-        "$hintText",
-        style: TextStyle(
-          color: KColor.stroke.color,
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w400,
-          fontStyle: FontStyle.normal,
-        ),
+      hint: GlobalText(
+        str: "$hintText",
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+        textAlign: TextAlign.center,
+        color: const Color(0xff232323),
       ),
       onChanged: onChanged,
       items: items,

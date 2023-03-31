@@ -76,7 +76,7 @@ class GlobalTextFormField extends StatelessWidget {
           left: 0.w,
         ),
         floatingLabelBehavior:
-            floatingLabelBehavior ?? FloatingLabelBehavior.always,
+            floatingLabelBehavior ?? FloatingLabelBehavior.auto,
         prefixIcon: prefixIcon,
         hintText: hintText,
         label: mandatoryLabel == true
