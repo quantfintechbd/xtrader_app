@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 @immutable
-abstract class IBuySellRepository {
+abstract class IModifyPositionRepository {
   
 }
 

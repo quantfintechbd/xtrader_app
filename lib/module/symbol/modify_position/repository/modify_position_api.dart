@@ -1,8 +1,8 @@
 import '/data_provider/api_client.dart';
-class BuySellApi {
+class ModifyPositionApi {
   final ApiClient _apiClient = ApiClient();
 
-  BuySellApi();
+  ModifyPositionApi();
 
  
 }

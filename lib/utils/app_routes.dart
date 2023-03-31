@@ -4,7 +4,8 @@ import 'package:xtrader_app/module/bottom_navigation/bottom_navigation_bar/views
 
 import 'package:xtrader_app/module/landing/views/landing_screen.dart';
 import 'package:xtrader_app/module/login/views/login_screen.dart';
-import 'package:xtrader_app/module/symbol/buy_sell/views/buy_sell_screen.dart';
+
+import 'package:xtrader_app/module/symbol/modify_position/views/modify_position_screen.dart';
 import 'package:xtrader_app/module/symbol/remove_symbol/views/remove_symbol_screen.dart';
 
 enum AppRoutes {
@@ -13,7 +14,7 @@ enum AppRoutes {
   bottomNavigation,
   addSymbol,
   removeSymbol,
-  buySell,
+  modifyPosition,
 }
 
 extension AppRoutesExtention on AppRoutes {
@@ -29,8 +30,8 @@ extension AppRoutesExtention on AppRoutes {
         return AddSymbolScreen();
       case AppRoutes.removeSymbol:
         return RemoveSymbolScreen();
-      case AppRoutes.buySell:
-        return BuySellScreen();
+      case AppRoutes.modifyPosition:
+        return ModifyPositionScreen();
     }
   }
 }

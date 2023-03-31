@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
+import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
@@ -91,10 +92,15 @@ class TradesBottomSheet extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: GlobalText(
-              str: "Modify Position",
-              fontWeight: FontWeight.w500,
-              fontSize: 16.sp,
+            title: InkWell(
+              onTap: () {
+                Navigation.push(context, appRoutes: AppRoutes.modifyPosition);
+              },
+              child: GlobalText(
+                str: "Modify Position",
+                fontWeight: FontWeight.w500,
+                fontSize: 16.sp,
+              ),
             ),
           ),
           ListTile(
