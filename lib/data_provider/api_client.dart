@@ -27,9 +27,9 @@ class ApiClient {
     _dio.options = BaseOptions(
       baseUrl: AppUrl.base.url,
       headers: _header,
-      connectTimeout: const Duration(microseconds: 60 * 1000), //miliseconds
-      sendTimeout: const Duration(microseconds: 60 * 1000),
-      receiveTimeout: const Duration(microseconds: 60 * 1000),
+      connectTimeout: const Duration(seconds: 30), //miliseconds
+      sendTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 60),
     );
     _initInterceptors();
   }
@@ -125,6 +125,7 @@ class ApiClient {
         url,
         method,
         params,
+        data: params,
         options: options,
         savePath: savePath,
         onReceiveProgress: onReceiveProgress,
@@ -306,9 +307,10 @@ class ApiClient {
         code.log();
         isPopDialog?.log();
 
-        List<String>? erroMsg;
+        String? erroMsg;
         // TODO:  please replace this message based on your reponse.
-        erroMsg = List<String>.from(data["message"]?.map((x) => x));
+        erroMsg =
+            data["error"]; //List<String>.from(data["message"]?.map((x) => x));
         erroMsg.toString().log();
         ViewUtil.showAlertDialog(
           barrierDismissible: false,
@@ -316,9 +318,7 @@ class ApiClient {
           borderRadius: BorderRadius.all(
             Radius.circular(20.r),
           ),
-          content: ErrorDialog(
-            erroMsg: erroMsg,
-          ),
+          content: ErrorDialog(erroMsg: erroMsg.toString()),
         ).then((value) {
           if (isPopDialog == true || isPopDialog == null) {
             Navigator.pop(Navigation.key.currentContext!);

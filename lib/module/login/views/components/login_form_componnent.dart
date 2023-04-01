@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/module/login/controller/login_controller.dart';
 
 import '../../../../global/widget/global_text.dart';
 import '../../../../global/widget/global_textformfield.dart';
 import '../../../../utils/styles/k_colors.dart';
 
-class LoginFormComponent extends StatelessWidget {
+class LoginFormComponent extends ConsumerWidget {
   const LoginFormComponent({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
+    final state = ref.read(loginProvider);
     return Column(
       children: [
         Container(
@@ -22,6 +25,7 @@ class LoginFormComponent extends StatelessWidget {
             border: Border.all(color: KColor.stroke.color, width: 1),
           ),
           child: GlobalTextFormField(
+            controller: state.userIdController,
             labelText: "User Id",
             textInputType: TextInputType.numberWithOptions(decimal: false),
             validator: (value) {
@@ -44,6 +48,7 @@ class LoginFormComponent extends StatelessWidget {
           ),
           child: GlobalTextFormField(
             labelText: "Password",
+            controller: state.passwordController,
             obscureText: true,
             validator: (value) {
               if (value == null || value.isEmpty) {

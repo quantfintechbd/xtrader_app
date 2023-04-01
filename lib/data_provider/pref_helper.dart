@@ -2,7 +2,6 @@ import 'package:xtrader_app/constant/constant_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefHelper {
-
   static Future<SharedPreferences> get _instance async =>
       _prefsInstance ??= await SharedPreferences.getInstance();
   static SharedPreferences? _prefsInstance;
@@ -68,7 +67,6 @@ class PrefHelper {
   }
 
   static bool isLoggedIn() {
-    return (_prefsInstance?.getInt(AppConstant.USER_ID.key) ?? -1) > 0;
+    return (_prefsInstance?.getInt(AppConstant.TOKEN.key) ?? -1) > 0;
   }
 }
-

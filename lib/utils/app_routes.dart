@@ -4,6 +4,7 @@ import 'package:xtrader_app/module/bottom_navigation/bottom_navigation_bar/views
 
 import 'package:xtrader_app/module/landing/views/landing_screen.dart';
 import 'package:xtrader_app/module/login/views/login_screen.dart';
+import 'package:xtrader_app/module/symbol/load_symbol/views/load_symbol_screen.dart';
 
 import 'package:xtrader_app/module/symbol/modify_position/views/modify_position_screen.dart';
 import 'package:xtrader_app/module/symbol/remove_symbol/views/remove_symbol_screen.dart';
@@ -15,6 +16,7 @@ enum AppRoutes {
   addSymbol,
   removeSymbol,
   modifyPosition,
+  loadSymbol
 }
 
 extension AppRoutesExtention on AppRoutes {
@@ -32,6 +34,8 @@ extension AppRoutesExtention on AppRoutes {
         return RemoveSymbolScreen();
       case AppRoutes.modifyPosition:
         return ModifyPositionScreen();
+      case AppRoutes.loadSymbol:
+        return LoadSymbolScreen();
     }
   }
 }

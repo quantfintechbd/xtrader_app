@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/constant/app_url.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/module/landing/views/landing_screen.dart';
+import 'package:xtrader_app/module/symbol/load_symbol/views/load_symbol_screen.dart';
 
 import 'package:xtrader_app/utils/app_version.dart';
 import 'package:xtrader_app/utils/enum.dart';
@@ -19,6 +20,7 @@ import 'package:xtrader_app/utils/theme/theme_controller.dart';
 import 'package:xtrader_app/utils/theme/theme_util.dart';
 
 import 'constant/constant_key.dart';
+import 'module/bottom_navigation/bottom_navigation_bar/views/bottom_navigation_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -114,7 +116,7 @@ class MyApp extends StatelessWidget {
           );
         });
       },
-      child: LandingScreen(),
+      child: BottomNavigationScreen(),
     );
   }
 }

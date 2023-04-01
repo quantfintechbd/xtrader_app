@@ -1,5 +1,6 @@
 enum AppConstant {
-  USER_ID,
+  USER_NAME,
+  NAME,
   TOKEN,
   LANGUAGE,
   YYYY_MM_DD,
@@ -37,8 +38,10 @@ enum AppConstant {
 extension AppConstantExtention on AppConstant {
   String get key {
     switch (this) {
-      case AppConstant.USER_ID:
-        return "USER_ID";
+      case AppConstant.USER_NAME:
+        return "USER_NAME";
+      case AppConstant.NAME:
+        return "NAME";
       case AppConstant.TOKEN:
         return "TOKEN";
       case AppConstant.LANGUAGE:

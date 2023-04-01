@@ -1,7 +1,8 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:xtrader_app/constant/constant_key.dart';
+import 'package:xtrader_app/global/widget/global_button.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 
@@ -13,62 +14,99 @@ class ErrorDialog extends StatelessWidget {
     required this.erroMsg,
   }) : super(key: key);
 
-  final List<String> erroMsg;
+  final String erroMsg;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
+    return Container(
+      // color: KColor.scafoldBg.color,
+      decoration: BoxDecoration(
+        color: KColor.popupBg.color,
+        borderRadius: BorderRadius.all(
+          Radius.circular(10.r),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 20.w, top: 20.w),
+                child: GlobalText(
+                  str: "Error!",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16.sp,
+                  color: KColor.red.color,
+                ),
+              ),
+              Spacer(),
               InkWell(
-              onTap: () {
-                Navigation.pop(Navigation.key.currentContext);
-              },
-              child: const Icon(Icons.close),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(left: 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: List.generate(
-              erroMsg.length,
-              (index) => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                 
-                  Flexible(
-                    child: Container(
-                      padding: EdgeInsets.only(right: 30..w),
-                      child: GlobalText(
-                        str: "${erroMsg[index].toString()}",
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.start,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff999999),
-                        letterSpacing: 0.2,
+                onTap: () {
+                  Navigation.pop(Navigation.key.currentContext);
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20.w, top: 20.w),
+                  child: const Icon(Icons.close),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 20.w,
+                        ),
+                        child: GlobalText(
+                          str: erroMsg,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff999999),
+                          letterSpacing: 0.2,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                GlobalButton(
+                  buttonText: "Okay",
+                  onPressed: () {
+                    Navigation.pop(context);
+                  },
+                  btnHeight: 55,
+                  roundedBorderRadius: 8,
+                )
+              ],
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
-
- 
+/*
+List.generate(
+              erroMsg.length,
+              (index) => 
+            ),
+            */

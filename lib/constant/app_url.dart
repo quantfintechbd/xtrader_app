@@ -3,7 +3,14 @@ import 'package:xtrader_app/utils/enum.dart';
 enum AppUrl {
   base,
   baseImage,
-
+  login,
+  totalSymbol,
+  symbolList,
+  quotesDetails,
+  newOrder,
+  closeOrder,
+  modifyOrder,
+  tradeDetails,
 }
 
 extension AppUrlExtention on AppUrl {
@@ -19,7 +26,7 @@ extension AppUrlExtention on AppUrl {
         break;
 
       case UrlLink.isDev:
-        _baseUrl = "";
+        _baseUrl = "http://api.xtraderplatform.com/index.php";
         _baseImageUrl = "";
 
         break;
@@ -36,10 +43,24 @@ extension AppUrlExtention on AppUrl {
         return "$_baseUrl";
       case AppUrl.baseImage:
         return "$_baseImageUrl";
-     
-      default:
+      case AppUrl.login:
+        return "/login";
+
+      case AppUrl.totalSymbol:
+        return "/total-symbol";
+      case AppUrl.symbolList:
+        return "/symbol-list";
+      case AppUrl.quotesDetails:
+        return "/quotes-details";
+      case AppUrl.newOrder:
+        return "/new-order";
+      case AppUrl.closeOrder:
+        return "/close-order";
+      case AppUrl.modifyOrder:
+        return "/modify-order";
+      case AppUrl.tradeDetails:
+        return "/trade-details";
     }
     return "";
   }
 }
-

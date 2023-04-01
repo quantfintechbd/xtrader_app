@@ -70,6 +70,11 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
           isShowMenubar: true,
           title: "Trade  +5780.557 USD",
         );
+      case 3:
+        return GlobalAppbar(
+          isShowMenubar: true,
+          title: "History",
+        );
       default:
         return GlobalAppbar(
           isShowMenubar: true,

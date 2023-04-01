@@ -1,27 +1,23 @@
 class GlobalResponse {
   GlobalResponse({
     this.message,
-    this.errors,
+    this.error,
     this.code,
   });
 
   String? message;
-  List<String>? errors;
+  String? error;
   int? code;
 
   factory GlobalResponse.fromJson(Map<String, dynamic> json) => GlobalResponse(
         message: json["message"],
-        errors: json["errors"] == null
-            ? null
-            : List<String>.from(json["errors"].map((x) => x)),
+        error: json["error"] == null ? null : json["errors"],
         code: json["code"],
       );
 
   Map<String, dynamic> toJson() => {
         "message": message,
-        "errors":
-            errors == null ? null : List<dynamic>.from(errors!.map((x) => x)),
+        "errors": error,
         "code": code,
       };
 }
-

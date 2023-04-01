@@ -18,15 +18,15 @@ class ViewUtil {
 
     return ScaffoldMessenger.of(Navigation.key.currentContext!).showSnackBar(
       SnackBar(
+        backgroundColor: KColor.red.color,
         content: GlobalText(
           str: msg,
           fontWeight: FontWeight.w500,
-          color: KColor.textColorDark.color,
+          color: KColor.white.color,
         ),
         action: SnackBarAction(
           label: btnName ?? "",
-          textColor:
-              btnName == null ? Colors.transparent : KColor.textColorDark.color,
+          textColor: btnName == null ? Colors.transparent : KColor.white.color,
           onPressed: onPressed ?? () {},
         ),
       ),

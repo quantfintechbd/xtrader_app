@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/module/login/controller/login_controller.dart';
 import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 
@@ -49,17 +51,20 @@ class LoginButton extends StatelessWidget {
         SizedBox(
           height: 10.h,
         ),
-        GlobalButton(
-          onPressed: () {
-            Navigation.pushAndRemoveUntil(
-              context,
-              appRoutes: AppRoutes.bottomNavigation,
-            );
-          },
-          buttonText: "Login Now",
-          btnHeight: 56.h,
-          roundedBorderRadius: 8,
-        ),
+        Consumer(builder: (context, ref, snap) {
+          final state = ref.watch(loginProvider);
+          final controller = ref.read(loginProvider.notifier);
+          return GlobalButton(
+            onPressed: state.isValid == true
+                ? () {
+                    controller.login(context);
+                  }
+                : null,
+            buttonText: "Login Now",
+            btnHeight: 56.h,
+            roundedBorderRadius: 8,
+          );
+        }),
       ],
     );
   }
