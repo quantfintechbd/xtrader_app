@@ -160,7 +160,7 @@ class ApiClient {
       if (method == Method.POST) {
         response = await _dio.post(
           url,
-          queryParameters: params,
+          // queryParameters: params,
           data: data,
         );
       } else if (method == Method.DELETE) {
@@ -208,6 +208,7 @@ class ApiClient {
         Platform.isAndroid ? AppConstant.ANDROID.key : AppConstant.IOS.key;
 
     return {
+      "Authenticated": PrefHelper.getString(AppConstant.USER_NAME.key),
       HttpHeaders.contentTypeHeader: AppConstant.APPLICATION_JSON.key,
       HttpHeaders.authorizationHeader:
           "${AppConstant.BEARER.key} ${PrefHelper.getString(AppConstant.TOKEN.key)}",

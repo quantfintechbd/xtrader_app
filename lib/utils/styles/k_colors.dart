@@ -19,6 +19,7 @@ enum KColor {
   popupBg,
   mineShaft,
   mineShaftCommmon,
+  reverseDark,
 }
 
 extension KColorExtention on KColor {
@@ -70,6 +71,11 @@ extension KColorExtention on KColor {
         );
       case KColor.mineShaftCommmon:
         return const Color(0xff232323);
+      case KColor.reverseDark:
+        return _themedColor(
+          forDark: const Color(0xffE1E1E1),
+          forlight: const Color(0xff18335B),
+        );
       default:
         return Colors.blue;
     }

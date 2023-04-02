@@ -83,7 +83,7 @@ class LoginController extends StateNotifier<LoginState> {
             "hrlr".log();
             Navigation.pushAndRemoveUntil(
               context,
-              appRoutes: AppRoutes.bottomNavigation,
+              appRoutes: AppRoutes.loadSymbol,
             );
             state = state.copyWith(isValid: false);
           } catch (e) {
@@ -102,8 +102,8 @@ class LoginController extends StateNotifier<LoginState> {
 
   @override
   void dispose() {
+    state.userIdController.dispose();
+    state.userIdController.dispose();
     super.dispose();
-    state.userIdController.dispose();
-    state.userIdController.dispose();
   }
 }

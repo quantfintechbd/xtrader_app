@@ -28,6 +28,5 @@ class LoginRepository implements ILoginRepository {
       "repo : $error".log();
       throw Exception(error);
     });
-    ;
   }
 }

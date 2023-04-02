@@ -72,7 +72,8 @@ class GlobalTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.only(
           top: 0.h,
-          bottom: 0.h,
+          bottom:
+              floatingLabelBehavior == FloatingLabelBehavior.never ? 20.h : 0.h,
           left: 0.w,
         ),
         floatingLabelBehavior:

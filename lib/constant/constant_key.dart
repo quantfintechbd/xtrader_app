@@ -33,6 +33,8 @@ enum AppConstant {
   EN,
   BN,
   FONTFAMILY,
+  REMOTE_SYMBOLS,
+  LOCAL_SYMBOLS
 }
 
 extension AppConstantExtention on AppConstant {
@@ -106,7 +108,10 @@ extension AppConstantExtention on AppConstant {
         return 'bn';
       case AppConstant.FONTFAMILY:
         return 'SF Pro Display';
-
+      case AppConstant.REMOTE_SYMBOLS:
+        return "REMOTE_SYMBOLS";
+      case AppConstant.LOCAL_SYMBOLS:
+        return "LOCAL_SYMBOLS";
       default:
         return "";
     }
