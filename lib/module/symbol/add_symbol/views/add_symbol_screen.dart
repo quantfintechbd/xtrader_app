@@ -80,7 +80,6 @@ class AddSymbolScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return ListTile(
                         onTap: () {
-                          index.log();
                           controller.addLocal(state.unAttended[index]);
                         },
                         contentPadding: EdgeInsets.zero,

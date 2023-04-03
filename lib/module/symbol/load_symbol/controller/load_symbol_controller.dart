@@ -22,7 +22,11 @@ class LoadSymbolController extends StateNotifier<LoadSymbolState> {
 
   LoadSymbolController()
       : super(LoadSymbolState(
-            totalCount: 0, startIndex: 0, endIndex: 5, remoteSymbols: []));
+          totalCount: 0,
+          startIndex: 0,
+          endIndex: 10,
+          remoteSymbols: [],
+        ));
 
   void getTotalSymbolCount(BuildContext context) {
     _loadsymbolRepository.getTotalCount(onsuccess: (totalData) {
@@ -61,7 +65,7 @@ class LoadSymbolController extends StateNotifier<LoadSymbolState> {
           if (state.remoteSymbols.length != state.totalCount) {
             state = state.copyWith(
               startIndex: state.endIndex + 1,
-              endIndex: state.endIndex + 6,
+              endIndex: state.endIndex + state.limit + 1,
             );
             "State".log();
             state.remoteSymbols.length.log();

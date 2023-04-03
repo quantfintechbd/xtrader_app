@@ -201,3 +201,10 @@ extension CapitalizeExtention on String {
 extension LastPathComponent on String {
   String get lastPathComponent => this.split('/').last.replaceAll("_", "");
 }
+
+extension CurrencyFormatter on String {
+  String get asCurrency {
+    final oCcy = NumberFormat("#,##0.00", "fr_FR");
+    return oCcy.format(this.parseToDouble());
+  }
+}

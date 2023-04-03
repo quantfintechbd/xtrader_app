@@ -13,15 +13,23 @@ import 'package:xtrader_app/utils/styles/k_colors.dart';
 @immutable
 class BottomNavigationState {
   final int selectedTab;
+  final String dropdownvalue;
+  BottomNavigationState(
+      {required this.selectedTab, required this.dropdownvalue});
 
-  BottomNavigationState({required this.selectedTab});
-
-  BottomNavigationState copyWith({int? selectedTab}) {
+  BottomNavigationState copyWith({int? selectedTab, String? dropdownvalue}) {
     return BottomNavigationState(
       selectedTab: selectedTab ?? this.selectedTab,
+      dropdownvalue: dropdownvalue ?? this.dropdownvalue,
     );
   }
 
+  var items = [
+    '7 Days',
+    '15 Days',
+    '1 Month',
+    '1 year',
+  ];
   List<BottomNavigationBarItem> barItems = [
     BottomNavigationBarItem(
       label: 'Quotes',

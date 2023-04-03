@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_appbar.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
+import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/styles/k_assets.dart';
+import 'package:xtrader_app/utils/styles/k_colors.dart';
 
 import '../repository/bottom_navigation_interface.dart';
 import '../repository/bottom_navigation_repository.dart';
@@ -19,7 +22,8 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
   final IBottomNavigationRepository _bottomnavigationRepository =
       BottomNavigationRepository();
 
-  BottomNavigationController() : super(BottomNavigationState(selectedTab: 0));
+  BottomNavigationController()
+      : super(BottomNavigationState(selectedTab: 0, dropdownvalue: '7 Days'));
 
   void changeTap(int value) {
     state = state.copyWith(selectedTab: value);
@@ -68,7 +72,48 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
       case 2:
         return GlobalAppbar(
           isShowMenubar: true,
-          title: "Trade  +5780.557 USD",
+          title: "Trade",
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0, left: 0, top: 10),
+              child: Consumer(builder: (context, ref, snapshot) {
+                final state = ref.watch(bottomNavigationProvider);
+                return DropdownButton(
+                  icon: Icon(
+                    Icons.filter_alt,
+                    color: KColor.white.color,
+                  ),
+                  items: state.items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Row(
+                        children: [
+                          Icon(
+                            state.dropdownvalue == items
+                                ? Icons.check_box
+                                : Icons.check_box_outline_blank,
+                            color: KColor.mineShaftCommmon.color,
+                          ),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          GlobalText(
+                            str: items,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: KColor.mineShaftCommmon.color,
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    this.state = state.copyWith(dropdownvalue: newValue);
+                  },
+                );
+              }),
+            ),
+          ],
         );
       case 3:
         return GlobalAppbar(

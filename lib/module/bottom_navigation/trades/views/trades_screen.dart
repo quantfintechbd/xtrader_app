@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/bottom_navigation/trades/controller/trades_controller.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/views/components/trades_item_view.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
@@ -21,31 +23,42 @@ class TradesScreen extends StatelessWidget {
           ),
           SizedBox(
             height: context.height * 0.25,
-            child: ListView(
-              physics: NeverScrollableScrollPhysics(),
-              children: const [
-                SummeryItemView(
-                  title: "Balance:",
-                  value: "69 943.20",
-                ),
-                SummeryItemView(
-                  title: "Equity:",
-                  value: "69 943.20",
-                ),
-                SummeryItemView(
-                  title: "Margin:",
-                  value: "9 943.20",
-                ),
-                SummeryItemView(
-                  title: "Free Margin:",
-                  value: "14 362.04",
-                ),
-                SummeryItemView(
-                  title: "Margin Level (%):",
-                  value: "1 362.04",
-                ),
-              ],
-            ),
+            child: Consumer(builder: (context, ref, snapshot) {
+              final state = ref.watch(tradesProvider);
+              return ListView(
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  for (int x = 0;
+                      x < state.tradePositionData.entries.length;
+                      x++) ...[
+                    SummeryItemView(
+                        title:
+                            state.tradePositionData.keys.toList()[x].toString(),
+                        value: state.tradePositionData.values
+                            .toList()[x]
+                            .toString()
+                            .asCurrency //"69 943.20",
+                        ),
+                  ],
+                  /*SummeryItemView(
+                    title: "Equity:",
+                    value: "69 943.20",
+                  ),
+                  SummeryItemView(
+                    title: "Margin:",
+                    value: "9 943.20",
+                  ),
+                  SummeryItemView(
+                    title: "Free Margin:",
+                    value: "14 362.04",
+                  ),
+                  SummeryItemView(
+                    title: "Margin Level (%):",
+                    value: "1 362.04",
+                  ),*/
+                ],
+              );
+            }),
           ),
           SizedBox(
             height: 10.h,
@@ -64,14 +77,14 @@ class TradesScreen extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: 20,
-            shrinkWrap: true,
-            itemBuilder: ((context, index) {
-              return TradesItemView();
-            }),
-          ),
+          // ListView.builder(
+          //   physics: NeverScrollableScrollPhysics(),
+          //   itemCount: 20,
+          //   shrinkWrap: true,
+          //   itemBuilder: ((context, index) {
+          //     return TradesItemView();
+          //   }),
+          // ),
         ],
       ),
     );

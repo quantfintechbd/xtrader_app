@@ -71,7 +71,7 @@ class AddSymbolController extends StateNotifier<AddSymbolState> {
   }
 
   void addLocal(String symbol) {
-    state.localSymbols.toList().add(symbol);
+    state.localSymbols.add(symbol);
     _addsymbolRepository.updateLocal(state.localSymbols);
     makeUnAttendedData();
   }

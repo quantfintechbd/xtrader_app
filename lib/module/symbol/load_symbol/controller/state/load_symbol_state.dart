@@ -4,6 +4,7 @@ class LoadSymbolState {
   final int totalCount;
   final int startIndex, endIndex;
   final List<String> remoteSymbols;
+  final int limit = 30;
   LoadSymbolState({
     required this.startIndex,
     required this.endIndex,

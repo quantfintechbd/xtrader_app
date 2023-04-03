@@ -7,6 +7,7 @@ import 'package:xtrader_app/constant/app_url.dart';
 import 'package:xtrader_app/constant/constant_key.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/global/widget/error_dialog.dart';
+import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
@@ -309,9 +310,8 @@ class ApiClient {
         isPopDialog?.log();
 
         String? erroMsg;
-        // TODO:  please replace this message based on your reponse.
-        erroMsg =
-            data["error"]; //List<String>.from(data["message"]?.map((x) => x));
+
+        erroMsg = data["error"];
         erroMsg.toString().log();
         ViewUtil.showAlertDialog(
           barrierDismissible: false,
@@ -322,7 +322,11 @@ class ApiClient {
           content: ErrorDialog(erroMsg: erroMsg.toString()),
         ).then((value) {
           if (isPopDialog == true || isPopDialog == null) {
-            Navigator.pop(Navigation.key.currentContext!);
+            if (erroMsg == 'Expired token') {
+              _logout();
+            } else {
+              Navigator.pop(Navigation.key.currentContext!);
+            }
           }
         });
         if (isPopDialog == false) {
@@ -330,5 +334,13 @@ class ApiClient {
         }
       }
     }
+  }
+
+  void _logout() {
+    PrefHelper.setString(AppConstant.TOKEN.key, '');
+    PrefHelper.setString(AppConstant.USER_NAME.key, '');
+    PrefHelper.setString(AppConstant.NAME.key, '');
+    Navigation.pushAndRemoveUntil(Navigation.key.currentContext!,
+        appRoutes: AppRoutes.login);
   }
 }

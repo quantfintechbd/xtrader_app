@@ -74,7 +74,7 @@ class LoginController extends StateNotifier<LoginState> {
             );
             PrefHelper.setString(
               AppConstant.NAME.key,
-              loginData.username ?? "",
+              loginData.name ?? "",
             );
             loginSuccess = true;
             Navigation.pop(context);
