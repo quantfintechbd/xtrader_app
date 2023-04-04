@@ -26,4 +26,22 @@ class TradesApi {
       throw Exception(error);
     });
   }
+
+  Future fetchDetails(
+      {required Map<String, dynamic> map,
+      required Function(Response response) onSuccess}) async {
+    await _apiClient
+        .request(
+            method: Method.POST,
+            url: AppUrl.tradeDetails.url,
+            params: map,
+            isPopGlobalDialog: true,
+            onSuccessFunction: await (Response response) {
+              onSuccess(response);
+            })
+        .catchError((error, stackTrace) {
+      "api on error ${error}".log();
+      throw Exception(error);
+    });
+  }
 }

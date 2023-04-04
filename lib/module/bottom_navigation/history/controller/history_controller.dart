@@ -1,6 +1,67 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xtrader_app/module/bottom_navigation/history/controller/state/history_state.dart';
+import 'package:xtrader_app/utils/extension.dart';
+
 import '../repository/history_interface.dart';
 import '../repository/history_repository.dart';
-class HistoryController  {
+
+final historyProvider = StateNotifierProvider<HistoryController, HistoryState>(
+  (ref) => HistoryController(),
+);
+
+class HistoryController extends StateNotifier<HistoryState> {
   final IHistoryRepository _historyRepository = HistoryRepository();
-  
+
+  HistoryController()
+      : super(
+          const HistoryState(
+            isLoading: false,
+            historySummery: {},
+            details: [],
+          ),
+        ) {
+    fetchHistory('7 Days');
   }
+
+  void fetchHistory(String selection) async {
+    selection.log();
+    int days = 0;
+    switch (selection) {
+      case '7 Days':
+        days = 7;
+        break;
+      case '15 Days':
+        days = 15;
+        break;
+      case '1 Month':
+        days = 30;
+        break;
+      case '1 year':
+        days = 365;
+        break;
+    }
+    state = state.copyWith(isLoading: true);
+    await _historyRepository
+        .fetchHistory(
+      numberOfdays: days.toString(),
+      onSuccess: (historyData) {
+        if (historyData.summery != null) {
+          state = state.copyWith(
+            historySummery: historyData.summery!.toJson(),
+          );
+        }
+        if (historyData.details != null) {
+          state = state.copyWith(
+            details: historyData.details,
+          );
+        }
+        state = state.copyWith(
+          isLoading: false,
+        );
+      },
+    )
+        .catchError((_) {
+      state = state.copyWith(isLoading: false);
+    });
+  }
+}

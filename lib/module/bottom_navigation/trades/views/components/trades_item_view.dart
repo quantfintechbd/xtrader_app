@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_details_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/views/components/trades_bottom_sheet.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
@@ -11,8 +12,8 @@ import 'package:xtrader_app/utils/styles/styles.dart';
 import 'package:xtrader_app/utils/view_util.dart';
 
 class TradesItemView extends StatefulWidget {
-  const TradesItemView({super.key});
-
+  const TradesItemView({super.key, required this.tradeDetails});
+  final TradeDetails tradeDetails;
   @override
   State<TradesItemView> createState() => _TradesItemViewState();
 }
@@ -45,15 +46,20 @@ class _TradesItemViewState extends State<TradesItemView> {
                         Row(
                           children: [
                             GlobalText(
-                              str: "BRENT,",
+                              str: "${widget.tradeDetails.symbol ?? ''},",
                               fontWeight: FontWeight.w700,
                               fontSize: 14.sp,
                             ),
                             GlobalText(
-                              str: " Sell 0.05",
+                              str:
+                                  " ${widget.tradeDetails.action?.capitalize() ?? ''} ${widget.tradeDetails.volume ?? ''}",
                               fontWeight: FontWeight.w700,
                               fontSize: 14.sp,
-                              color: KColor.red.color,
+                              color:
+                                  widget.tradeDetails.action?.toLowerCase() ==
+                                          'buy'
+                                      ? KColor.primary.color
+                                      : KColor.red.color,
                             ),
                           ],
                         ),
@@ -64,7 +70,7 @@ class _TradesItemViewState extends State<TradesItemView> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             GlobalText(
-                              str: "74.38",
+                              str: widget.tradeDetails.priceOpen ?? '',
                               fontWeight: FontWeight.w400,
                               fontSize: 13.sp,
                               color: KColor.sixA6a6a.color,
@@ -81,7 +87,7 @@ class _TradesItemViewState extends State<TradesItemView> {
                               width: 6.w,
                             ),
                             GlobalText(
-                              str: "74.04",
+                              str: widget.tradeDetails.priceCurrent ?? '',
                               fontWeight: FontWeight.w400,
                               fontSize: 13.sp,
                               color: KColor.sixA6a6a.color,
@@ -92,10 +98,15 @@ class _TradesItemViewState extends State<TradesItemView> {
                     ),
                     Spacer(),
                     GlobalText(
-                      str: "14 362.04",
+                      str: widget.tradeDetails.profit.toString().asCurrency,
                       fontWeight: FontWeight.w700,
                       fontSize: 15.sp,
-                      color: KColor.primary.color,
+                      color: widget.tradeDetails.profit != null &&
+                              widget.tradeDetails.profit!.parseToDouble() >
+                                      0.0 ==
+                                  true
+                          ? KColor.primary.color
+                          : KColor.red.color,
                     ),
                   ],
                 ),
@@ -120,7 +131,7 @@ class _TradesItemViewState extends State<TradesItemView> {
                   height: 15.h,
                 ),
                 GlobalText(
-                  str: "2023-03-16  18:20:46",
+                  str: widget.tradeDetails.time ?? '',
                   fontWeight: FontWeight.w400,
                   fontSize: 13.sp,
                   color: KColor.sixA6a6a.color,
@@ -132,14 +143,14 @@ class _TradesItemViewState extends State<TradesItemView> {
                         children: [
                           DTItem(
                             title: "S/L",
-                            value: "0",
+                            value: widget.tradeDetails.sL ?? '',
                           ),
                           SizedBox(
                             height: 6.h,
                           ),
                           DTItem(
                             title: "T/P",
-                            value: "0",
+                            value: widget.tradeDetails.tP ?? '',
                           ),
                         ],
                       ),
@@ -150,13 +161,16 @@ class _TradesItemViewState extends State<TradesItemView> {
                     Expanded(
                       child: Column(
                         children: [
-                          DTItem(title: "Swap", value: "0"),
+                          DTItem(
+                            title: "Swap",
+                            value: widget.tradeDetails.swap ?? '',
+                          ),
                           SizedBox(
                             height: 6.h,
                           ),
                           DTItem(
                             title: "ID",
-                            value: "46321789",
+                            value: widget.tradeDetails.expertPositionID ?? '',
                           )
                         ],
                       ),

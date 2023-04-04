@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
-import 'package:xtrader_app/module/bottom_navigation/trades/views/components/trades_bottom_sheet.dart';
+import 'package:xtrader_app/module/bottom_navigation/history/model/history_response.dart';
 import 'package:xtrader_app/utils/enum.dart';
+import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
-import 'package:xtrader_app/utils/view_util.dart';
 
 class HistoryItemView extends StatefulWidget {
-  const HistoryItemView({super.key});
-
+  const HistoryItemView({super.key, required this.details});
+  final HistoryDetails details;
   @override
   State<HistoryItemView> createState() => _HistoryItemViewState();
 }
@@ -38,22 +38,26 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                         Row(
                           children: [
                             GlobalText(
-                              str: "BRENT,",
+                              str: "${widget.details.symbol ?? ''},",
                               fontWeight: FontWeight.w700,
                               fontSize: 14.sp,
                             ),
                             GlobalText(
-                              str: " Sell 0.05",
+                              str:
+                                  " ${widget.details.action?.capitalize() ?? ''} ${widget.details.volume}",
                               fontWeight: FontWeight.w700,
                               fontSize: 14.sp,
-                              color: KColor.red.color,
+                              color:
+                                  widget.details.action?.toLowerCase() == 'buy'
+                                      ? KColor.primary.color
+                                      : KColor.red.color,
                             ),
                           ],
                         ),
                         SizedBox(
                           height: 4.h,
                         ),
-                        Row(
+                        /*  Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             GlobalText(
@@ -80,15 +84,19 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                               color: KColor.sixA6a6a.color,
                             ),
                           ],
-                        ),
+                        ),*/
                       ],
                     ),
                     Spacer(),
                     GlobalText(
-                      str: "14 362.04",
+                      str: widget.details.profit.toString().asCurrency,
                       fontWeight: FontWeight.w700,
                       fontSize: 15.sp,
-                      color: KColor.primary.color,
+                      color: widget.details.profit != null &&
+                              widget.details.profit!.parseToDouble() > 0.0 ==
+                                  true
+                          ? KColor.primary.color
+                          : KColor.red.color,
                     ),
                   ],
                 ),
@@ -113,7 +121,7 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                   height: 15.h,
                 ),
                 GlobalText(
-                  str: "2023-03-16  18:20:46",
+                  str: widget.details.time ?? '',
                   fontWeight: FontWeight.w400,
                   fontSize: 13.sp,
                   color: KColor.sixA6a6a.color,
@@ -125,22 +133,22 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                         children: [
                           DTItem(
                             title: "S/L",
-                            value: "0",
+                            value: widget.details.priceSL ?? '',
                           ),
                           SizedBox(
                             height: 6.h,
                           ),
                           DTItem(
                             title: "T/P",
-                            value: "0",
+                            value: widget.details.priceTP ?? '',
                           ),
-                          SizedBox(
-                            height: 6.h,
-                          ),
-                          DTItem(
-                            title: "Open",
-                            value: "0",
-                          ),
+                          // SizedBox(
+                          //   height: 6.h,
+                          // ),
+                          // DTItem(
+                          //   title: "Open",
+                          //   value: widget.details ?? '',
+                          // ),
                         ],
                       ),
                     ),
@@ -150,20 +158,23 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                     Expanded(
                       child: Column(
                         children: [
-                          DTItem(title: "Swap", value: "0"),
+                          DTItem(
+                            title: "Swap",
+                            value: widget.details.swap ?? '',
+                          ),
                           SizedBox(
                             height: 6.h,
                           ),
                           DTItem(
                             title: "ID",
-                            value: "46321789",
+                            value: widget.details.positionID ?? '',
                           ),
                           SizedBox(
                             height: 6.h,
                           ),
                           DTItem(
                             title: "Commission",
-                            value: "0",
+                            value: widget.details.commission ?? '',
                           ),
                         ],
                       ),

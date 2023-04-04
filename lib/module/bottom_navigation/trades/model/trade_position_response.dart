@@ -25,11 +25,11 @@ class TradePositionResponse {
 }
 
 class TradePositionData {
-  double? balance;
-  double? equity;
-  int? margin;
-  double? marginFree;
-  int? marginLevel;
+  String? balance;
+  String? equity;
+  String? margin;
+  String? marginFree;
+  String? marginLevel;
 
   TradePositionData(
       {this.balance,
@@ -39,15 +39,15 @@ class TradePositionData {
       this.marginLevel});
 
   TradePositionData.fromJson(Map<String, dynamic> json) {
-    balance = json['Balance'];
-    equity = json['Equity'];
-    margin = json['Margin'];
-    marginFree = json['MarginFree'];
-    marginLevel = json['MarginLevel'];
+    balance = json['Balance'].toString();
+    equity = json['Equity'].toString();
+    margin = json['Margin'].toString();
+    marginFree = json['MarginFree'].toString();
+    marginLevel = json['MarginLevel'].toString();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['Balance'] = balance;
     data['Equity'] = equity;
     data['Margin'] = margin;

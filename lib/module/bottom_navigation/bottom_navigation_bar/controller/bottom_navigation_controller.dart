@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_appbar.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/bottom_navigation/history/controller/history_controller.dart';
+import 'package:xtrader_app/module/bottom_navigation/trades/controller/trades_controller.dart';
 import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/navigation.dart';
@@ -23,7 +25,12 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
       BottomNavigationRepository();
 
   BottomNavigationController()
-      : super(BottomNavigationState(selectedTab: 0, dropdownvalue: '7 Days'));
+      : super(
+          BottomNavigationState(
+              selectedTab: 0,
+              dropdownvalue: '7 Days',
+              historyFilterValue: '7 Days'),
+        );
 
   void changeTap(int value) {
     state = state.copyWith(selectedTab: value);
@@ -78,6 +85,7 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
               padding: const EdgeInsets.only(right: 20.0, left: 0, top: 10),
               child: Consumer(builder: (context, ref, snapshot) {
                 final state = ref.watch(bottomNavigationProvider);
+                final controller = ref.read(tradesProvider.notifier);
                 return DropdownButton(
                   icon: Icon(
                     Icons.filter_alt,
@@ -109,6 +117,7 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
                   }).toList(),
                   onChanged: (String? newValue) {
                     this.state = state.copyWith(dropdownvalue: newValue);
+                    controller.fetchTradeDetails(newValue ?? '');
                   },
                 );
               }),
@@ -119,6 +128,51 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
         return GlobalAppbar(
           isShowMenubar: true,
           title: "History",
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0, left: 0, top: 10),
+              child: Consumer(
+                builder: (context, ref, snapshot) {
+                  final state = ref.watch(bottomNavigationProvider);
+                  final controller = ref.read(historyProvider.notifier);
+                  return DropdownButton(
+                    icon: Icon(
+                      Icons.filter_alt,
+                      color: KColor.white.color,
+                    ),
+                    items: state.items.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Row(
+                          children: [
+                            Icon(
+                              state.dropdownvalue == items
+                                  ? Icons.check_box
+                                  : Icons.check_box_outline_blank,
+                              color: KColor.mineShaftCommmon.color,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            GlobalText(
+                              str: items,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: KColor.mineShaftCommmon.color,
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      this.state = state.copyWith(historyFilterValue: newValue);
+                      controller.fetchHistory(newValue ?? '');
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         );
       default:
         return GlobalAppbar(

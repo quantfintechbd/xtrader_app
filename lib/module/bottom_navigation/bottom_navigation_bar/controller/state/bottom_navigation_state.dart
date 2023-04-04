@@ -14,13 +14,22 @@ import 'package:xtrader_app/utils/styles/k_colors.dart';
 class BottomNavigationState {
   final int selectedTab;
   final String dropdownvalue;
-  BottomNavigationState(
-      {required this.selectedTab, required this.dropdownvalue});
+  final String historyFilterValue;
+  BottomNavigationState({
+    required this.selectedTab,
+    required this.dropdownvalue,
+    required this.historyFilterValue,
+  });
 
-  BottomNavigationState copyWith({int? selectedTab, String? dropdownvalue}) {
+  BottomNavigationState copyWith({
+    int? selectedTab,
+    String? dropdownvalue,
+    String? historyFilterValue,
+  }) {
     return BottomNavigationState(
       selectedTab: selectedTab ?? this.selectedTab,
       dropdownvalue: dropdownvalue ?? this.dropdownvalue,
+      historyFilterValue: historyFilterValue ?? this.historyFilterValue,
     );
   }
 

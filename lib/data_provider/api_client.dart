@@ -298,7 +298,7 @@ class ApiClient {
           throw Exception("response data is ${response.data}");
         }
       } else if (code == 401) {
-        await PrefHelper.setString(AppConstant.TOKEN.key, "");
+        _logout();
         // Navigation.pushAndRemoveUntil(
         //   Navigation.key.currentContext,
         //   appRoutes: AppRoutes.login,

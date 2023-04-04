@@ -12,6 +12,7 @@ enum AppUrl {
   modifyOrder,
   tradeDetails,
   tradePostion,
+  getHistory,
 }
 
 extension AppUrlExtention on AppUrl {
@@ -63,7 +64,8 @@ extension AppUrlExtention on AppUrl {
         return "/trade-details";
       case AppUrl.tradePostion:
         return '/trade-position';
+      case AppUrl.getHistory:
+        return '/get-history';
     }
-    return "";
   }
 }
