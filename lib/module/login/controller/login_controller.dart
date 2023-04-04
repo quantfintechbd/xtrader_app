@@ -27,6 +27,7 @@ class LoginController extends StateNotifier<LoginState> {
             isValid: false,
             userIdController: TextEditingController(),
             passwordController: TextEditingController(),
+            shouldShowPassword: false,
           ),
         ) {
     state.userIdController.addListener(() {
@@ -98,6 +99,10 @@ class LoginController extends StateNotifier<LoginState> {
         Navigation.pop(context);
       });
     }
+  }
+
+  void changePasswordState() {
+    state = state.copyWith(shouldShowPassword: !state.shouldShowPassword);
   }
 
   @override

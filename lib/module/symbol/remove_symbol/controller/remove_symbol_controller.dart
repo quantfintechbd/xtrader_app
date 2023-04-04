@@ -5,8 +5,8 @@ import 'package:xtrader_app/module/symbol/remove_symbol/controller/state/remove_
 import '../repository/remove_symbol_interface.dart';
 import '../repository/remove_symbol_repository.dart';
 
-final removeSymbolProvider =
-    StateNotifierProvider<RemoveSymbolController, RemoveSymbolState>(
+final removeSymbolProvider = StateNotifierProvider.autoDispose<
+    RemoveSymbolController, RemoveSymbolState>(
   (ref) => RemoveSymbolController(),
 );
 

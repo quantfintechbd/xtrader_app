@@ -34,28 +34,24 @@ class RemoveSymbolScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 5.h),
-              decoration: BoxDecoration(
-                color: KColor.white.color,
-                borderRadius: BorderRadius.circular(8.r),
-                border: Border.all(color: KColor.stroke.color, width: 1),
-              ),
-              child: GlobalTextFormField(
-                style: KTextStyle.customTextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.sp),
-                controller: state.searchController,
-                labelText: "Search Here",
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: GlobalSvgLoader(
-                    imagePath: KAssetName.search.imagePath,
-                    svgFor: SvgFor.asset,
-                  ),
+            GlobalTextFormField(
+              style: KTextStyle.customTextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp),
+              controller: state.searchController,
+              labelText: "Search Here",
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: GlobalSvgLoader(
+                  imagePath: KAssetName.search.imagePath,
+                  svgFor: SvgFor.asset,
                 ),
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: KColor.stroke.color, width: 1),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
             SizedBox(

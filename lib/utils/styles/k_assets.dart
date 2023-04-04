@@ -24,7 +24,9 @@ enum KAssetName {
   barchart,
   upArrow,
   rightArrow,
-  moon
+  moon,
+  eyeOpen,
+  eyeOff
 }
 
 extension AssetsExtention on KAssetName {
@@ -82,6 +84,10 @@ extension AssetsExtention on KAssetName {
         return '$_svgDir/right-arrow.svg';
       case KAssetName.moon:
         return '$_svgDir/moon.svg';
+      case KAssetName.eyeOff:
+        return '$_svgDir/eye-off.svg';
+      case KAssetName.eyeOpen:
+        return '$_svgDir/ic_eye_open.svg';
       default:
         return "";
     }

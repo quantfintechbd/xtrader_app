@@ -25,31 +25,32 @@ class GlobalTextFormField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final Function(String)? onChanged;
   final FloatingLabelBehavior? floatingLabelBehavior;
-
-  const GlobalTextFormField({
-    Key? key,
-    this.obscureText,
-    this.textInputType,
-    this.controller,
-    this.validator,
-    this.fillColor,
-    this.suffixIcon,
-    this.prefixIcon,
-    this.maxlength,
-    this.initialValue,
-    this.autovalidateMode,
-    this.readOnly,
-    this.hintText,
-    this.labelText,
-    this.hintStyle,
-    this.mandatoryLabel,
-    this.labelStyle,
-    this.line = 1,
-    this.style,
-    this.onChanged,
-    this.textInputAction = TextInputAction.done,
-    this.floatingLabelBehavior,
-  }) : super(key: key);
+  final InputBorder? border;
+  const GlobalTextFormField(
+      {Key? key,
+      this.obscureText,
+      this.textInputType,
+      this.controller,
+      this.validator,
+      this.fillColor,
+      this.suffixIcon,
+      this.prefixIcon,
+      this.maxlength,
+      this.initialValue,
+      this.autovalidateMode,
+      this.readOnly,
+      this.hintText,
+      this.labelText,
+      this.hintStyle,
+      this.mandatoryLabel,
+      this.labelStyle,
+      this.line = 1,
+      this.style,
+      this.onChanged,
+      this.textInputAction = TextInputAction.done,
+      this.floatingLabelBehavior,
+      this.border})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +105,9 @@ class GlobalTextFormField extends StatelessWidget {
         floatingLabelAlignment: FloatingLabelAlignment.start,
         fillColor: KColor.white.color,
         suffixIcon: suffixIcon,
-        border: InputBorder.none,
+        border: border ?? InputBorder.none,
+        focusedBorder: border ?? InputBorder.none,
+        //InputBorder.none,
       ),
       validator: validator,
       readOnly: readOnly ?? false,
