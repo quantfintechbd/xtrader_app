@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
+import 'package:xtrader_app/module/bottom_navigation/trades/controller/trades_controller.dart';
 import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
@@ -8,10 +10,11 @@ import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 
 import '../../../../../global/widget/global_text.dart';
+import '../../model/trade_details_response.dart';
 
 class TradesBottomSheet extends StatelessWidget {
-  const TradesBottomSheet({super.key});
-
+  const TradesBottomSheet({super.key, required this.details});
+  final TradeDetails details;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +36,7 @@ class TradesBottomSheet extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "EURUSD,",
+                        text: "${details.symbol ?? ''},",
                         style: KTextStyle.customTextStyle(
                           color: KColor.textColorDark.color,
                           fontWeight: FontWeight.w700,
@@ -41,9 +44,12 @@ class TradesBottomSheet extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: "Sell 0.01",
+                        text:
+                            " ${details.action?.capitalize() ?? ''} ${details.volume ?? ''}",
                         style: KTextStyle.customTextStyle(
-                          color: KColor.textColorDark.color,
+                          color: details.action?.toLowerCase() == 'buy'
+                              ? KColor.primary.color
+                              : KColor.red.color,
                           fontWeight: FontWeight.w500,
                           fontSize: 16.sp,
                         ),
@@ -53,9 +59,13 @@ class TradesBottomSheet extends StatelessWidget {
                 ),
                 Spacer(),
                 GlobalText(
-                  str: "5.07",
+                  str: details.profit.toString().asCurrency,
                   fontWeight: FontWeight.w500,
                   fontSize: 16.sp,
+                  color: details.profit != null &&
+                          details.profit!.parseToDouble() > 0.0 == true
+                      ? KColor.primary.color
+                      : KColor.red.color,
                 ),
                 SizedBox(
                   width: 10.w,
@@ -78,11 +88,18 @@ class TradesBottomSheet extends StatelessWidget {
             color: KColor.separator.color,
           ),
           ListTile(
-            title: GlobalText(
-              str: "Close Postion",
-              fontWeight: FontWeight.w500,
-              fontSize: 16.sp,
-            ),
+            title: Consumer(builder: (context, ref, snapshot) {
+              final controller = ref.watch(tradesProvider.notifier);
+              return InkWell(
+                onTap: () =>
+                    controller.closeOrder(details.position ?? '', context),
+                child: GlobalText(
+                  str: "Close Postion",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                ),
+              );
+            }),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -94,7 +111,8 @@ class TradesBottomSheet extends StatelessWidget {
           ListTile(
             title: InkWell(
               onTap: () {
-                Navigation.push(context, appRoutes: AppRoutes.modifyPosition);
+                Navigation.push(context,
+                    appRoutes: AppRoutes.modifyPosition, arguments: details);
               },
               child: GlobalText(
                 str: "Modify Position",

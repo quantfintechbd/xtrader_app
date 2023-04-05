@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:xtrader_app/constant/constant_key.dart';
 import 'package:xtrader_app/global/widget/global_button.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/utils/navigation.dart';
@@ -12,10 +10,15 @@ class ErrorDialog extends StatelessWidget {
   const ErrorDialog({
     Key? key,
     required this.erroMsg,
+    this.title,
+    this.titleColor,
+    this.callbackAction,
   }) : super(key: key);
 
   final String erroMsg;
-
+  final String? title;
+  final Color? titleColor;
+  final Function(void)? callbackAction;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,16 +39,19 @@ class ErrorDialog extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 20.w, top: 20.w),
                 child: GlobalText(
-                  str: "Error!",
+                  str: title ?? "Error!",
                   fontWeight: FontWeight.w700,
                   fontSize: 16.sp,
-                  color: KColor.red.color,
+                  color: titleColor ?? KColor.red.color,
                 ),
               ),
               Spacer(),
               InkWell(
                 onTap: () {
                   Navigation.pop(Navigation.key.currentContext);
+                  if (callbackAction != null) {
+                    callbackAction!;
+                  }
                 },
                 child: Padding(
                   padding: EdgeInsets.only(right: 20.w, top: 20.w),

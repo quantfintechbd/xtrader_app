@@ -6,10 +6,14 @@ import '../../../../../utils/styles/styles.dart';
 import 'gradiant_box.dart';
 
 class PlusMinusComponent extends StatefulWidget {
-  PlusMinusComponent(
-      {super.key, required this.hintText, required this.controller});
+  PlusMinusComponent({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    required this.value,
+  });
   final String hintText;
-  double value = 0;
+  double value;
   final TextEditingController controller;
   @override
   State<PlusMinusComponent> createState() => _PlusMinusComponentState();

@@ -8,8 +8,9 @@ import 'gradiant_box.dart';
 class ScaleComponent extends StatelessWidget {
   const ScaleComponent({
     super.key,
+    required this.midValue,
   });
-
+  final String midValue;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -42,7 +43,7 @@ class ScaleComponent extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 12.h),
               child: GlobalText(
-                str: "12.02",
+                str: midValue,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
                 color: KColor.mineShaftCommmon.color,

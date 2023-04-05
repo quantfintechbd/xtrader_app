@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_button.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_details_response.dart';
 import 'package:xtrader_app/module/symbol/common_components/plus_minus_component.dart';
+import 'package:xtrader_app/module/order/modify_position/controller/modify_position_controller.dart';
+import 'package:xtrader_app/utils/extension.dart';
 
 import '../../../../global/widget/global_appbar.dart';
 import '../../../../utils/styles/styles.dart';
-import '../../common_components/scale_component.dart';
+import '../../../symbol/common_components/scale_component.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
@@ -16,10 +20,18 @@ class ChartData {
 }
 
 class ModifyPositionScreen extends StatelessWidget {
-  const ModifyPositionScreen({Key? key}) : super(key: key);
-
+  const ModifyPositionScreen({Key? key, required this.details})
+      : super(key: key);
+  final TradeDetails details;
   @override
   Widget build(BuildContext context) {
+    final controller = context.read(modifyPostionProvider.notifier);
+    final state = context.read(modifyPostionProvider);
+    Future(
+      () {
+        controller.setdetails(details);
+      },
+    );
     final List<ChartData> chartData1 = [
       ChartData(2010, 35),
       ChartData(2011, 13),
@@ -39,7 +51,7 @@ class ModifyPositionScreen extends StatelessWidget {
       backgroundColor: KColor.scafoldBg.color,
       appBar: GlobalAppbar(
         isShowMenubar: false,
-        title: "AUDCAD",
+        title: details.symbol,
         isLeading: true,
         centerTitle: false,
       ),
@@ -50,7 +62,9 @@ class ModifyPositionScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            ScaleComponent(),
+            ScaleComponent(
+              midValue: details.volume.toString().parseToDouble().toString(),
+            ),
             SizedBox(
               height: 20.h,
             ),
@@ -60,14 +74,14 @@ class ModifyPositionScreen extends StatelessWidget {
                   width: 20.w,
                 ),
                 GlobalText(
-                  str: "0.93048",
+                  str: details.sL ?? '',
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                   color: KColor.red.color,
                 ),
                 Spacer(),
                 GlobalText(
-                  str: "0.93048",
+                  str: details.tP ?? '',
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                   color: KColor.primary.color,
@@ -83,17 +97,20 @@ class ModifyPositionScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                    child: PlusMinusComponent(
-                  hintText: "SL",
-                  controller: TextEditingController(),
-                )),
+                  child: PlusMinusComponent(
+                    hintText: "SL",
+                    controller: state.slController,
+                    value: details.sL?.parseToDouble() ?? 0.0,
+                  ),
+                ),
                 SizedBox(
                   width: 10.w,
                 ),
                 Expanded(
                   child: PlusMinusComponent(
-                    hintText: "SL",
-                    controller: TextEditingController(),
+                    hintText: "T/P",
+                    controller: state.tpController,
+                    value: details.tP?.parseToDouble() ?? 0.0,
                   ),
                 ),
               ],
@@ -129,12 +146,20 @@ class ModifyPositionScreen extends StatelessWidget {
               height: 20.h,
             ),
             SafeArea(
-              child: GlobalButton(
-                onPressed: () {},
-                buttonText: "Modify",
-                btnHeight: 55,
-                roundedBorderRadius: 8,
-              ),
+              child: Consumer(builder: (context, ref, snapshot) {
+                final state = ref.watch(modifyPostionProvider);
+                return GlobalButton(
+                  onPressed: state.slController.text.isNotEmpty &&
+                          state.tpController.text.isNotEmpty
+                      ? () {
+                          controller.modifyResponse(context);
+                        }
+                      : null,
+                  buttonText: "Modify",
+                  btnHeight: 55,
+                  roundedBorderRadius: 8,
+                );
+              }),
             )
           ],
         ),

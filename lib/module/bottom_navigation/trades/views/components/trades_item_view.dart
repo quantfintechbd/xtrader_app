@@ -34,7 +34,11 @@ class _TradesItemViewState extends State<TradesItemView> {
             },
             onLongPress: () {
               ViewUtil.bottomSheet(
-                  context: context, content: TradesBottomSheet());
+                context: context,
+                content: TradesBottomSheet(
+                  details: widget.tradeDetails,
+                ),
+              );
             },
             child: Column(
               children: [

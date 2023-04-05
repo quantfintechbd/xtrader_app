@@ -15,78 +15,84 @@ class TradesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: 20.h,
-          ),
-          SizedBox(
-            height: context.height * 0.25,
-            child: Consumer(builder: (context, ref, snapshot) {
-              final state = ref.watch(tradesProvider);
-              return state.positionLoading
+    final controller = context.read(tradesProvider.notifier);
+    return RefreshIndicator(
+      onRefresh: () async {
+        controller.refresh();
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 20.h,
+            ),
+            SizedBox(
+              height: context.height * 0.25,
+              child: Consumer(builder: (context, ref, snapshot) {
+                final state = ref.watch(tradesProvider);
+                return state.positionLoading
+                    ? Center(
+                        child: centerCircularProgress(
+                            progressColor: KColor.primary.color),
+                      )
+                    : ListView(
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          for (int x = 0;
+                              x < state.tradePositionData.entries.length;
+                              x++) ...[
+                            SummeryItemView(
+                                title: state.tradePositionData.keys
+                                    .toList()[x]
+                                    .toString(),
+                                value: state.tradePositionData.values
+                                    .toList()[x]
+                                    .toString()
+                                    .asCurrency //"69 943.20",
+                                ),
+                          ],
+                        ],
+                      );
+              }),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              color: context.theme.colorScheme.tertiaryContainer,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+                child: GlobalText(
+                    str: "Positions",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16.sp,
+                    color: KColor.textHintColor.color),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Consumer(builder: (context, ref, snapshot) {
+              final dataState = ref.watch(tradesProvider);
+              return dataState.detailsLoading
                   ? Center(
                       child: centerCircularProgress(
                           progressColor: KColor.primary.color),
                     )
-                  : ListView(
+                  : ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
-                      children: [
-                        for (int x = 0;
-                            x < state.tradePositionData.entries.length;
-                            x++) ...[
-                          SummeryItemView(
-                              title: state.tradePositionData.keys
-                                  .toList()[x]
-                                  .toString(),
-                              value: state.tradePositionData.values
-                                  .toList()[x]
-                                  .toString()
-                                  .asCurrency //"69 943.20",
-                              ),
-                        ],
-                      ],
+                      itemCount: dataState.tradeDetails?.length ?? 0,
+                      shrinkWrap: true,
+                      itemBuilder: ((context, index) {
+                        return TradesItemView(
+                          tradeDetails: dataState.tradeDetails![index],
+                        );
+                      }),
                     );
             }),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Container(
-            color: context.theme.colorScheme.tertiaryContainer,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
-              child: GlobalText(
-                  str: "Positions",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16.sp,
-                  color: KColor.textHintColor.color),
-            ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Consumer(builder: (context, ref, snapshot) {
-            final dataState = ref.watch(tradesProvider);
-            return dataState.detailsLoading
-                ? Center(
-                    child: centerCircularProgress(
-                        progressColor: KColor.primary.color),
-                  )
-                : ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: dataState.tradeDetails?.length ?? 0,
-                    shrinkWrap: true,
-                    itemBuilder: ((context, index) {
-                      return TradesItemView(
-                        tradeDetails: dataState.tradeDetails![index],
-                      );
-                    }),
-                  );
-          }),
-        ],
+          ],
+        ),
       ),
     );
   }

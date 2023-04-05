@@ -311,7 +311,7 @@ class ApiClient {
 
         String? erroMsg;
 
-        erroMsg = data["error"];
+        erroMsg = data["error"] ?? data['message'];
         erroMsg.toString().log();
         ViewUtil.showAlertDialog(
           barrierDismissible: false,

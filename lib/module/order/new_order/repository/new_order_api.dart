@@ -1,8 +1,8 @@
 import '/data_provider/api_client.dart';
-class ModifyPositionApi {
+class NewOrderApi {
   final ApiClient _apiClient = ApiClient();
 
-  ModifyPositionApi();
+  NewOrderApi();
 
  
 }

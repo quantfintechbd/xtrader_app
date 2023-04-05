@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:xtrader_app/global/model/global_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_details_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_position_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/repository/trades_api.dart';
@@ -44,5 +45,18 @@ class TradesRepository implements ITradesRepository {
         }).catchError((Object v) {
       throw Exception(v);
     });
+  }
+
+  @override
+  Future closeOrder(
+      {required String postion,
+      required Function(GlobalResponse data) onSuccess}) async {
+    await _tradesApi.closeOrder(
+        map: {'position': postion},
+        onSuccess: (Response response) {
+          GlobalResponse result = GlobalResponse.fromJson(response.data);
+
+          onSuccess(result);
+        });
   }
 }

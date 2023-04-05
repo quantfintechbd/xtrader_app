@@ -15,72 +15,75 @@ class HistoryScreen extends ConsumerWidget {
   @override
   Widget build(context, ref) {
     final state = ref.watch(historyProvider);
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: 20.h,
-          ),
-          SizedBox(
-            height: context.height * 0.25,
-            child: state.isLoading
+    return RefreshIndicator(
+      onRefresh: () => context.read(historyProvider.notifier).refresh(),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 20.h,
+            ),
+            SizedBox(
+              height: context.height * 0.25,
+              child: state.isLoading
+                  ? Center(
+                      child: centerCircularProgress(
+                          progressColor: KColor.primary.color),
+                    )
+                  : ListView(
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        for (int x = 0;
+                            x < state.historySummery.entries.length;
+                            x++) ...[
+                          SummeryItemView(
+                            title: state.historySummery.keys
+                                .toList()[x]
+                                .capitalize(),
+                            value: state.historySummery.keys
+                                .toList()[x]
+                                .toString()
+                                .asCurrency,
+                          ),
+                        ],
+                      ],
+                    ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              color: context.theme.colorScheme.tertiaryContainer,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+                child: GlobalText(
+                    str: "Positions",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16.sp,
+                    color: KColor.textHintColor.color),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            state.isLoading
                 ? Center(
                     child: centerCircularProgress(
                         progressColor: KColor.primary.color),
                   )
-                : ListView(
+                : ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      for (int x = 0;
-                          x < state.historySummery.entries.length;
-                          x++) ...[
-                        SummeryItemView(
-                          title: state.historySummery.keys
-                              .toList()[x]
-                              .capitalize(),
-                          value: state.historySummery.keys
-                              .toList()[x]
-                              .toString()
-                              .asCurrency,
-                        ),
-                      ],
-                    ],
+                    itemCount: state.details.length,
+                    shrinkWrap: true,
+                    itemBuilder: ((context, index) {
+                      return HistoryItemView(
+                        details: state.details[index],
+                      );
+                    }),
                   ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Container(
-            color: context.theme.colorScheme.tertiaryContainer,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
-              child: GlobalText(
-                  str: "Positions",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16.sp,
-                  color: KColor.textHintColor.color),
-            ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          state.isLoading
-              ? Center(
-                  child: centerCircularProgress(
-                      progressColor: KColor.primary.color),
-                )
-              : ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: state.details.length,
-                  shrinkWrap: true,
-                  itemBuilder: ((context, index) {
-                    return HistoryItemView(
-                      details: state.details[index],
-                    );
-                  }),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }

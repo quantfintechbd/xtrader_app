@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 @immutable
-abstract class IModifyPositionRepository {
+abstract class INewOrderRepository {
   
 }
 

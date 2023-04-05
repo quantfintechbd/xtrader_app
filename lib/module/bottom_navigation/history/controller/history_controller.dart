@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xtrader_app/module/bottom_navigation/history/controller/state/history_state.dart';
 import 'package:xtrader_app/utils/extension.dart';
@@ -22,10 +24,14 @@ class HistoryController extends StateNotifier<HistoryState> {
         ) {
     fetchHistory('7 Days');
   }
+  Future<void> refresh() async {
+    fetchHistory(state.currentSelction ?? '7 Days');
+  }
 
   void fetchHistory(String selection) async {
     selection.log();
     int days = 0;
+    state = state.copyWith(currentSelction: selection);
     switch (selection) {
       case '7 Days':
         days = 7;
