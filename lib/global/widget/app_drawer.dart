@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/constant/constant_key.dart';
+import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
+import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 import 'package:xtrader_app/utils/theme/theme_controller.dart';
 import 'package:xtrader_app/utils/theme/theme_util.dart';
@@ -26,12 +30,12 @@ class GlobalAppDrawer extends StatelessWidget {
                 color: KColor.popupBg.color,
               ),
               accountName: GlobalText(
-                str: "Abdullah Al Mahmud",
+                str: PrefHelper.getString(AppConstant.NAME.key),
                 fontWeight: FontWeight.w700,
                 fontSize: 16.sp,
               ),
               accountEmail: GlobalText(
-                str: "4006",
+                str: PrefHelper.getString(AppConstant.USER_NAME.key),
                 fontWeight: FontWeight.w500,
                 fontSize: 12.sp,
               ),
@@ -103,21 +107,45 @@ class GlobalAppDrawer extends StatelessWidget {
                 fontSize: 14.sp,
               ),
               minLeadingWidth: 10,
-              trailing: Consumer(builder: (context, ref, snap) {
-                final state = ref.watch(themeProvider);
-                final themeController = ref.read(themeProvider.notifier);
-                return Switch(
-                  activeColor: KColor.primary.color,
-                  inactiveThumbColor: KColor.primary.color,
-                  inactiveTrackColor: KColor.primary.color.withOpacity(0.5),
-                  onChanged: (bool value) {
-                    themeController.setTheme(
-                        value ? XtraderTheme.light : XtraderTheme.dark);
-                  },
-                  value: state.theme == XtraderTheme.light,
-                );
-              }),
+              trailing: Consumer(
+                builder: (context, ref, snap) {
+                  final state = ref.watch(themeProvider);
+                  final themeController = ref.read(themeProvider.notifier);
+                  return Switch(
+                    activeColor: KColor.primary.color,
+                    inactiveThumbColor: KColor.primary.color,
+                    inactiveTrackColor: KColor.primary.color.withOpacity(0.5),
+                    onChanged: (bool value) {
+                      themeController.setTheme(
+                          value ? XtraderTheme.light : XtraderTheme.dark);
+                    },
+                    value: state.theme == XtraderTheme.light,
+                  );
+                },
+              ),
             ),
+            InkWell(
+              onTap: () {
+                PrefHelper.setString(AppConstant.TOKEN.key, '');
+                PrefHelper.setString(AppConstant.USER_NAME.key, '');
+                PrefHelper.setString(AppConstant.NAME.key, '');
+                Navigation.pushAndRemoveUntil(context,
+                    appRoutes: AppRoutes.login);
+              },
+              child: ListTile(
+                leading: GlobalSvgLoader(
+                  imagePath: KAssetName.logout.imagePath,
+                  svgFor: SvgFor.asset,
+                ),
+                minLeadingWidth: 10,
+                title: GlobalText(
+                  str: "Logout",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                  color: KColor.red.color,
+                ),
+              ),
+            )
           ],
         ),
       ),

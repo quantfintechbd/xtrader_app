@@ -20,7 +20,7 @@ class AddSymbolState {
       localSymbols: localSymbols ?? this.localSymbols,
       remoteSymbols: remoteSymbols ?? this.remoteSymbols,
       unAttended: unAttended ?? this.unAttended,
-      searchController: searchController ?? TextEditingController(),
+      searchController: searchController,
     );
   }
 }

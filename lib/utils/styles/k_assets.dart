@@ -26,7 +26,8 @@ enum KAssetName {
   rightArrow,
   moon,
   eyeOpen,
-  eyeOff
+  eyeOff,
+  logout,
 }
 
 extension AssetsExtention on KAssetName {
@@ -88,6 +89,8 @@ extension AssetsExtention on KAssetName {
         return '$_svgDir/eye-off.svg';
       case KAssetName.eyeOpen:
         return '$_svgDir/ic_eye_open.svg';
+      case KAssetName.logout:
+        return '$_svgDir/logout.svg';
       default:
         return "";
     }

@@ -56,7 +56,7 @@ class LoginFormComponent extends ConsumerWidget {
             return GlobalTextFormField(
               labelText: "Password",
               controller: state.passwordController,
-              obscureText: state.shouldShowPassword,
+              obscureText: !state.shouldShowPassword,
               suffixIcon: InkWell(
                 onTap: () {
                   controller.changePasswordState();
