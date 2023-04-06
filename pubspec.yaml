@@ -47,8 +47,10 @@ dependencies:
   flutter_riverpod: ^2.3.2
   dotted_line: ^3.1.0
   syncfusion_flutter_charts: ^21.1.37
-  socket_io_client: ^2.0.1
+
   web_socket_channel: ^2.3.0
+  flutter_inappwebview: ^5.7.2+3
+  focus_detector: ^2.0.1
  
   
 dev_dependencies:

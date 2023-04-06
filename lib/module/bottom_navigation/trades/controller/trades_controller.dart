@@ -11,8 +11,9 @@ import '../../../../global/widget/error_dialog.dart';
 import '../repository/trades_interface.dart';
 import '../repository/trades_repository.dart';
 
-final tradesProvider = StateNotifierProvider<TradesController, TradesState>(
-    (ref) => TradesController());
+final tradesProvider =
+    StateNotifierProvider.autoDispose<TradesController, TradesState>(
+        (ref) => TradesController());
 
 class TradesController extends StateNotifier<TradesState> {
   final ITradesRepository _tradesRepository = TradesRepository();

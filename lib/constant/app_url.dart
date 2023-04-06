@@ -15,6 +15,7 @@ enum AppUrl {
   tradeDetails,
   tradePostion,
   getHistory,
+  chartShow,
 }
 
 extension AppUrlExtention on AppUrl {
@@ -68,6 +69,8 @@ extension AppUrlExtention on AppUrl {
         return '/trade-position';
       case AppUrl.getHistory:
         return '/get-history';
+      case AppUrl.chartShow:
+        return '/chart-show';
     }
   }
 }

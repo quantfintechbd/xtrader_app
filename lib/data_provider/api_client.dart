@@ -313,24 +313,24 @@ class ApiClient {
 
         erroMsg = data["error"] ?? data['message'];
         erroMsg.toString().log();
-        ViewUtil.showAlertDialog(
-          barrierDismissible: false,
-          contentPadding: EdgeInsets.zero,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20.r),
-          ),
-          content: ErrorDialog(erroMsg: erroMsg.toString()),
-        ).then((value) {
-          if (isPopDialog == true || isPopDialog == null) {
-            if (erroMsg == 'Expired token') {
-              _logout();
-            } else {
+        if (erroMsg == 'Expired token') {
+          _logout();
+        } else {
+          ViewUtil.showAlertDialog(
+            barrierDismissible: false,
+            contentPadding: EdgeInsets.zero,
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.r),
+            ),
+            content: ErrorDialog(erroMsg: erroMsg.toString()),
+          ).then((value) {
+            if (isPopDialog == true || isPopDialog == null) {
               Navigator.pop(Navigation.key.currentContext!);
             }
+          });
+          if (isPopDialog == false) {
+            throw Exception();
           }
-        });
-        if (isPopDialog == false) {
-          throw Exception();
         }
       }
     }

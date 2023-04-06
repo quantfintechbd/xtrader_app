@@ -7,7 +7,8 @@ import 'package:xtrader_app/utils/extension.dart';
 import '../repository/history_interface.dart';
 import '../repository/history_repository.dart';
 
-final historyProvider = StateNotifierProvider<HistoryController, HistoryState>(
+final historyProvider =
+    StateNotifierProvider.autoDispose<HistoryController, HistoryState>(
   (ref) => HistoryController(),
 );
 

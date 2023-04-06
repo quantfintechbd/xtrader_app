@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/quotes/views/components/bottom_sheet.dart';
+import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 import 'package:xtrader_app/utils/view_util.dart';
 
 class QuotesItemView extends StatelessWidget {
-  const QuotesItemView({super.key});
-
+  const QuotesItemView({super.key, required this.quotes});
+  final Quotes quotes;
   @override
   Widget build(context) {
     return GestureDetector(
@@ -29,7 +31,7 @@ class QuotesItemView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GlobalText(
-                          str: "AUDCAD",
+                          str: quotes.symbol ?? '',
                           fontWeight: FontWeight.w700,
                           fontSize: 16.sp,
                           color:
@@ -39,7 +41,7 @@ class QuotesItemView extends StatelessWidget {
                           height: 16.h,
                         ),
                         GlobalText(
-                          str: "20 Mar, 17:48:51",
+                          str: quotes.time ?? '',
                           fontWeight: FontWeight.w400,
                           fontSize: 10.sp,
                           color:
@@ -57,7 +59,7 @@ class QuotesItemView extends StatelessWidget {
                       children: [
                         ColordContainer(
                           color: KColor.red.color,
-                          string: "10.28889",
+                          string: quotes.ask ?? '',
                         ),
                         SizedBox(
                           height: 2.h,
@@ -72,7 +74,7 @@ class QuotesItemView extends StatelessWidget {
                             ),
                             Spacer(),
                             GlobalText(
-                              str: "-0.00250",
+                              str: quotes.askLow ?? '',
                               fontWeight: FontWeight.w400,
                               fontSize: 10.sp,
                               color: KColor.scondaryTextColor.color,
@@ -83,7 +85,7 @@ class QuotesItemView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 4.w,
+                    width: 6.w,
                   ),
                   Expanded(
                     child: Column(
@@ -91,7 +93,7 @@ class QuotesItemView extends StatelessWidget {
                       children: [
                         ColordContainer(
                           color: KColor.primary.color,
-                          string: "10.93032",
+                          string: quotes.bid ?? '',
                         ),
                         SizedBox(
                           height: 2.h,
@@ -107,7 +109,7 @@ class QuotesItemView extends StatelessWidget {
                             ),
                             Spacer(),
                             GlobalText(
-                              str: "-0.00250",
+                              str: quotes.bidHigh ?? '',
                               fontWeight: FontWeight.w400,
                               fontSize: 10.sp,
                               color: KColor.scondaryTextColor.color,
@@ -120,8 +122,8 @@ class QuotesItemView extends StatelessWidget {
                 ],
               ),
               Positioned(
-                bottom: 15.h,
-                right: 85.w,
+                bottom: 12.h,
+                right: 80.w,
                 child: Container(
                   decoration: BoxDecoration(
                     color: KColor.spaceCadet.color,
@@ -130,7 +132,7 @@ class QuotesItemView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(3.0),
                     child: GlobalText(
-                      str: "99.99",
+                      str: quotes.difference ?? '',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -165,9 +167,12 @@ class ColordContainer extends StatelessWidget {
       decoration:
           BoxDecoration(color: color, borderRadius: BorderRadius.circular(4.r)),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-        child: MultisizedText(
-          text: string,
+        padding: EdgeInsets.only(top: 6, bottom: 15, right: 20.w, left: 20.w),
+        child: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: MultisizedText(
+            text: string,
+          ),
         ),
       ),
     );
@@ -182,9 +187,11 @@ class MultisizedText extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
+    String newText = text.parseToDouble().toStringAsFixed(5);
+
     return RichText(
       text: TextSpan(
-        text: text.substring(0, 5),
+        text: newText.substring(0, 5),
         style: KTextStyle.customTextStyle(
           color: KColor.white.color,
           fontSize: 14,
@@ -192,7 +199,7 @@ class MultisizedText extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: text.substring(text.length - 3, text.length - 1),
+            text: newText.substring(newText.length - 3, newText.length - 1),
             style: KTextStyle.customTextStyle(
               color: KColor.white.color,
               fontSize: 26,
@@ -200,7 +207,7 @@ class MultisizedText extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: text.substring(text.length - 1, text.length),
+            text: newText.substring(newText.length - 1, newText.length),
             style: KTextStyle.customTextStyle(
               color: KColor.white.color,
               fontSize: 14,
@@ -212,23 +219,3 @@ class MultisizedText extends StatelessWidget {
     );
   }
 }
-/*Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GlobalText(
-                  str: "AUDCAD",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16.sp,
-                  color: KColor.textColorDark.color,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                GlobalText(
-                  str: "20 Mar, 17:48:51",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12.sp,
-                  color: KColor.scondaryTextColor.color,
-                ),
-              ],
-            )*/
