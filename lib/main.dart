@@ -8,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/constant/app_url.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/module/landing/views/landing_screen.dart';
-import 'package:xtrader_app/module/symbol/load_symbol/views/load_symbol_screen.dart';
 
 import 'package:xtrader_app/utils/app_version.dart';
 import 'package:xtrader_app/utils/enum.dart';

@@ -36,6 +36,14 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
     state = state.copyWith(selectedTab: value);
   }
 
+  void showCharts({required String symbol}) {
+    state = state.copyWith(selectedTab: 1, selectedSymbol: symbol);
+  }
+
+  void setChartToDefault() {
+    state = state.copyWith(selectedSymbol: 'AUDCAD');
+  }
+
   Widget get screen {
     return state.screens[state.selectedTab];
   }
@@ -173,6 +181,11 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
               ),
             ),
           ],
+        );
+      case 1:
+        return GlobalAppbar(
+          isShowMenubar: true,
+          title: "Chart ${state.selectedSymbol}",
         );
       default:
         return GlobalAppbar(

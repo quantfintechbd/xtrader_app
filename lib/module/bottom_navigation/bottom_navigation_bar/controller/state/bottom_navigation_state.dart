@@ -15,21 +15,24 @@ class BottomNavigationState {
   final int selectedTab;
   final String dropdownvalue;
   final String historyFilterValue;
-  BottomNavigationState({
-    required this.selectedTab,
-    required this.dropdownvalue,
-    required this.historyFilterValue,
-  });
+  final String? selectedSymbol;
+  BottomNavigationState(
+      {required this.selectedTab,
+      required this.dropdownvalue,
+      required this.historyFilterValue,
+      this.selectedSymbol});
 
   BottomNavigationState copyWith({
     int? selectedTab,
     String? dropdownvalue,
     String? historyFilterValue,
+    String? selectedSymbol,
   }) {
     return BottomNavigationState(
       selectedTab: selectedTab ?? this.selectedTab,
       dropdownvalue: dropdownvalue ?? this.dropdownvalue,
       historyFilterValue: historyFilterValue ?? this.historyFilterValue,
+      selectedSymbol: selectedSymbol ?? 'AUDCAD',
     );
   }
 

@@ -14,7 +14,11 @@ class QuotesItemView extends StatelessWidget {
   Widget build(context) {
     return GestureDetector(
       onLongPress: () {
-        ViewUtil.bottomSheet(context: context, content: QuotesBottomSheet());
+        ViewUtil.bottomSheet(
+            context: context,
+            content: QuotesBottomSheet(
+              quotes: quotes,
+            ));
       },
       child: Column(
         children: [

@@ -10,6 +10,7 @@ import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 
 import '../../../../../global/widget/global_text.dart';
+import '../../../bottom_navigation_bar/controller/bottom_navigation_controller.dart';
 import '../../model/trade_details_response.dart';
 
 class TradesBottomSheet extends StatelessWidget {
@@ -138,13 +139,24 @@ class TradesBottomSheet extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
-            title: GlobalText(
-              str: "Chart",
-              fontWeight: FontWeight.w500,
-              fontSize: 16.sp,
-            ),
-          ),
+          Consumer(builder: (context, ref, snapshot) {
+            final bottomNavigation =
+                ref.read(bottomNavigationProvider.notifier);
+
+            return InkWell(
+              onTap: () {
+                Navigation.pop(context);
+                bottomNavigation.showCharts(symbol: details.symbol ?? 'AUDCAD');
+              },
+              child: ListTile(
+                title: GlobalText(
+                  str: "Chart",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                ),
+              ),
+            );
+          }),
         ],
       ),
     );
