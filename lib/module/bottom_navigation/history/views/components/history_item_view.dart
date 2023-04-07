@@ -22,7 +22,7 @@ class _HistoryItemViewState extends State<HistoryItemView> {
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       child: Column(
         children: [
-          GestureDetector(
+          InkWell(
             onTap: () {
               setState(() {
                 visible = !visible;

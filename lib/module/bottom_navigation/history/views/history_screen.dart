@@ -41,7 +41,7 @@ class HistoryScreen extends ConsumerWidget {
                             title: state.historySummery.keys
                                 .toList()[x]
                                 .capitalize(),
-                            value: state.historySummery.keys
+                            value: state.historySummery.values
                                 .toList()[x]
                                 .toString()
                                 .asCurrency,

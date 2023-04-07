@@ -80,6 +80,9 @@ class LandingScreen extends StatelessWidget {
                     roundedBorderRadius: 8,
                     fontWeight: FontWeight.w600,
                   ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
                 ],
               ),
             ),
