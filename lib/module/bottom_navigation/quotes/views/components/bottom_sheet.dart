@@ -5,6 +5,7 @@ import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/module/bottom_navigation/bottom_navigation_bar/controller/bottom_navigation_controller.dart';
 import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';
+import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
@@ -54,25 +55,30 @@ class QuotesBottomSheet extends StatelessWidget {
             height: 1,
             color: KColor.separator.color,
           ),
-          // ListTile(
-          //   onTap: () {},
-          //   leading: GlobalSvgLoader(
-          //     imagePath: KAssetName.bag.imagePath,
-          //     svgFor: SvgFor.asset,
-          //   ),
-          //   title: const GlobalText(
-          //     str: "New Order",
-          //     fontWeight: FontWeight.w500,
-          //   ),
-          //   minLeadingWidth: 10,
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 20.w),
-          //   child: Divider(
-          //     height: 1,
-          //     color: KColor.separator.color,
-          //   ),
-          // ),
+          ListTile(
+            onTap: () {
+              Navigation.pop(context);
+              Navigation.push(context,
+                  appRoutes: AppRoutes.newOrder,
+                  arguments: quotes.symbol ?? '');
+            },
+            leading: GlobalSvgLoader(
+              imagePath: KAssetName.bag.imagePath,
+              svgFor: SvgFor.asset,
+            ),
+            title: const GlobalText(
+              str: "New Order",
+              fontWeight: FontWeight.w500,
+            ),
+            minLeadingWidth: 10,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Divider(
+              height: 1,
+              color: KColor.separator.color,
+            ),
+          ),
           Consumer(builder: (context, ref, snapshot) {
             final bottomNavigation =
                 ref.read(bottomNavigationProvider.notifier);

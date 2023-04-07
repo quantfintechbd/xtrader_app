@@ -12,7 +12,7 @@ class QuotesItemView extends StatelessWidget {
   final Quotes quotes;
   @override
   Widget build(context) {
-    return GestureDetector(
+    return InkWell(
       onLongPress: () {
         ViewUtil.bottomSheet(
             context: context,
