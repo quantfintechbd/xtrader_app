@@ -91,8 +91,10 @@ class TradesBottomSheet extends StatelessWidget {
             title: Consumer(builder: (context, ref, snapshot) {
               final controller = ref.watch(tradesProvider.notifier);
               return InkWell(
-                onTap: () =>
-                    controller.closeOrder(details.position ?? '', context),
+                onTap: () {
+                  controller.closeOrder(details.position ?? '', context);
+                  Navigation.pop(context);
+                },
                 child: GlobalText(
                   str: "Close Postion",
                   fontWeight: FontWeight.w500,
@@ -111,6 +113,7 @@ class TradesBottomSheet extends StatelessWidget {
           ListTile(
             title: InkWell(
               onTap: () {
+                Navigation.pop(context);
                 Navigation.push(context,
                     appRoutes: AppRoutes.modifyPosition, arguments: details);
               },
@@ -121,11 +124,18 @@ class TradesBottomSheet extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
-            title: GlobalText(
-              str: "New Order",
-              fontWeight: FontWeight.w500,
-              fontSize: 16.sp,
+          InkWell(
+            onTap: () {
+              Navigation.pop(context);
+              Navigation.push(context,
+                  appRoutes: AppRoutes.newOrder, arguments: details);
+            },
+            child: ListTile(
+              title: GlobalText(
+                str: "New Order",
+                fontWeight: FontWeight.w500,
+                fontSize: 16.sp,
+              ),
             ),
           ),
           ListTile(

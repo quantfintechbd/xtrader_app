@@ -24,14 +24,14 @@ class ModifyOrderResponse {
 
 class ModifyStepOne {
   String? pageId;
-  Response? response;
+  ModifyResponse? response;
 
   ModifyStepOne({this.pageId, this.response});
 
   ModifyStepOne.fromJson(Map<String, dynamic> json) {
     pageId = json['pageId'];
     response = json['response'] != null
-        ? new Response.fromJson(json['response'])
+        ? new ModifyResponse.fromJson(json['response'])
         : null;
   }
 
@@ -45,20 +45,19 @@ class ModifyStepOne {
   }
 }
 
-class Response {
+class ModifyResponse {
   String? message;
   ModifyStepOne? data;
 
-  Response({this.message, this.data});
+  ModifyResponse({this.message, this.data});
 
-  Response.fromJson(Map<String, dynamic> json) {
+  ModifyResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data =
-        json['data'] != null ? new ModifyStepOne.fromJson(json['data']) : null;
+    data = json['data'] != null ? ModifyStepOne.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();

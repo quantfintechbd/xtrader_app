@@ -93,6 +93,7 @@ class TradesController extends StateNotifier<TradesState> {
         .closeOrder(
             postion: position,
             onSuccess: (data) {
+              refresh();
               Navigation.pop(context);
               ViewUtil.showAlertDialog(
                 barrierDismissible: false,

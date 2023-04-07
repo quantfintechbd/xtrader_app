@@ -114,8 +114,7 @@ class MyApp extends StatelessWidget {
           );
         });
       },
-      child:
-          PrefHelper.isLoggedIn() ? const LoadSymbolScreen() : LandingScreen(),
+      child: LandingScreen(),
     );
   }
 }

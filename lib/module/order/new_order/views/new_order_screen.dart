@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_button.dart';
+import 'package:xtrader_app/global/widget/global_dropdown.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_details_response.dart';
+import 'package:xtrader_app/module/order/new_order/controller/new_order_controller.dart';
 import 'package:xtrader_app/module/symbol/common_components/plus_minus_component.dart';
 import 'package:xtrader_app/module/order/modify_position/controller/modify_position_controller.dart';
 import 'package:xtrader_app/utils/extension.dart';
@@ -24,8 +26,8 @@ class NewOrderScreen extends StatelessWidget {
   final TradeDetails details;
   @override
   Widget build(BuildContext context) {
-    final controller = context.read(modifyPostionProvider.notifier);
-    final state = context.read(modifyPostionProvider);
+    final controller = context.read(newOrderProvider.notifier);
+    final state = context.read(newOrderProvider);
     Future(
       () {
         controller.setdetails(details);
@@ -61,6 +63,42 @@ class NewOrderScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
+            Consumer(builder: (context, ref, snap) {
+              final stateWatch = ref.watch(newOrderProvider);
+              return GlobalDropdown(
+                validator: (p0) {
+                  if (stateWatch.dropdownvalue?.isEmpty == true) {
+                    return 'Order Excution Type is required';
+                  }
+                },
+                hintText: "Order Excution Type",
+                items: state.items.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Row(
+                      children: [
+                        Center(
+                          child: GlobalText(
+                            str: items,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: KColor.mineShaftCommmon.color,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                onChanged: (Object? str) {
+                  if (str != null) {
+                    controller.onchanged(str.toString());
+                  }
+                },
+              );
+            }),
+            SizedBox(
+              height: 20.h,
+            ),
             ScaleComponent(
               midValue: details.volume.toString().parseToDouble().toString(),
             ),
@@ -89,6 +127,14 @@ class NewOrderScreen extends StatelessWidget {
                   width: 20.w,
                 ),
               ],
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            PlusMinusComponent(
+              hintText: "Price",
+              controller: state.priceController,
+              value: details.priceCurrent?.parseToDouble() ?? 0.0,
             ),
             SizedBox(
               height: 20.h,
@@ -146,17 +192,40 @@ class NewOrderScreen extends StatelessWidget {
             ),
             SafeArea(
               child: Consumer(builder: (context, ref, snapshot) {
-                final state = ref.watch(modifyPostionProvider);
-                return GlobalButton(
-                  onPressed: state.slController.text.isNotEmpty &&
-                          state.tpController.text.isNotEmpty
-                      ? () {
-                          controller.modifyResponse(context);
-                        }
-                      : null,
-                  buttonText: "Modify",
-                  btnHeight: 55,
-                  roundedBorderRadius: 8,
+                final state = ref.watch(newOrderProvider);
+                return Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: GlobalButton(
+                        onPressed: state.isValid
+                            ? () {
+                                controller.newOrder(context, action: 'buy');
+                              }
+                            : null,
+                        buttonText: "Buy",
+                        btnHeight: 55,
+                        roundedBorderRadius: 8,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: GlobalButton(
+                        onPressed: state.isValid
+                            ? () {
+                                controller.newOrder(context, action: 'sell');
+                              }
+                            : null,
+                        buttonText: "Sell",
+                        btnHeight: 55,
+                        roundedBorderRadius: 8,
+                        btnBackgroundActiveColor: KColor.red.color,
+                      ),
+                    ),
+                  ],
                 );
               }),
             )

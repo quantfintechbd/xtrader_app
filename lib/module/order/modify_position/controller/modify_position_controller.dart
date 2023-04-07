@@ -46,7 +46,7 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
   void validate() {
     state = state.copyWith(
         isValid: state.slController.text.isNotEmpty &&
-            state.slController.text.isNotEmpty);
+            state.tpController.text.isNotEmpty);
   }
 
   Future modifyResponse(BuildContext context) async {
@@ -57,9 +57,7 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
         tpValue: state.tpController.text.parseToDouble(),
         slValue: state.slController.text.parseToDouble(),
       );
-      ViewUtil.showAlertDialog(
-        content: const GlobalLoader(),
-      );
+
       _modifypositionRepository
           .requestModifyResponse(
               data: data,
