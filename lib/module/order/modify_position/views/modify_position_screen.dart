@@ -63,7 +63,7 @@ class ModifyPositionScreen extends StatelessWidget {
               height: 20.h,
             ),
             ScaleComponent(
-              midValue: details.volume.toString().parseToDouble().toString(),
+              controller: state.volumeController,
             ),
             SizedBox(
               height: 20.h,
@@ -73,19 +73,25 @@ class ModifyPositionScreen extends StatelessWidget {
                 SizedBox(
                   width: 20.w,
                 ),
-                GlobalText(
-                  str: details.sL ?? '',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                  color: KColor.red.color,
-                ),
+                Consumer(builder: (context, ref, snapshot) {
+                  final state = ref.watch(modifyPostionProvider);
+                  return GlobalText(
+                    str: state.quotes?.ask?.asCurrency ?? '',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    color: KColor.red.color,
+                  );
+                }),
                 Spacer(),
-                GlobalText(
-                  str: details.tP ?? '',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                  color: KColor.primary.color,
-                ),
+                Consumer(builder: (context, ref, snapshot) {
+                  final state = ref.watch(modifyPostionProvider);
+                  return GlobalText(
+                    str: state.quotes?.bid?.asCurrency ?? '',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    color: KColor.primary.color,
+                  );
+                }),
                 SizedBox(
                   width: 20.w,
                 ),
@@ -97,21 +103,27 @@ class ModifyPositionScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: PlusMinusComponent(
-                    hintText: "SL",
-                    controller: state.slController,
-                    value: details.sL?.parseToDouble() ?? 0.0,
-                  ),
+                  child: Consumer(builder: (context, ref, snapshot) {
+                    final state = ref.watch(modifyPostionProvider);
+                    return PlusMinusComponent(
+                      hintText: "SL",
+                      controller: state.slController,
+                      value: state.quotes?.ask?.parseToDouble() ?? 0.0,
+                    );
+                  }),
                 ),
                 SizedBox(
                   width: 10.w,
                 ),
                 Expanded(
-                  child: PlusMinusComponent(
-                    hintText: "T/P",
-                    controller: state.tpController,
-                    value: details.tP?.parseToDouble() ?? 0.0,
-                  ),
+                  child: Consumer(builder: (context, ref, snapshot) {
+                    final state = ref.watch(modifyPostionProvider);
+                    return PlusMinusComponent(
+                      hintText: "T/P",
+                      controller: state.tpController,
+                      value: state.quotes?.bid?.parseToDouble() ?? 0.0,
+                    );
+                  }),
                 ),
               ],
             ),

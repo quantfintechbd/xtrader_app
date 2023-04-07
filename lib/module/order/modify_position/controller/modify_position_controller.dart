@@ -8,7 +8,6 @@ import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/view_util.dart';
 
 import '../../../../global/widget/error_dialog.dart';
-import '../../../../global/widget/global_loader.dart';
 import '../../../../utils/navigation.dart';
 import '../repository/modify_position_interface.dart';
 import '../repository/modify_position_repository.dart';
@@ -26,6 +25,7 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
           ModifyOrderState(
               slController: TextEditingController(),
               tpController: TextEditingController(),
+              volumeController: TextEditingController(),
               isValid: false),
         ) {
     state.slController.addListener(
@@ -41,6 +41,9 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
   }
   void setdetails(TradeDetails details) {
     state = state.copyWith(details: details);
+    state.volumeController.text =
+        details.volume.toString().parseToDouble().toString();
+    loadQuote();
   }
 
   void validate() {
@@ -82,5 +85,18 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
         Navigation.pop(context);
       });
     }
+  }
+
+  Future loadQuote() async {
+    await _modifypositionRepository.loadQuotes(
+        symbols: {
+          'selectedSymbols': [state.details?.symbol ?? '']
+        },
+        onSuccess: (value) {
+          state = state.copyWith(quotes: value);
+          Future.delayed(Duration(seconds: 3), () {
+            loadQuote();
+          });
+        });
   }
 }

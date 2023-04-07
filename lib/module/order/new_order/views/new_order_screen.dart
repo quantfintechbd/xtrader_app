@@ -99,9 +99,9 @@ class NewOrderScreen extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            ScaleComponent(
-              midValue: details.volume.toString().parseToDouble().toString(),
-            ),
+            // ScaleComponent(
+            //   midValue: details.volume.toString().parseToDouble().toString(),
+            // ),
             SizedBox(
               height: 20.h,
             ),

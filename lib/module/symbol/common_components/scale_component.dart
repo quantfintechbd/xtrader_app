@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/symbol/common_components/plus_minus_component.dart';
 import 'package:xtrader_app/utils/styles/k_colors.dart';
 
 import 'gradiant_box.dart';
@@ -8,9 +9,9 @@ import 'gradiant_box.dart';
 class ScaleComponent extends StatelessWidget {
   const ScaleComponent({
     super.key,
-    required this.midValue,
+    required this.controller,
   });
-  final String midValue;
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -33,23 +34,9 @@ class ScaleComponent extends StatelessWidget {
         ),
         Expanded(
           flex: 2,
-          child: Container(
-            decoration: BoxDecoration(
-              color: KColor.white.color,
-              border: Border.symmetric(
-                  horizontal:
-                      BorderSide(color: KColor.stroke.color, width: 1.h)),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 12.h),
-              child: GlobalText(
-                str: midValue,
-                fontWeight: FontWeight.w500,
-                fontSize: 14.sp,
-                color: KColor.mineShaftCommmon.color,
-                textAlign: TextAlign.center,
-              ),
-            ),
+          child: OrderTextField(
+            hintText: 'Volume',
+            controller: controller,
           ),
         ),
         Expanded(
