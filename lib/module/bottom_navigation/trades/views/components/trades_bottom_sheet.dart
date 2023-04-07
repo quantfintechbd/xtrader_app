@@ -129,7 +129,8 @@ class TradesBottomSheet extends StatelessWidget {
             onTap: () {
               Navigation.pop(context);
               Navigation.push(context,
-                  appRoutes: AppRoutes.newOrder, arguments: details);
+                  appRoutes: AppRoutes.newOrder,
+                  arguments: details.symbol ?? '');
             },
             child: ListTile(
               title: GlobalText(

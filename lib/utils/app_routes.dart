@@ -40,7 +40,7 @@ extension AppRoutesExtention on AppRoutes {
       case AppRoutes.loadSymbol:
         return LoadSymbolScreen();
       case AppRoutes.newOrder:
-        return NewOrderScreen(details: arguments as TradeDetails);
+        return NewOrderScreen(symbol: arguments as String);
     }
   }
 }

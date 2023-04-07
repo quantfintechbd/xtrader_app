@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_details_response.dart';
+
+import '../../../../bottom_navigation/quotes/model/quotes_details_response.dart';
 
 @immutable
 class NewOrderState {
-  final TradeDetails? details;
-  final TextEditingController slController, tpController, priceController;
+  String? symbol;
+  final Quotes? quotes;
+  final TextEditingController slController,
+      tpController,
+      priceController,
+      orderSize;
   final bool isValid;
   final String? dropdownvalue;
+
   NewOrderState({
-    this.details,
+    this.symbol,
+    this.quotes,
     required this.slController,
     required this.tpController,
     required this.priceController,
+    required this.orderSize,
     required this.isValid,
     this.dropdownvalue,
   });
@@ -23,16 +31,15 @@ class NewOrderState {
     "Buy Stop",
     "Sell Stop"
   ];
-  NewOrderState copyWith({
-    TradeDetails? details,
-    bool? isValid,
-    String? dropdownvalue,
-  }) {
+  NewOrderState copyWith(
+      {String? symbol, bool? isValid, String? dropdownvalue, Quotes? quotes}) {
     return NewOrderState(
-      details: details ?? this.details,
+      symbol: symbol ?? this.symbol,
+      quotes: quotes ?? this.quotes,
       tpController: this.tpController,
       slController: this.slController,
       priceController: this.priceController,
+      orderSize: this.orderSize,
       isValid: isValid ?? this.isValid,
       dropdownvalue: dropdownvalue ?? this.dropdownvalue,
     );

@@ -8,7 +8,6 @@ import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/view_util.dart';
 
-import '../../../bottom_navigation/trades/model/trade_details_response.dart';
 import '../repository/new_order_interface.dart';
 import '../repository/new_order_repository.dart';
 
@@ -25,6 +24,7 @@ class NewOrderController extends StateNotifier<NewOrderState> {
             slController: TextEditingController(),
             tpController: TextEditingController(),
             priceController: TextEditingController(),
+            orderSize: TextEditingController(),
             isValid: false,
           ),
         ) {
@@ -41,21 +41,46 @@ class NewOrderController extends StateNotifier<NewOrderState> {
     state.priceController.addListener(() {
       validate();
     });
+    state.orderSize.addListener(() {
+      validate();
+    });
   }
-  void setdetails(TradeDetails details) {
-    state = state.copyWith(details: details);
+  void setdetails(String details) {
+    state = state.copyWith(symbol: details);
+    loadQuote();
+  }
+
+  bool shouldLoadData = true;
+  void startTimer() {
+    loadQuote();
+    shouldLoadData = true;
+  }
+
+  void stopTimer() {
+    shouldLoadData = false;
   }
 
   void validate() {
-    bool isValid = true;
-    if (state.dropdownvalue?.isEmpty == true) {
-      isValid = false;
-    } else if (state.dropdownvalue != 'Instant Execution') {
-      isValid = state.priceController.text.isNotEmpty &&
-          state.priceController.text.parseToDouble() > 0.0;
+    if (state.dropdownvalue != null &&
+        state.orderSize.text.isNotEmpty == true) {
+      state = state.copyWith(isValid: true);
+      if (state.dropdownvalue == 'Instant Execution') {
+        state = state.copyWith(isValid: true);
+      } else if (state.priceController.text.isNotEmpty &&
+          state.priceController.text.parseToDouble() > 0.0) {
+        state = state.copyWith(isValid: true);
+      } else {
+        state = state.copyWith(isValid: false);
+      }
+    } else {
+      state = state.copyWith(isValid: false);
     }
 
-    state = state.copyWith(isValid: isValid);
+    // if (state.dropdownvalue != 'Instant Execution') {
+    //   state = state.copyWith(
+    //       isValid: state.priceController.text.isNotEmpty &&
+    //           state.priceController.text.parseToDouble() > 0.0);
+    // }
   }
 
   void onchanged(String value) {
@@ -66,8 +91,8 @@ class NewOrderController extends StateNotifier<NewOrderState> {
   Future newOrder(BuildContext context, {required String action}) async {
     NewOrderRequest request = NewOrderRequest(
         buySell: action,
-        symbol: state.details?.symbol,
-        orderSize: state.details?.volume,
+        symbol: state.symbol,
+        orderSize: state.orderSize.text,
         price: state.priceController.text,
         orderExecutionType: state.dropdownvalue,
         slValue: state.slController.text,
@@ -95,5 +120,20 @@ class NewOrderController extends StateNotifier<NewOrderState> {
         .catchError((_) {
       Navigation.pop(context);
     });
+  }
+
+  Future loadQuote() async {
+    await _neworderRepository.loadQuotes(
+        symbols: {
+          'selectedSymbols': [state.symbol ?? '']
+        },
+        onSuccess: (value) {
+          state = state.copyWith(quotes: value);
+          if (shouldLoadData) {
+            Future.delayed(Duration(seconds: 3), () {
+              loadQuote();
+            });
+          }
+        });
   }
 }
