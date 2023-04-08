@@ -93,11 +93,15 @@ class QuotesScreen extends StatelessWidget {
               child: Consumer(builder: (context, ref, snapshot) {
                 final state = ref.watch(quotesProvider);
                 return state.isSymbols == true
-                    ? ListView.builder(
-                        itemCount: state.data?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return QuotesItemView(quotes: state.data![index]);
-                        })
+                    ? state.data == null
+                        ? Center(
+                            child: centerCircularProgress(),
+                          )
+                        : ListView.builder(
+                            itemCount: state.data?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return QuotesItemView(quotes: state.data![index]);
+                            })
                     : const Center(
                         child: GlobalText(
                           str: "You don't have any quotes!",
