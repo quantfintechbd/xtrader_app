@@ -72,6 +72,7 @@ class MyApp extends StatelessWidget {
                 color: KColor.secondary.color,
               ),
               fontFamily: AppConstant.FONTFAMILY.key,
+
               primaryColor: KColor.primary.color,
               visualDensity: VisualDensity.adaptivePlatformDensity,
               colorScheme: ThemeData().colorScheme.copyWith(

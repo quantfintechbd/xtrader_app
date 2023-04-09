@@ -7,6 +7,8 @@ import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 import 'package:xtrader_app/utils/view_util.dart';
 
+import 'colored_container.dart';
+
 class QuotesItemView extends StatelessWidget {
   const QuotesItemView({super.key, required this.quotes});
   final Quotes quotes;
@@ -105,7 +107,7 @@ class QuotesItemView extends StatelessWidget {
                         Row(
                           children: [
                             GlobalText(
-                              str: "  High:",
+                              str: "High:",
                               fontWeight: FontWeight.w400,
                               fontSize: 10.sp,
                               color: KColor.scondaryTextColor.color,
@@ -151,73 +153,6 @@ class QuotesItemView extends StatelessWidget {
             height: 1,
             color: KColor.stroke.color,
           )
-        ],
-      ),
-    );
-  }
-}
-
-class ColordContainer extends StatelessWidget {
-  const ColordContainer({
-    super.key,
-    required this.color,
-    required this.string,
-  });
-  final Color color;
-  final String string;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration:
-          BoxDecoration(color: color, borderRadius: BorderRadius.circular(4.r)),
-      child: Padding(
-        padding: EdgeInsets.only(top: 6, bottom: 15, right: 20.w, left: 20.w),
-        child: FittedBox(
-          fit: BoxFit.fitWidth,
-          child: MultisizedText(
-            text: string,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MultisizedText extends StatelessWidget {
-  const MultisizedText({
-    super.key,
-    required this.text,
-  });
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    String newText = text.parseToDouble().toStringAsFixed(5);
-
-    return RichText(
-      text: TextSpan(
-        text: newText.substring(0, 5),
-        style: KTextStyle.customTextStyle(
-          color: KColor.white.color,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
-        children: [
-          TextSpan(
-            text: newText.substring(newText.length - 3, newText.length - 1),
-            style: KTextStyle.customTextStyle(
-              color: KColor.white.color,
-              fontSize: 26,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          TextSpan(
-            text: newText.substring(newText.length - 1, newText.length),
-            style: KTextStyle.customTextStyle(
-              color: KColor.white.color,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
         ],
       ),
     );

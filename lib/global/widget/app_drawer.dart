@@ -5,8 +5,10 @@ import 'package:xtrader_app/constant/constant_key.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/bottom_navigation/bottom_navigation_bar/controller/bottom_navigation_controller.dart';
 import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
+import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 import 'package:xtrader_app/utils/theme/theme_controller.dart';
@@ -69,6 +71,10 @@ class GlobalAppDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
+              onTap: () {
+                Navigation.pop(context);
+                context.read(bottomNavigationProvider.notifier).changeTap(2);
+              },
               leading: GlobalSvgLoader(
                   imagePath: KAssetName.upArrow.imagePath,
                   svgFor: SvgFor.asset),

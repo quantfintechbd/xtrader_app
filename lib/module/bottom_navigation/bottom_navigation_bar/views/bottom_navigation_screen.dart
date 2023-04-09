@@ -35,9 +35,11 @@ class BottomNavigationScreen extends ConsumerWidget {
           currentIndex: state.selectedTab,
           items: state.barItems,
           selectedLabelStyle: KTextStyle.customTextStyle(
-              color: Colors.green,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500),
+            color: KColor.primary.color,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          selectedItemColor: KColor.primary.color,
           unselectedLabelStyle: KTextStyle.customTextStyle(
               color: KColor.textColorDark.color,
               fontSize: 14.sp,
