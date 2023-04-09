@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/utils/enum.dart';
-import '../../constant/constant_key.dart';
-import '../../utils/navigation.dart';
-import '../../utils/styles/styles.dart';
+import '../../../constant/constant_key.dart';
+import '../../../utils/navigation.dart';
+import '../../../utils/styles/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,6 +17,7 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool isShowMenubar;
   final bool? centerTitle;
   final bool isLeading;
+  final Color? backgroundColor;
   final void Function()? backActionOverride;
   GlobalAppbar({
     Key? key,
@@ -27,6 +29,7 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.isLeading = false,
     this.backActionOverride,
     this.titleWidget,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -34,7 +37,7 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: isToShowElevation ? 0.5.h : 0,
       shadowColor: KColor.stroke.color,
-      backgroundColor: KColor.primary.color,
+      backgroundColor: backgroundColor ?? KColor.primary.color,
       leadingWidth: isShowMenubar ? 0 : null,
       toolbarHeight: 65.h,
       title: isShowMenubar == true

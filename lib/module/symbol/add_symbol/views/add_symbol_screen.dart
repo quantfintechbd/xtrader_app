@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:xtrader_app/global/widget/global_appbar.dart';
+import 'package:xtrader_app/global/widget/global_app_bar/global_appbar.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/global/widget/global_textformfield.dart';

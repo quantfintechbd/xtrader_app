@@ -78,6 +78,7 @@ class LandingScreen extends StatelessWidget {
                     buttonText: "Get Started",
                     btnHeight: 55.h,
                     roundedBorderRadius: 8,
+                    textFontSize: 17,
                     fontWeight: FontWeight.w600,
                   ),
                   SizedBox(

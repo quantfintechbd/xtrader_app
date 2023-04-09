@@ -7,7 +7,7 @@ import 'package:xtrader_app/global/widget/global_textformfield.dart';
 import 'package:xtrader_app/module/symbol/remove_symbol/controller/remove_symbol_controller.dart';
 import 'package:xtrader_app/utils/extension.dart';
 
-import '../../../../global/widget/global_appbar.dart';
+import '../../../../global/widget/global_app_bar/global_appbar.dart';
 import '../../../../utils/enum.dart';
 import '../../../../utils/styles/styles.dart';
 

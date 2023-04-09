@@ -8,7 +8,7 @@ import 'package:xtrader_app/module/symbol/common_components/plus_minus_component
 import 'package:xtrader_app/module/order/modify_position/controller/modify_position_controller.dart';
 import 'package:xtrader_app/utils/extension.dart';
 
-import '../../../../global/widget/global_appbar.dart';
+import '../../../../global/widget/global_app_bar/global_appbar.dart';
 import '../../../../utils/styles/styles.dart';
 import '../../../symbol/common_components/scale_component.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

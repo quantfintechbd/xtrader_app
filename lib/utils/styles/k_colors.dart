@@ -20,6 +20,7 @@ enum KColor {
   mineShaft,
   mineShaftCommmon,
   reverseDark,
+  ob1a31,
 }
 
 extension KColorExtention on KColor {
@@ -76,6 +77,8 @@ extension KColorExtention on KColor {
           forDark: const Color(0xffE1E1E1),
           forlight: const Color(0xff18335B),
         );
+      case KColor.ob1a31:
+        return const Color(0xff0B1A31);
       default:
         return Colors.blue;
     }

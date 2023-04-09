@@ -6,6 +6,7 @@ import 'package:xtrader_app/module/order/new_order/controller/state/new_order_st
 import 'package:xtrader_app/module/order/new_order/model/new_order_request.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
+import 'package:xtrader_app/utils/styles/k_colors.dart';
 import 'package:xtrader_app/utils/view_util.dart';
 
 import '../repository/new_order_interface.dart';
@@ -110,6 +111,7 @@ class NewOrderController extends StateNotifier<NewOrderState> {
                 content: ErrorDialog(
                   erroMsg: data.globalResponse?.message ?? '',
                   title: "Success!",
+                  titleColor: KColor.primary.color,
                   callbackAction: (_) {
                     Navigation.pop(context);
                   },

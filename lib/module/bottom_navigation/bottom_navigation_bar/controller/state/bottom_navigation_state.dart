@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xtrader_app/global/widget/global_appbar.dart';
+import 'package:xtrader_app/global/widget/global_app_bar/global_appbar.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/module/bottom_navigation/charts/views/charts_screen.dart';
 import 'package:xtrader_app/module/bottom_navigation/history/views/history_screen.dart';
@@ -16,23 +16,32 @@ class BottomNavigationState {
   final String dropdownvalue;
   final String historyFilterValue;
   final String? selectedSymbol;
-  BottomNavigationState(
-      {required this.selectedTab,
-      required this.dropdownvalue,
-      required this.historyFilterValue,
-      this.selectedSymbol});
+  final Color? appbarBg;
+  final Widget? appBarTitleWidget;
+  BottomNavigationState({
+    required this.selectedTab,
+    required this.dropdownvalue,
+    required this.historyFilterValue,
+    this.selectedSymbol,
+    this.appbarBg,
+    this.appBarTitleWidget,
+  });
 
   BottomNavigationState copyWith({
     int? selectedTab,
     String? dropdownvalue,
     String? historyFilterValue,
     String? selectedSymbol,
+    Color? appbarBg,
+    Widget? appBarTitleWidget,
   }) {
     return BottomNavigationState(
       selectedTab: selectedTab ?? this.selectedTab,
       dropdownvalue: dropdownvalue ?? this.dropdownvalue,
       historyFilterValue: historyFilterValue ?? this.historyFilterValue,
       selectedSymbol: selectedSymbol ?? 'AUDCAD',
+      appbarBg: appbarBg ?? this.appbarBg,
+      appBarTitleWidget: appBarTitleWidget ?? this.appBarTitleWidget,
     );
   }
 

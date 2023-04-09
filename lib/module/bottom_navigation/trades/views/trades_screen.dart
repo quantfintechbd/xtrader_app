@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/bottom_navigation/bottom_navigation_bar/controller/bottom_navigation_controller.dart';
 
 import 'package:xtrader_app/module/bottom_navigation/trades/controller/trades_controller.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/views/components/trades_item_view.dart';
@@ -17,6 +18,7 @@ class TradesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = context.read(tradesProvider.notifier);
+    final bottomControler = context.read(bottomNavigationProvider.notifier);
     return FocusDetector(
       onFocusGained: () {
         controller.refresh();
@@ -84,6 +86,35 @@ class TradesScreen extends StatelessWidget {
               ),
               Consumer(builder: (context, ref, snapshot) {
                 final dataState = ref.watch(tradesProvider);
+                Future(() {
+                  bottomControler.setAppBarBgColor(
+                      dataState.totalProfit?.isNegative == true
+                          ? KColor.red.color
+                          : KColor.primary.color);
+
+                  bottomControler.setAppBarTitleWidget(
+                    Row(
+                      children: [
+                        GlobalText(
+                          str: "Trade",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: KColor.white.color,
+                        ),
+                        SizedBox(
+                          width: 6.w,
+                        ),
+                        GlobalText(
+                            str: dataState.totalProfit == null
+                                ? ''
+                                : "${dataState.totalProfit!.toStringAsFixed(2)} USD",
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: KColor.white.color),
+                      ],
+                    ),
+                  );
+                });
                 return dataState.tradeDetails?.isEmpty == true
                     ? Center(
                         child: centerCircularProgress(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:xtrader_app/global/widget/global_appbar.dart';
+import 'package:xtrader_app/global/widget/global_app_bar/global_appbar.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/module/bottom_navigation/history/controller/history_controller.dart';
@@ -42,6 +42,14 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
 
   void setChartToDefault() {
     state = state.copyWith(selectedSymbol: 'AUDCAD');
+  }
+
+  void setAppBarBgColor(Color color) {
+    state = state.copyWith(appbarBg: color);
+  }
+
+  void setAppBarTitleWidget(Widget widget) {
+    state = state.copyWith(appBarTitleWidget: widget);
   }
 
   Widget get screen {
@@ -87,32 +95,8 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
       case 2:
         return GlobalAppbar(
           isShowMenubar: true,
-          titleWidget: Row(
-            children: [
-              GlobalText(
-                str: "Trade",
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
-                color: KColor.white.color,
-              ),
-              SizedBox(
-                width: 6.w,
-              ),
-              Consumer(builder: (context, ref, snapshot) {
-                final tradeState = ref.watch(tradesProvider);
-                return GlobalText(
-                  str: tradeState.totalProfit == null
-                      ? ''
-                      : "${tradeState.totalProfit!.toStringAsFixed(5)} USD",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 20,
-                  color: tradeState.totalProfit?.isNegative == true
-                      ? KColor.red.color
-                      : KColor.white.color,
-                );
-              })
-            ],
-          ),
+          backgroundColor: state.appbarBg ?? KColor.mineShaft.color,
+          titleWidget: state.appBarTitleWidget ?? Container(),
         );
       case 3:
         return GlobalAppbar(

@@ -6,6 +6,7 @@ import 'package:xtrader_app/module/login/controller/login_controller.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/styles/k_assets.dart';
+import 'package:xtrader_app/utils/styles/k_text_style.dart';
 
 import '../../../../global/widget/global_text.dart';
 import '../../../../global/widget/global_textformfield.dart';
@@ -68,6 +69,7 @@ class LoginFormComponent extends ConsumerWidget {
                         ? KAssetName.eyeOff.imagePath
                         : KAssetName.eyeOpen.imagePath,
                     svgFor: SvgFor.asset,
+                    color: KColor.stroke.color,
                   ),
                 ),
               ),

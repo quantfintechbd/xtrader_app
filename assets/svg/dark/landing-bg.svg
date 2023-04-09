@@ -3,8 +3,8 @@
 <rect width="360" height="800" fill="white"/>
 <rect width="360" height="800" fill="black"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M360 51V406.868C274.837 392.375 210 318.226 210 228.934C210 139.642 274.837 65.4933 360 51Z" fill="#104C37"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M211.896 0C208.465 131.943 120.408 242.821 0 280.362V0L211.896 0Z" fill="#0CAF82"/>
-<path d="M100 143H207C219.703 143 230 153.297 230 166V273C230 307.794 201.794 336 167 336H60C47.2974 336 37 325.703 37 313V206C37 171.206 65.2061 143 100 143Z" fill="black" stroke="#0CAF82" stroke-width="4"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M211.896 0C208.465 131.943 120.409 242.821 0 280.362V0H211.896Z" fill="#0CAF82"/>
+<path d="M37 206C37 171.206 65.2061 143 100 143H207C219.703 143 230 153.297 230 166V273C230 307.794 201.794 336 167 336H60C47.2974 336 37 325.703 37 313V206Z" fill="black" stroke="#0CAF82" stroke-width="4"/>
 <rect x="65" y="196" width="136" height="86.8889" fill="url(#pattern0)"/>
 </g>
 <defs>

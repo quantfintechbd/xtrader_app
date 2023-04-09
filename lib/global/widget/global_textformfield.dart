@@ -59,7 +59,9 @@ class GlobalTextFormField extends StatelessWidget {
       maxLines: line,
       style: style == null
           ? KTextStyle.customTextStyle(
-              color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16.sp)
+              color: KColor.ob1a31.color,
+              fontWeight: FontWeight.w500,
+              fontSize: 18.sp)
           : style,
       autovalidateMode: autovalidateMode,
       obscureText: obscureText ?? false,

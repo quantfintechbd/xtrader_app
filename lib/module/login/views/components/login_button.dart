@@ -63,6 +63,8 @@ class LoginButton extends StatelessWidget {
             buttonText: "Login Now",
             btnHeight: 56.h,
             roundedBorderRadius: 8,
+            fontWeight: FontWeight.w700,
+            textFontSize: 17,
           );
         }),
       ],

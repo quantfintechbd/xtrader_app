@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                   GlobalText(
                     str: "Please login to continue",
                     fontWeight: FontWeight.w700,
-                    fontSize: 16.sp,
+                    fontSize: 24.sp,
                     color: KColor.textColorDark.color,
                   ),
                   SizedBox(

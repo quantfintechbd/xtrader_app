@@ -9,7 +9,7 @@ import 'package:xtrader_app/module/order/new_order/controller/new_order_controll
 import 'package:xtrader_app/module/symbol/common_components/plus_minus_component.dart';
 import 'package:xtrader_app/utils/extension.dart';
 
-import '../../../../global/widget/global_appbar.dart';
+import '../../../../global/widget/global_app_bar/global_appbar.dart';
 import '../../../../utils/styles/styles.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -233,7 +233,7 @@ class NewOrderScreen extends StatelessWidget {
                         child: GlobalButton(
                           onPressed: state.isValid
                               ? () {
-                                  controller.newOrder(context, action: 'buy');
+                                  controller.newOrder(context, action: 'Buy');
                                 }
                               : null,
                           buttonText: "Buy",
@@ -249,7 +249,7 @@ class NewOrderScreen extends StatelessWidget {
                         child: GlobalButton(
                           onPressed: state.isValid
                               ? () {
-                                  controller.newOrder(context, action: 'sell');
+                                  controller.newOrder(context, action: 'Sell');
                                 }
                               : null,
                           buttonText: "Sell",
