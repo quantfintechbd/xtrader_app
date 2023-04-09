@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/utils/extension.dart';
 
 import '../../../../../utils/styles/styles.dart';
 import 'gradiant_box.dart';
@@ -28,13 +29,13 @@ class _PlusMinusComponentState extends State<PlusMinusComponent> {
           flex: 1,
           child: InkWell(
             onTap: () {
-              double newVal = widget.value - 0.1;
-              if (newVal.isNegative == false) {
-                setState(() {
-                  widget.value = newVal;
-                  widget.controller.text = widget.value.toStringAsFixed(5);
-                });
-              }
+              setState(() {
+                final double currentValue = widget.controller.text.isNotEmpty
+                    ? widget.controller.text.parseToDouble()
+                    : widget.value;
+                final double newValue = currentValue - 0.00001;
+                widget.controller.text = newValue.toStringAsFixed(5);
+              });
             },
             child: GradiantBox(
               text: "-",
@@ -56,8 +57,11 @@ class _PlusMinusComponentState extends State<PlusMinusComponent> {
           child: InkWell(
             onTap: () {
               setState(() {
-                widget.value += 0.1;
-                widget.controller.text = widget.value.toString();
+                final double currentValue = widget.controller.text.isNotEmpty
+                    ? widget.controller.text.parseToDouble()
+                    : widget.value;
+                final double newValue = currentValue + 0.00001;
+                widget.controller.text = newValue.toStringAsFixed(5);
               });
             },
             child: GradiantBox(

@@ -46,8 +46,7 @@ class NewOrderController extends StateNotifier<NewOrderState> {
     });
   }
   void setdetails(String details) {
-    state = state.copyWith(symbol: details);
-    loadQuote();
+    state = state.copyWith(symbol: details, dropdownvalue: 'Instant Execution');
   }
 
   bool shouldLoadData = true;

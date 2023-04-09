@@ -5,18 +5,20 @@ import 'package:xtrader_app/global/widget/global_text.dart';
 import '../../utils/styles/styles.dart';
 
 class GlobalDropdown extends StatelessWidget {
-  const GlobalDropdown({
-    Key? key,
-    required this.validator,
-    required this.hintText,
-    required this.onChanged,
-    required this.items,
-  }) : super(key: key);
+  const GlobalDropdown(
+      {Key? key,
+      required this.validator,
+      required this.hintText,
+      required this.onChanged,
+      required this.items,
+      this.value})
+      : super(key: key);
 
   final String? Function(Object?)? validator;
   final String? hintText;
   final void Function(Object?)? onChanged;
   final List<DropdownMenuItem<Object>>? items;
+  final Object? value;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,7 @@ class GlobalDropdown extends StatelessWidget {
       ),
       onChanged: onChanged,
       items: items,
+      value: value,
     );
   }
 }

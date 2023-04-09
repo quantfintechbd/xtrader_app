@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final List<Widget>? actions;
+  final Widget? titleWidget;
   final bool isToShowElevation;
   final bool isShowMenubar;
   final bool? centerTitle;
@@ -25,6 +26,7 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle,
     this.isLeading = false,
     this.backActionOverride,
+    this.titleWidget,
   }) : super(key: key);
 
   @override
@@ -53,12 +55,13 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
                 SizedBox(
                   width: 5.w,
                 ),
-                GlobalText(
-                  str: title ?? "",
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w700,
-                  color: KColor.white.color,
-                ),
+                titleWidget ??
+                    GlobalText(
+                      str: title ?? "",
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: KColor.white.color,
+                    ),
               ],
             )
           : GlobalText(

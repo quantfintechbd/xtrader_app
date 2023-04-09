@@ -1,3 +1,4 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -117,9 +118,9 @@ class _TradesItemViewState extends State<TradesItemView> {
                 SizedBox(
                   height: 15.h,
                 ),
-                Divider(
-                  height: 1,
-                  color: KColor.primary.color,
+                DottedLine(
+                  dashColor: KColor.primary.color,
+                  dashRadius: 0.1,
                 ),
               ],
             ),

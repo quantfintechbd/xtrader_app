@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/module/symbol/common_components/plus_minus_component.dart';
+import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/styles/k_colors.dart';
 
 import 'gradiant_box.dart';
@@ -18,18 +19,28 @@ class ScaleComponent extends StatelessWidget {
       children: [
         Expanded(
           flex: 1,
-          child: GradiantBox(
-            text: "-0.1",
-            radius: BorderRadius.only(
-              topLeft: Radius.circular(8.r),
-              bottomLeft: Radius.circular(8.r),
+          child: InkWell(
+            onTap: () {
+              calculate("-0.1");
+            },
+            child: GradiantBox(
+              text: "-0.1",
+              radius: BorderRadius.only(
+                topLeft: Radius.circular(8.r),
+                bottomLeft: Radius.circular(8.r),
+              ),
             ),
           ),
         ),
         Expanded(
           flex: 1,
-          child: GradiantBox(
-            text: "-0.01",
+          child: InkWell(
+            onTap: () {
+              calculate("-0.01");
+            },
+            child: const GradiantBox(
+              text: "-0.01",
+            ),
           ),
         ),
         Expanded(
@@ -41,21 +52,36 @@ class ScaleComponent extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child: GradiantBox(
-            text: "+0.01",
+          child: InkWell(
+            onTap: () {
+              calculate("0.01");
+            },
+            child: const GradiantBox(
+              text: "+0.01",
+            ),
           ),
         ),
         Expanded(
           flex: 1,
-          child: GradiantBox(
-            text: "+0.1",
-            radius: BorderRadius.only(
-              topRight: Radius.circular(8.r),
-              bottomRight: Radius.circular(8.r),
+          child: InkWell(
+            onTap: () {
+              calculate("0.1");
+            },
+            child: GradiantBox(
+              text: "+0.1",
+              radius: BorderRadius.only(
+                topRight: Radius.circular(8.r),
+                bottomRight: Radius.circular(8.r),
+              ),
             ),
           ),
         ),
       ],
     );
+  }
+
+  void calculate(String value) {
+    controller.text = (controller.text.parseToDouble() + value.parseToDouble())
+        .toStringAsFixed(4);
   }
 }

@@ -34,7 +34,7 @@ class TradesApi {
         .request(
             method: Method.POST,
             url: AppUrl.tradeDetails.url,
-            params: map,
+            //  params: map,
             isPopGlobalDialog: true,
             onSuccessFunction: await (Response response) {
               onSuccess(response);

@@ -1,3 +1,4 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
@@ -55,7 +56,13 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                           ],
                         ),
                         SizedBox(
-                          height: 4.h,
+                          height: 5.h,
+                        ),
+                        GlobalText(
+                          str: widget.details.time ?? '',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13.sp,
+                          color: KColor.sixA6a6a.color,
                         ),
                         /*  Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -103,9 +110,9 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                 SizedBox(
                   height: 15.h,
                 ),
-                Divider(
-                  height: 1,
-                  color: KColor.primary.color,
+                DottedLine(
+                  dashColor: KColor.primary.color,
+                  dashRadius: 0.1,
                 ),
               ],
             ),
@@ -119,12 +126,6 @@ class _HistoryItemViewState extends State<HistoryItemView> {
               children: [
                 SizedBox(
                   height: 15.h,
-                ),
-                GlobalText(
-                  str: widget.details.time ?? '',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13.sp,
-                  color: KColor.sixA6a6a.color,
                 ),
                 Row(
                   children: [
@@ -142,13 +143,13 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                             title: "T/P",
                             value: widget.details.priceTP ?? '',
                           ),
-                          // SizedBox(
-                          //   height: 6.h,
-                          // ),
-                          // DTItem(
-                          //   title: "Open",
-                          //   value: widget.details ?? '',
-                          // ),
+                          SizedBox(
+                            height: 6.h,
+                          ),
+                          const DTItem(
+                            title: "",
+                            value: '',
+                          ),
                         ],
                       ),
                     ),

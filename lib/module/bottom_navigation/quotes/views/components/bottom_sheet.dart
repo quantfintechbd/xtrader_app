@@ -66,9 +66,10 @@ class QuotesBottomSheet extends StatelessWidget {
               imagePath: KAssetName.bag.imagePath,
               svgFor: SvgFor.asset,
             ),
-            title: const GlobalText(
+            title: GlobalText(
               str: "New Order",
               fontWeight: FontWeight.w500,
+              fontSize: 16.sp,
             ),
             minLeadingWidth: 10,
           ),
@@ -92,9 +93,10 @@ class QuotesBottomSheet extends StatelessWidget {
                   imagePath: KAssetName.barchart.imagePath,
                   svgFor: SvgFor.asset,
                 ),
-                title: const GlobalText(
+                title: GlobalText(
                   str: "Chart",
                   fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
                 ),
                 minLeadingWidth: 10,
               ),

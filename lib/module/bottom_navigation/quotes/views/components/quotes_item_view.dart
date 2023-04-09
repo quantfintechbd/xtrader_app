@@ -126,8 +126,8 @@ class QuotesItemView extends StatelessWidget {
                 ],
               ),
               Positioned(
-                bottom: 12.h,
-                right: 80.w,
+                bottom: 15.h,
+                right: 90.w,
                 child: Container(
                   decoration: BoxDecoration(
                     color: KColor.spaceCadet.color,

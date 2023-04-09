@@ -21,6 +21,9 @@ class TradesScreen extends StatelessWidget {
       onFocusGained: () {
         controller.refresh();
       },
+      onFocusLost: () {
+        controller.stopLoading();
+      },
       child: RefreshIndicator(
         onRefresh: () async {
           controller.refresh();
@@ -36,7 +39,7 @@ class TradesScreen extends StatelessWidget {
                 height: context.height * 0.25,
                 child: Consumer(builder: (context, ref, snapshot) {
                   final state = ref.watch(tradesProvider);
-                  return state.positionLoading
+                  return state.tradePositionData.isEmpty
                       ? Center(
                           child: centerCircularProgress(
                               progressColor: KColor.primary.color),
@@ -81,7 +84,7 @@ class TradesScreen extends StatelessWidget {
               ),
               Consumer(builder: (context, ref, snapshot) {
                 final dataState = ref.watch(tradesProvider);
-                return dataState.detailsLoading
+                return dataState.tradeDetails?.isEmpty == true
                     ? Center(
                         child: centerCircularProgress(
                             progressColor: KColor.primary.color),

@@ -87,50 +87,32 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
       case 2:
         return GlobalAppbar(
           isShowMenubar: true,
-          title: "Trade",
-          // actions: [
-          //   Padding(
-          //     padding: const EdgeInsets.only(right: 20.0, left: 0, top: 10),
-          //     child: Consumer(builder: (context, ref, snapshot) {
-          //       final state = ref.watch(bottomNavigationProvider);
-          //       final controller = ref.read(tradesProvider.notifier);
-          //       return DropdownButton(
-          //         icon: Icon(
-          //           Icons.filter_alt,
-          //           color: KColor.white.color,
-          //         ),
-          //         items: state.items.map((String items) {
-          //           return DropdownMenuItem(
-          //             value: items,
-          //             child: Row(
-          //               children: [
-          //                 Icon(
-          //                   state.dropdownvalue == items
-          //                       ? Icons.check_box
-          //                       : Icons.check_box_outline_blank,
-          //                   color: KColor.mineShaftCommmon.color,
-          //                 ),
-          //                 SizedBox(
-          //                   width: 5.w,
-          //                 ),
-          //                 GlobalText(
-          //                   str: items,
-          //                   fontWeight: FontWeight.w500,
-          //                   fontSize: 14,
-          //                   color: KColor.mineShaftCommmon.color,
-          //                 ),
-          //               ],
-          //             ),
-          //           );
-          //         }).toList(),
-          //         onChanged: (String? newValue) {
-          //           this.state = state.copyWith(dropdownvalue: newValue);
-          //           controller.fetchTradeDetails(newValue ?? '');
-          //         },
-          //       );
-          //     }),
-          //   ),
-          // ],
+          titleWidget: Row(
+            children: [
+              GlobalText(
+                str: "Trade",
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+                color: KColor.white.color,
+              ),
+              SizedBox(
+                width: 6.w,
+              ),
+              Consumer(builder: (context, ref, snapshot) {
+                final tradeState = ref.watch(tradesProvider);
+                return GlobalText(
+                  str: tradeState.totalProfit == null
+                      ? ''
+                      : "${tradeState.totalProfit!.toStringAsFixed(5)} USD",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  color: tradeState.totalProfit?.isNegative == true
+                      ? KColor.red.color
+                      : KColor.white.color,
+                );
+              })
+            ],
+          ),
         );
       case 3:
         return GlobalAppbar(

@@ -52,6 +52,9 @@ class NewOrderScreen extends StatelessWidget {
       onFocusLost: () {
         controller.stopTimer();
       },
+      onFocusGained: () {
+        controller.startTimer();
+      },
       child: Scaffold(
         backgroundColor: KColor.scafoldBg.color,
         appBar: GlobalAppbar(
@@ -99,6 +102,7 @@ class NewOrderScreen extends StatelessWidget {
                       controller.onchanged(str.toString());
                     }
                   },
+                  value: state.items.first,
                 );
               }),
               SizedBox(
@@ -116,7 +120,7 @@ class NewOrderScreen extends StatelessWidget {
                   Consumer(builder: (context, ref, snapshot) {
                     final state = ref.watch(newOrderProvider);
                     return GlobalText(
-                      str: state.quotes?.ask.toString().asCurrency ?? '',
+                      str: state.quotes?.ask ?? '',
                       fontWeight: FontWeight.w700,
                       fontSize: 16,
                       color: KColor.red.color,
@@ -126,7 +130,7 @@ class NewOrderScreen extends StatelessWidget {
                   Consumer(builder: (context, ref, snapshot) {
                     final state = ref.watch(newOrderProvider);
                     return GlobalText(
-                      str: state.quotes?.bid.toString().asCurrency ?? '',
+                      str: state.quotes?.bid ?? '',
                       fontWeight: FontWeight.w700,
                       fontSize: 16,
                       color: KColor.primary.color,
@@ -137,17 +141,25 @@ class NewOrderScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 20.h,
-              ),
               Consumer(builder: (context, ref, snapshot) {
                 final state = ref.watch(newOrderProvider);
-                return PlusMinusComponent(
-                  hintText: "Price",
-                  controller: state.priceController,
-                  value: state.quotes?.priceClose.toString().parseToDouble() ??
-                      0.0,
-                );
+                return state.dropdownvalue != 'Instant Execution'
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          PlusMinusComponent(
+                            hintText: "Price",
+                            controller: state.priceController,
+                            value: state.quotes?.priceClose
+                                    .toString()
+                                    .parseToDouble() ??
+                                0.0,
+                          ),
+                        ],
+                      )
+                    : Container();
               }),
               SizedBox(
                 height: 20.h,

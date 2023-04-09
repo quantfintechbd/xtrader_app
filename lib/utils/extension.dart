@@ -204,8 +204,9 @@ extension LastPathComponent on String {
 
 extension CurrencyFormatter on String {
   String get asCurrency {
-    final oCcy = NumberFormat("#,##0.00", "fr_FR");
-    return oCcy.format(this.parseToDouble());
+    return this;
+    // final oCcy = NumberFormat("#,##0.00");
+    // return oCcy.format(this.parseToDouble());
   }
 }
 

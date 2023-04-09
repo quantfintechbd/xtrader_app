@@ -23,14 +23,16 @@ class TradesController extends StateNotifier<TradesState> {
           tradePositionData: {},
           positionLoading: false,
           detailsLoading: false,
-        )) {
-    fetchTradesPostion();
-    fetchTradeDetails('7 Days');
-  }
+          shouldLoad: true,
+        ));
 
   void refresh() {
     fetchTradesPostion();
     fetchTradeDetails(state.currentSelction ?? '7 Days');
+  }
+
+  void stopLoading() {
+    state = state.copyWith(shouldLoad: false);
   }
 
   void fetchTradesPostion() async {
@@ -41,6 +43,11 @@ class TradesController extends StateNotifier<TradesState> {
           tradePositionData: data.toJson(),
           positionLoading: false,
         );
+        if (state.shouldLoad) {
+          Future.delayed(Duration(seconds: 5), () {
+            refresh();
+          });
+        }
       },
     ).catchError((_) {
       state = state.copyWith(positionLoading: false);
@@ -74,8 +81,13 @@ class TradesController extends StateNotifier<TradesState> {
         .fetchDetails(
       numberOfdays: days.toString(),
       onSuccess: (listData) {
+        double profits = listData
+            .map((e) => double.parse(e.profit ?? '0.0'))
+            .reduce((a, b) => a + b);
+        profits.log();
         state = state.copyWith(
           tradeDetails: listData,
+          totalProfit: profits,
           detailsLoading: false,
         );
       },
