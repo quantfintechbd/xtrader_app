@@ -28,6 +28,8 @@ class LoginController extends StateNotifier<LoginState> {
             userIdController: TextEditingController(),
             passwordController: TextEditingController(),
             shouldShowPassword: false,
+            isPasswordFocused: false,
+            isUserIdFocued: false,
           ),
         ) {
     state.userIdController.addListener(() {
@@ -103,6 +105,14 @@ class LoginController extends StateNotifier<LoginState> {
 
   void changePasswordState() {
     state = state.copyWith(shouldShowPassword: !state.shouldShowPassword);
+  }
+
+  void changeUserIdFocus(bool isfocused) {
+    state = state.copyWith(isUserIdFocued: isfocused);
+  }
+
+  void changePasswordFocus(bool isfocused) {
+    state = state.copyWith(isPasswordFocused: isfocused);
   }
 
   @override

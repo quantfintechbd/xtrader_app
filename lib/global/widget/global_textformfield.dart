@@ -96,8 +96,9 @@ class GlobalTextFormField extends StatelessWidget {
                 ],
               )
             : Text(labelText ?? "",
-                style: KTextStyle.customTextStyle(
-                    color: KColor.textHintColor.color, fontSize: 16.sp)),
+                style: labelStyle ??
+                    KTextStyle.customTextStyle(
+                        color: KColor.textHintColor.color, fontSize: 16.sp)),
         filled: true,
         counterText: "",
         floatingLabelStyle: KTextStyle.customTextStyle(

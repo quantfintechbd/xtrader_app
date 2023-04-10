@@ -132,9 +132,10 @@ class GlobalAppDrawer extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                PrefHelper.setString(AppConstant.TOKEN.key, '');
+                Navigation.pop(context);
+                /* PrefHelper.setString(AppConstant.TOKEN.key, '');
                 PrefHelper.setString(AppConstant.USER_NAME.key, '');
-                PrefHelper.setString(AppConstant.NAME.key, '');
+                PrefHelper.setString(AppConstant.NAME.key, '');*/
                 Navigation.pushAndRemoveUntil(context,
                     appRoutes: AppRoutes.login);
               },

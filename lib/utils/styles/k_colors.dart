@@ -31,7 +31,8 @@ extension KColorExtention on KColor {
       case KColor.secondary:
         return const Color(0xff0CAF82);
       case KColor.textColorDark:
-        return _themedColor(forDark: Colors.white, forlight: Colors.black);
+        return _themedColor(
+            forDark: Colors.white, forlight: KColor.ob1a31.color);
 
       case KColor.white:
         return Colors.white;

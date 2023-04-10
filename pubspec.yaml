@@ -68,7 +68,7 @@ dev_dependencies:
 flutter_icons:
   android: "xtrade_app_icon"
   ios: true
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/app_logo.png"
   remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the
@@ -103,7 +103,7 @@ flutter:
   fonts:
     - family: SF Pro Display
       fonts:
-        - asset: assets/SFPRODISPLAYBLACKITALIC.OTF
+        - asset: assets/fonts/SFPRODISPLAYBLACKITALIC.OTF
         - asset: assets/fonts/SFPRODISPLAYBOLD.OTF
         - asset: assets/fonts/SFPRODISPLAYREGULAR.OTF
         - asset: assets/fonts/SFPRODISPLAYHEAVYITALIC.OTF

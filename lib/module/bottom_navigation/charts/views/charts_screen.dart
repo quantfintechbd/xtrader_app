@@ -30,7 +30,7 @@ class ChartsScreen extends ConsumerWidget {
         ));
     return FocusDetector(
       onFocusLost: () {
-        contoller.setChartToDefault();
+        // contoller.setChartToDefault();
       },
       child: Container(
         width: context.width,
