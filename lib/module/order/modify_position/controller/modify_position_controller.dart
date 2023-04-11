@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_details_response.dart';
 import 'package:xtrader_app/module/order/modify_position/controller/state/modify_position_state.dart';
 import 'package:xtrader_app/module/order/modify_position/model/modify_request.dart';
@@ -19,7 +22,7 @@ final modifyPostionProvider = StateNotifierProvider.autoDispose<
 class ModifyPositionController extends StateNotifier<ModifyOrderState> {
   final IModifyPositionRepository _modifypositionRepository =
       ModifyPositionRepository();
-
+  Timer? timer;
   ModifyPositionController()
       : super(
           ModifyOrderState(
@@ -89,17 +92,44 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
     }
   }
 
+  bool shouldLoadData = true;
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      "Timer".log();
+      if (state.quotes != null) {
+        state.dataset.add(
+          QuotesChartData(
+            time: DateTime.now().microsecondsSinceEpoch.toDouble(),
+            bid: state.quotes?.bid?.toString().parseToDouble() ?? 0.0,
+            ask: state.quotes?.ask?.toString().parseToDouble() ?? 0.0,
+          ),
+        );
+        state = state.copyWith(dataset: state.dataset);
+      }
+    });
+    loadQuote();
+    shouldLoadData = true;
+  }
+
+  void stopTimer() {
+    timer?.cancel();
+    timer = null;
+    shouldLoadData = false;
+  }
+
   Future loadQuote() async {
     await _modifypositionRepository.loadQuotes(
         symbols: {
           'selectedSymbols': [state.details?.symbol ?? '']
         },
         onSuccess: (value) {
-          state.dataset.add(value);
+          // state.dataset.add(value);
           state = state.copyWith(quotes: value);
-          Future.delayed(Duration(seconds: 3), () {
-            loadQuote();
-          });
+          if (shouldLoadData) {
+            Future.delayed(Duration(seconds: 3), () {
+              loadQuote();
+            });
+          }
         });
   }
 }

@@ -191,56 +191,56 @@ class NewOrderScreen extends StatelessWidget {
                 child: Consumer(
                   builder: (context, ref, snapshot) {
                     final dataState = ref.watch(newOrderProvider);
-                    return LineChart(
-                      LineChartData(
-                        titlesData: FlTitlesData(
-                          leftTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: AxisTitles(
-                            drawBehindEverything: false,
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              getTitlesWidget: (value, meta) {
-                                return GlobalText(
-                                    str: value.toStringAsFixed(3),
-                                    fontWeight: FontWeight.w500);
-                              },
-                              reservedSize: 55,
+                    return dataState.dataset.isNotEmpty
+                        ? LineChart(
+                            LineChartData(
+                              titlesData: FlTitlesData(
+                                leftTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                rightTitles: AxisTitles(
+                                  drawBehindEverything: false,
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    getTitlesWidget: (value, meta) {
+                                      return GlobalText(
+                                          str: value
+                                              .toStringAsFixed(5)
+                                              .substring(0, 7),
+                                          fontWeight: FontWeight.w500);
+                                    },
+                                    reservedSize: 55,
+                                  ),
+                                ),
+                                bottomTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                              ),
+                              lineBarsData: [
+                                LineChartBarData(
+                                  dotData: FlDotData(
+                                    show: false,
+                                  ),
+                                  color: KColor.red.color,
+                                  spots: dataState.dataset
+                                      .map((point) =>
+                                          FlSpot(point.time, point.ask))
+                                      .toList(),
+                                ),
+                                LineChartBarData(
+                                  dotData: FlDotData(
+                                    show: false,
+                                  ),
+                                  color: KColor.primary.color,
+                                  spots: dataState.dataset
+                                      .map((point) =>
+                                          FlSpot(point.time, point.bid))
+                                      .toList(),
+                                ),
+                              ],
                             ),
-                          ),
-                          bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          topTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                        ),
-                        lineBarsData: [
-                          LineChartBarData(
-                            color: KColor.red.color,
-                            isCurved: true,
-                            spots: dataState.dataset
-                                .map((point) => FlSpot(
-                                    DateFormat("dd/MM HH:mm:ss")
-                                        .parse(point.time ?? '')
-                                        .microsecondsSinceEpoch
-                                        .toDouble(),
-                                    point.ask.toString().parseToDouble()))
-                                .toList(),
-                          ),
-                          LineChartBarData(
-                            color: KColor.primary.color,
-                            isCurved: true,
-                            spots: dataState.dataset
-                                .map((point) => FlSpot(
-                                    DateFormat("dd/MM HH:mm:ss")
-                                        .parse(point.time ?? '')
-                                        .microsecondsSinceEpoch
-                                        .toDouble(),
-                                    point.bid.toString().parseToDouble()))
-                                .toList(),
-                          ),
-                        ],
-                      ),
-                    );
+                          )
+                        : Container();
                   },
                 ),
               ),

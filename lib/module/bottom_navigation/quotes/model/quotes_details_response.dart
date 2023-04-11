@@ -74,3 +74,9 @@ class Quotes {
     return data;
   }
 }
+
+class QuotesChartData {
+  final double bid, ask, time;
+
+  QuotesChartData({required this.bid, required this.ask, required this.time});
+}

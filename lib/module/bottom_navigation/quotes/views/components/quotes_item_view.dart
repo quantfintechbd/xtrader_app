@@ -10,7 +10,12 @@ import 'package:xtrader_app/utils/view_util.dart';
 import 'colored_container.dart';
 
 class QuotesItemView extends StatelessWidget {
-  const QuotesItemView({super.key, required this.quotes});
+  const QuotesItemView(
+      {super.key,
+      required this.quotes,
+      required this.askColor,
+      required this.bidColor});
+  final Color askColor, bidColor;
   final Quotes quotes;
   @override
   Widget build(context) {
@@ -64,7 +69,7 @@ class QuotesItemView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ColordContainer(
-                          color: KColor.red.color,
+                          color: askColor,
                           string: quotes.ask ?? '',
                         ),
                         SizedBox(
@@ -98,7 +103,7 @@ class QuotesItemView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         ColordContainer(
-                          color: KColor.primary.color,
+                          color: bidColor,
                           string: quotes.bid ?? '',
                         ),
                         SizedBox(

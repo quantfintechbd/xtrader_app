@@ -12,7 +12,7 @@ class NewOrderState {
       orderSize;
   final bool isValid;
   final String? dropdownvalue;
-  final List<Quotes> dataset;
+  final List<QuotesChartData> dataset;
 
   NewOrderState({
     this.symbol,
@@ -38,7 +38,7 @@ class NewOrderState {
       bool? isValid,
       String? dropdownvalue,
       Quotes? quotes,
-      List<Quotes>? dataset}) {
+      List<QuotesChartData>? dataset}) {
     return NewOrderState(
       symbol: symbol ?? this.symbol,
       quotes: quotes ?? this.quotes,

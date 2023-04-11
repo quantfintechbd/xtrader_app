@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,12 +55,28 @@ class NewOrderController extends StateNotifier<NewOrderState> {
   }
 
   bool shouldLoadData = true;
+  Timer? timer;
   void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      "Timer".log();
+      if (state.quotes != null) {
+        state.dataset.add(
+          QuotesChartData(
+            time: DateTime.now().microsecondsSinceEpoch.toDouble(),
+            bid: state.quotes?.bid?.toString().parseToDouble() ?? 0.0,
+            ask: state.quotes?.ask?.toString().parseToDouble() ?? 0.0,
+          ),
+        );
+        state = state.copyWith(dataset: state.dataset);
+      }
+    });
     loadQuote();
     shouldLoadData = true;
   }
 
   void stopTimer() {
+    timer?.cancel();
+    timer = null;
     shouldLoadData = false;
   }
 
@@ -131,7 +149,6 @@ class NewOrderController extends StateNotifier<NewOrderState> {
           'selectedSymbols': [state.symbol ?? '']
         },
         onSuccess: (value) {
-          state.dataset.add(value);
           state = state.copyWith(quotes: value);
           if (shouldLoadData) {
             Future.delayed(Duration(seconds: 3), () {

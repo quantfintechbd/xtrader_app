@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/utils/extension.dart';
@@ -16,6 +17,7 @@ final quotesProvider =
 
 class QuotesController extends StateNotifier<QuotesState> {
   final IQuotesRepository _quotesRepository = QuotesRepository();
+
   QuotesController()
       : super(
           const QuotesState(isSymbols: true),
@@ -42,7 +44,9 @@ class QuotesController extends StateNotifier<QuotesState> {
       _quotesRepository.loadQuotes(
           symbols: data,
           onSuccess: (listData) {
-            state = state.copyWith(isSymbols: true, data: listData);
+            final oldData = state.data;
+            state = state.copyWith(
+                isSymbols: true, data: listData, previousData: oldData);
             Future.delayed(const Duration(seconds: 5), () {
               if (shouldLoadData) {
                 loadData();

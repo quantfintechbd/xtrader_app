@@ -9,7 +9,7 @@ class ModifyOrderState {
   final Quotes? quotes;
   final TextEditingController slController, tpController, volumeController;
   final bool isValid;
-  final List<Quotes> dataset;
+  final List<QuotesChartData> dataset;
   const ModifyOrderState({
     this.details,
     this.quotes,
@@ -24,7 +24,7 @@ class ModifyOrderState {
     TradeDetails? details,
     bool? isValid,
     Quotes? quotes,
-    List<Quotes>? dataset,
+    List<QuotesChartData>? dataset,
   }) {
     return ModifyOrderState(
       details: details ?? this.details,

@@ -100,7 +100,11 @@ class QuotesScreen extends StatelessWidget {
                         : ListView.builder(
                             itemCount: state.data?.length ?? 0,
                             itemBuilder: (context, index) {
-                              return QuotesItemView(quotes: state.data![index]);
+                              return QuotesItemView(
+                                quotes: state.data![index],
+                                askColor: KColor.primary.color,
+                                bidColor: KColor.red.color,
+                              );
                             })
                     : const Center(
                         child: GlobalText(
