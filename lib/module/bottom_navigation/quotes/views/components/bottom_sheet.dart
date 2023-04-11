@@ -58,6 +58,7 @@ class QuotesBottomSheet extends StatelessWidget {
           ListTile(
             onTap: () {
               Navigation.pop(context);
+              context.read(bottomNavigationProvider.notifier).changeTap(2);
               Navigation.push(context,
                   appRoutes: AppRoutes.newOrder,
                   arguments: quotes.symbol ?? '');

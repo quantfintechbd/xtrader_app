@@ -62,10 +62,14 @@ class LoadSymbolController extends StateNotifier<LoadSymbolState> {
               state.remoteSymbols.add(element);
             }
           }
-          if (state.remoteSymbols.length != state.totalCount) {
+          if (state.remoteSymbols.length <= state.totalCount - 1) {
+            final newEndindex = state.endIndex + state.limit + 1;
+
             state = state.copyWith(
               startIndex: state.endIndex + 1,
-              endIndex: state.endIndex + state.limit + 1,
+              endIndex: newEndindex <= state.totalCount - 1
+                  ? state.endIndex + state.limit + 1
+                  : state.totalCount - 1,
             );
             "State".log();
             state.remoteSymbols.length.log();
@@ -73,9 +77,7 @@ class LoadSymbolController extends StateNotifier<LoadSymbolState> {
             state.endIndex.log();
             fetchSymbols(context);
           } else {
-            "calling Done".log();
             if (apiCount == responseCount) {
-              "response Done".log();
               state.remoteSymbols.length.log();
               PrefHelper.setStringList(
                   AppConstant.REMOTE_SYMBOLS.key, state.remoteSymbols);
