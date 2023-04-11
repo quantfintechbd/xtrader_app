@@ -29,9 +29,7 @@ class ChartsScreen extends ConsumerWidget {
           allowsInlineMediaPlayback: true,
         ));
     return FocusDetector(
-      onFocusLost: () {
-        // contoller.setChartToDefault();
-      },
+      onFocusLost: () {},
       child: Container(
         width: context.width,
         height: context.height,
@@ -55,7 +53,7 @@ class ChartsScreen extends ConsumerWidget {
               'Authorization': 'Bearer $token',
             },
             url: Uri.parse(
-              "https://api.xtraderplatform.com/index.php/chart-show?symbol=${state.selectedSymbol ?? 'AUDCAD'}",
+              "https://api.xtraderplatform.com/index.php/chart-show?symbol=${state.selectedSymbol ?? 'AUDCAD'}&w=${context.width}&h=${context.height}",
             ),
           ),
         ),

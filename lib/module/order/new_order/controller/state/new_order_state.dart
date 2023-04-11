@@ -12,6 +12,7 @@ class NewOrderState {
       orderSize;
   final bool isValid;
   final String? dropdownvalue;
+  final List<Quotes> dataset;
 
   NewOrderState({
     this.symbol,
@@ -22,6 +23,7 @@ class NewOrderState {
     required this.orderSize,
     required this.isValid,
     this.dropdownvalue,
+    required this.dataset,
   });
 
   final items = [
@@ -32,7 +34,11 @@ class NewOrderState {
     "Sell Stop"
   ];
   NewOrderState copyWith(
-      {String? symbol, bool? isValid, String? dropdownvalue, Quotes? quotes}) {
+      {String? symbol,
+      bool? isValid,
+      String? dropdownvalue,
+      Quotes? quotes,
+      List<Quotes>? dataset}) {
     return NewOrderState(
       symbol: symbol ?? this.symbol,
       quotes: quotes ?? this.quotes,
@@ -42,6 +48,7 @@ class NewOrderState {
       orderSize: this.orderSize,
       isValid: isValid ?? this.isValid,
       dropdownvalue: dropdownvalue ?? this.dropdownvalue,
+      dataset: dataset ?? this.dataset,
     );
   }
 }

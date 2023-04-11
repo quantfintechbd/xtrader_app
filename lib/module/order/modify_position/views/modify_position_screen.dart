@@ -1,6 +1,8 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:xtrader_app/global/widget/global_button.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_details_response.dart';
@@ -11,7 +13,7 @@ import 'package:xtrader_app/utils/extension.dart';
 import '../../../../global/widget/global_app_bar/global_appbar.dart';
 import '../../../../utils/styles/styles.dart';
 import '../../../symbol/common_components/scale_component.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
   ChartData(this.x, this.y);
@@ -128,34 +130,101 @@ class ModifyPositionScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 20.h,
+              height: 40.h,
             ),
             Expanded(
-              child: SfCartesianChart(
-                series: <ChartSeries>[
-                  SplineSeries<ChartData, int>(
-                    dataSource: chartData1,
-                    // Type of spline
-                    color: KColor.primary.color,
-                    splineType: SplineType.cardinal,
-                    cardinalSplineTension: 0.9,
-                    xValueMapper: (ChartData data, _) => data.x,
-                    yValueMapper: (ChartData data, _) => data.y,
-                  ),
-                  SplineSeries<ChartData, int>(
-                    dataSource: chartData2,
-                    // Type of spline
-                    color: KColor.red.color,
-                    splineType: SplineType.cardinal,
-                    cardinalSplineTension: 0.9,
-                    xValueMapper: (ChartData data, _) => data.x,
-                    yValueMapper: (ChartData data, _) => data.y,
-                  ),
-                ],
+              child: Consumer(
+                builder: (context, ref, snapshot) {
+                  final dataState = ref.watch(modifyPostionProvider);
+                  return LineChart(
+                    LineChartData(
+                      titlesData: FlTitlesData(
+                        leftTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        rightTitles: AxisTitles(
+                          drawBehindEverything: false,
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: (value, meta) {
+                              return GlobalText(
+                                  str: value.toStringAsFixed(3),
+                                  fontWeight: FontWeight.w500);
+                            },
+                            reservedSize: 55,
+                          ),
+                        ),
+                        bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                      ),
+                      lineBarsData: [
+                        LineChartBarData(
+                          color: KColor.red.color,
+                          isCurved: true,
+                          spots: dataState.dataset
+                              .map((point) => FlSpot(
+                                  DateFormat("dd/MM HH:mm:ss")
+                                      .parse(point.time ?? '')
+                                      .microsecondsSinceEpoch
+                                      .toDouble(),
+                                  point.ask.toString().parseToDouble()))
+                              .toList(),
+                        ),
+                        LineChartBarData(
+                          color: KColor.primary.color,
+                          isCurved: true,
+                          spots: dataState.dataset
+                              .map((point) => FlSpot(
+                                  DateFormat("dd/MM HH:mm:ss")
+                                      .parse(point.time ?? '')
+                                      .microsecondsSinceEpoch
+                                      .toDouble(),
+                                  point.bid.toString().parseToDouble()))
+                              .toList(),
+                        ),
+                      ],
+                    ),
+                  );
+                  /*SfCartesianChart(
+                    primaryXAxis: DateTimeAxis(),
+                    //https://help.syncfusion.com/flutter/cartesian-charts/chart-types/candle-chart
+                    series: <ChartSeries>[
+                      CandleSeries<Quotes, DateTime>(
+                        bullColor: KColor.primary.color,
+                        dataSource: dataState.dataset,
+                        xValueMapper: (Quotes data, _) =>
+                            DateFormat("dd/MM HH:mm:ss").parse(data.time ?? ''),
+                        lowValueMapper: (Quotes data, _) =>
+                            data.askLow.toString().parseToDouble(),
+                        highValueMapper: (Quotes data, _) =>
+                            data.askHigh.toString().parseToDouble(),
+                        openValueMapper: (Quotes data, _) =>
+                            data.priceOpen.toString().parseToDouble(),
+                        closeValueMapper: (Quotes data, _) =>
+                            data.priceClose.toString().parseToDouble(),
+                      ),
+                      CandleSeries<Quotes, DateTime>(
+                        bullColor: KColor.red.color,
+                        dataSource: dataState.dataset,
+                        xValueMapper: (Quotes data, _) =>
+                            DateFormat("dd/MM HH:mm:ss").parse(data.time ?? ''),
+                        lowValueMapper: (Quotes data, _) =>
+                            data.bidLow.toString().parseToDouble(),
+                        highValueMapper: (Quotes data, _) =>
+                            data.bidHigh.toString().parseToDouble(),
+                        openValueMapper: (Quotes data, _) =>
+                            data.priceOpen.toString().parseToDouble(),
+                        closeValueMapper: (Quotes data, _) =>
+                            data.priceClose.toString().parseToDouble(),
+                      )
+                    ],
+                  );*/
+                },
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 40.h,
             ),
             SafeArea(
               child: Consumer(builder: (context, ref, snapshot) {

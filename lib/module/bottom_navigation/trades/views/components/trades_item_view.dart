@@ -118,10 +118,6 @@ class _TradesItemViewState extends State<TradesItemView> {
                 SizedBox(
                   height: 15.h,
                 ),
-                DottedLine(
-                  dashColor: KColor.primary.color,
-                  dashRadius: 0.1,
-                ),
               ],
             ),
           ),
@@ -185,9 +181,9 @@ class _TradesItemViewState extends State<TradesItemView> {
                 SizedBox(
                   height: 15.h,
                 ),
-                Divider(
-                  height: 1,
-                  color: KColor.primary.color,
+                DottedLine(
+                  dashColor: KColor.primary.color,
+                  dashRadius: 0.1,
                 ),
               ],
             ),

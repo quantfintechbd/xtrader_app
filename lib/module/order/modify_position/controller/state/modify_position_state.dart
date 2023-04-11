@@ -9,6 +9,7 @@ class ModifyOrderState {
   final Quotes? quotes;
   final TextEditingController slController, tpController, volumeController;
   final bool isValid;
+  final List<Quotes> dataset;
   const ModifyOrderState({
     this.details,
     this.quotes,
@@ -16,10 +17,15 @@ class ModifyOrderState {
     required this.tpController,
     required this.volumeController,
     required this.isValid,
+    required this.dataset,
   });
 
-  ModifyOrderState copyWith(
-      {TradeDetails? details, bool? isValid, Quotes? quotes}) {
+  ModifyOrderState copyWith({
+    TradeDetails? details,
+    bool? isValid,
+    Quotes? quotes,
+    List<Quotes>? dataset,
+  }) {
     return ModifyOrderState(
       details: details ?? this.details,
       tpController: this.tpController,
@@ -27,6 +33,7 @@ class ModifyOrderState {
       volumeController: this.volumeController,
       isValid: isValid ?? this.isValid,
       quotes: quotes ?? this.quotes,
+      dataset: dataset ?? this.dataset,
     );
   }
 }

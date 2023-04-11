@@ -82,6 +82,6 @@ class ScaleComponent extends StatelessWidget {
 
   void calculate(String value) {
     controller.text = (controller.text.parseToDouble() + value.parseToDouble())
-        .toStringAsFixed(4);
+        .toStringAsFixed(2);
   }
 }

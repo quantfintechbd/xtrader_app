@@ -46,11 +46,12 @@ dependencies:
   flutter_svg: ^2.0.4
   flutter_riverpod: ^2.3.2
   dotted_line: ^3.1.0
-  syncfusion_flutter_charts: ^21.1.37
+  #syncfusion_flutter_charts: ^21.1.37
 
   web_socket_channel: ^2.3.0
   flutter_inappwebview: ^5.7.2+3
   focus_detector: ^2.0.1
+  fl_chart: ^0.61.0
  
   
 dev_dependencies:

@@ -8,6 +8,7 @@ import 'package:xtrader_app/module/bottom_navigation/history/controller/history_
 import 'package:xtrader_app/module/bottom_navigation/trades/controller/trades_controller.dart';
 import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
+import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/styles/k_assets.dart';
 import 'package:xtrader_app/utils/styles/k_colors.dart';
@@ -40,9 +41,9 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
     state = state.copyWith(selectedTab: 1, selectedSymbol: symbol);
   }
 
-  void setChartToDefault() {
-    state = state.copyWith(selectedSymbol: 'AUDCAD');
-  }
+  // void setChartToDefault() {
+  //   state = state.copyWith(selectedSymbol: 'AUDCAD');
+  // }
 
   void setAppBarBgColor(Color color) {
     state = state.copyWith(appbarBg: color);
@@ -120,7 +121,7 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
                         child: Row(
                           children: [
                             Icon(
-                              state.dropdownvalue == items
+                              state.historyFilterValue == items
                                   ? Icons.check_box
                                   : Icons.check_box_outline_blank,
                               color: KColor.mineShaftCommmon.color,
@@ -152,6 +153,42 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
         return GlobalAppbar(
           isShowMenubar: true,
           title: "Chart ${state.selectedSymbol}",
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigation.push(
+                  context,
+                  appRoutes: AppRoutes.newOrder,
+                  arguments: state.selectedSymbol,
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: GlobalSvgLoader(
+                  imagePath: KAssetName.add.imagePath,
+                  svgFor: SvgFor.asset,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                final symbol = state.selectedSymbol;
+                if (symbol != null) {
+                  changeTap(1);
+                  showCharts(symbol: symbol);
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: GlobalSvgLoader(
+                  imagePath: KAssetName.chartRefresh.imagePath,
+                  svgFor: SvgFor.asset,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ],
         );
       default:
         return GlobalAppbar(

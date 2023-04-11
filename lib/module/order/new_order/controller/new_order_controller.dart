@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/error_dialog.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';
 import 'package:xtrader_app/module/order/new_order/controller/state/new_order_state.dart';
 import 'package:xtrader_app/module/order/new_order/model/new_order_request.dart';
 import 'package:xtrader_app/utils/extension.dart';
@@ -27,6 +28,7 @@ class NewOrderController extends StateNotifier<NewOrderState> {
             priceController: TextEditingController(),
             orderSize: TextEditingController(),
             isValid: false,
+            dataset: [],
           ),
         ) {
     state.slController.addListener(
@@ -129,6 +131,7 @@ class NewOrderController extends StateNotifier<NewOrderState> {
           'selectedSymbols': [state.symbol ?? '']
         },
         onSuccess: (value) {
+          state.dataset.add(value);
           state = state.copyWith(quotes: value);
           if (shouldLoadData) {
             Future.delayed(Duration(seconds: 3), () {

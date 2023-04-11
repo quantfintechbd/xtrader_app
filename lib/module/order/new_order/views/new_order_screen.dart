@@ -1,17 +1,22 @@
+import 'dart:ffi';
+
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector/focus_detector.dart';
+import 'package:intl/intl.dart';
 import 'package:xtrader_app/global/widget/global_button.dart';
 import 'package:xtrader_app/global/widget/global_dropdown.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';
 import 'package:xtrader_app/module/order/new_order/controller/new_order_controller.dart';
 import 'package:xtrader_app/module/symbol/common_components/plus_minus_component.dart';
 import 'package:xtrader_app/utils/extension.dart';
 
 import '../../../../global/widget/global_app_bar/global_appbar.dart';
 import '../../../../utils/styles/styles.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../symbol/common_components/scale_component.dart';
 
@@ -33,20 +38,6 @@ class NewOrderScreen extends StatelessWidget {
         controller.setdetails(symbol);
       },
     );
-    final List<ChartData> chartData1 = [
-      ChartData(2010, 35),
-      ChartData(2011, 13),
-      ChartData(2012, 34),
-      ChartData(2013, 27),
-      ChartData(2014, 40)
-    ];
-    final List<ChartData> chartData2 = [
-      ChartData(2010, 40),
-      ChartData(2011, 10),
-      ChartData(2012, 87),
-      ChartData(2013, 62),
-      ChartData(2014, 20)
-    ];
 
     return FocusDetector(
       onFocusLost: () {
@@ -197,27 +188,60 @@ class NewOrderScreen extends StatelessWidget {
                 height: 20.h,
               ),
               Expanded(
-                child: SfCartesianChart(
-                  series: <ChartSeries>[
-                    SplineSeries<ChartData, int>(
-                      dataSource: chartData1,
-                      // Type of spline
-                      color: KColor.primary.color,
-                      splineType: SplineType.cardinal,
-                      cardinalSplineTension: 0.9,
-                      xValueMapper: (ChartData data, _) => data.x,
-                      yValueMapper: (ChartData data, _) => data.y,
-                    ),
-                    SplineSeries<ChartData, int>(
-                      dataSource: chartData2,
-                      // Type of spline
-                      color: KColor.red.color,
-                      splineType: SplineType.cardinal,
-                      cardinalSplineTension: 0.9,
-                      xValueMapper: (ChartData data, _) => data.x,
-                      yValueMapper: (ChartData data, _) => data.y,
-                    ),
-                  ],
+                child: Consumer(
+                  builder: (context, ref, snapshot) {
+                    final dataState = ref.watch(newOrderProvider);
+                    return LineChart(
+                      LineChartData(
+                        titlesData: FlTitlesData(
+                          leftTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false)),
+                          rightTitles: AxisTitles(
+                            drawBehindEverything: false,
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              getTitlesWidget: (value, meta) {
+                                return GlobalText(
+                                    str: value.toStringAsFixed(3),
+                                    fontWeight: FontWeight.w500);
+                              },
+                              reservedSize: 55,
+                            ),
+                          ),
+                          bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false)),
+                          topTitles: AxisTitles(
+                              sideTitles: SideTitles(showTitles: false)),
+                        ),
+                        lineBarsData: [
+                          LineChartBarData(
+                            color: KColor.red.color,
+                            isCurved: true,
+                            spots: dataState.dataset
+                                .map((point) => FlSpot(
+                                    DateFormat("dd/MM HH:mm:ss")
+                                        .parse(point.time ?? '')
+                                        .microsecondsSinceEpoch
+                                        .toDouble(),
+                                    point.ask.toString().parseToDouble()))
+                                .toList(),
+                          ),
+                          LineChartBarData(
+                            color: KColor.primary.color,
+                            isCurved: true,
+                            spots: dataState.dataset
+                                .map((point) => FlSpot(
+                                    DateFormat("dd/MM HH:mm:ss")
+                                        .parse(point.time ?? '')
+                                        .microsecondsSinceEpoch
+                                        .toDouble(),
+                                    point.bid.toString().parseToDouble()))
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
               SizedBox(

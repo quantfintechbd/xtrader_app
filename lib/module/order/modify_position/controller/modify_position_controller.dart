@@ -23,10 +23,12 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
   ModifyPositionController()
       : super(
           ModifyOrderState(
-              slController: TextEditingController(),
-              tpController: TextEditingController(),
-              volumeController: TextEditingController(),
-              isValid: false),
+            slController: TextEditingController(),
+            tpController: TextEditingController(),
+            volumeController: TextEditingController(),
+            isValid: false,
+            dataset: [],
+          ),
         ) {
     state.slController.addListener(
       () {
@@ -93,6 +95,7 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
           'selectedSymbols': [state.details?.symbol ?? '']
         },
         onSuccess: (value) {
+          state.dataset.add(value);
           state = state.copyWith(quotes: value);
           Future.delayed(Duration(seconds: 3), () {
             loadQuote();
