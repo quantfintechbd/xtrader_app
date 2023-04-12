@@ -25,7 +25,7 @@ class TradesController extends StateNotifier<TradesState> {
           detailsLoading: false,
           shouldLoad: true,
         ));
-
+  bool shouldLoad = true;
   void refresh() {
     fetchTradesPostion();
     fetchTradeDetails(state.currentSelction ?? '7 Days');
@@ -33,6 +33,7 @@ class TradesController extends StateNotifier<TradesState> {
 
   void stopLoading() {
     state = state.copyWith(shouldLoad: false);
+    shouldLoad = false;
   }
 
   void fetchTradesPostion() async {
@@ -43,7 +44,7 @@ class TradesController extends StateNotifier<TradesState> {
           tradePositionData: data.toJson(),
           positionLoading: false,
         );
-        if (state.shouldLoad) {
+        if (shouldLoad) {
           Future.delayed(Duration(seconds: 5), () {
             refresh();
           });

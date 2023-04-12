@@ -6,6 +6,7 @@ import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/module/bottom_navigation/bottom_navigation_bar/controller/bottom_navigation_controller.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/controller/quotes_controller.dart';
 import 'package:xtrader_app/utils/app_routes.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
@@ -132,10 +133,9 @@ class GlobalAppDrawer extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
+                context.read(quotesProvider.notifier).shouldLoadData = false;
                 Navigation.pop(context);
-                /* PrefHelper.setString(AppConstant.TOKEN.key, '');
-                PrefHelper.setString(AppConstant.USER_NAME.key, '');
-                PrefHelper.setString(AppConstant.NAME.key, '');*/
+
                 Navigation.pushAndRemoveUntil(context,
                     appRoutes: AppRoutes.login);
               },

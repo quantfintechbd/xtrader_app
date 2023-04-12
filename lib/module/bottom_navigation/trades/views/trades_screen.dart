@@ -86,35 +86,27 @@ class TradesScreen extends StatelessWidget {
               ),
               Consumer(builder: (context, ref, snapshot) {
                 final dataState = ref.watch(tradesProvider);
-                Future(() {
-                  bottomControler.setAppBarBgColor(
-                      dataState.totalProfit?.isNegative == true
-                          ? KColor.red.color
-                          : KColor.primary.color);
+                Future(
+                  () {
+                    bottomControler.setAppBarBgColor(
+                        dataState.totalProfit?.isNegative == true
+                            ? KColor.red.color
+                            : KColor.primary.color);
 
-                  bottomControler.setAppBarTitleWidget(
-                    Row(
-                      children: [
-                        GlobalText(
-                          str: "Trade",
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
-                          color: KColor.white.color,
-                        ),
-                        SizedBox(
-                          width: 6.w,
-                        ),
-                        GlobalText(
+                    bottomControler.setAppBarTitleWidget(
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: GlobalText(
                             str: dataState.totalProfit == null
                                 ? ''
                                 : "${dataState.totalProfit!.toStringAsFixed(2)} USD",
                             fontWeight: FontWeight.w700,
                             fontSize: 20,
                             color: KColor.white.color),
-                      ],
-                    ),
-                  );
-                });
+                      ),
+                    );
+                  },
+                );
                 return dataState.tradeDetails?.isEmpty == true
                     ? Center(
                         child: centerCircularProgress(

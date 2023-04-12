@@ -29,6 +29,7 @@ enum KAssetName {
   eyeOff,
   logout,
   chartRefresh,
+  arrowDown
 }
 
 extension AssetsExtention on KAssetName {
@@ -94,6 +95,8 @@ extension AssetsExtention on KAssetName {
         return '$_svgDir/logout.svg';
       case KAssetName.chartRefresh:
         return '$_svgDir/chart-refresh.svg';
+      case KAssetName.arrowDown:
+        return '$_svgDir/ic_arrow_down.svg';
       default:
         return "";
     }

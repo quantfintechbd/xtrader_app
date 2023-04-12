@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xtrader_app/utils/styles/k_text_style.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -21,8 +21,9 @@ class QuotesBottomSheet extends StatelessWidget {
       // color: KColor.scafoldBg.color,
       decoration: BoxDecoration(
         color: KColor.popupBg.color,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.r),
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(10.r),
+          topLeft: Radius.circular(10.r),
         ),
       ),
       height: context.height * 0.4,

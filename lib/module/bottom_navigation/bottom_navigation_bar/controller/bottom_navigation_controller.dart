@@ -94,10 +94,14 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
           ],
         );
       case 2:
+        List<Widget> actions = [];
+        actions.add(state.appBarTitleWidget ?? Container());
         return GlobalAppbar(
           isShowMenubar: true,
+          title: "Trades",
           backgroundColor: state.appbarBg ?? KColor.mineShaft.color,
-          titleWidget: state.appBarTitleWidget ?? Container(),
+          // titleWidget: state.appBarTitleWidget ?? Container(),
+          actions: actions,
         );
       case 3:
         return GlobalAppbar(
