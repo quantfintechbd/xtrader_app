@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xtrader_app/global/widget/global_loader.dart';
 import 'package:xtrader_app/module/login/controller/state/login_state.dart';
+import 'package:xtrader_app/module/login/model/broker_list_response.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 
@@ -32,6 +33,7 @@ class LoginController extends StateNotifier<LoginState> {
             isUserIdFocued: false,
           ),
         ) {
+    fetchBrokerList();
     state.userIdController.addListener(() {
       _validate();
     });
@@ -45,11 +47,18 @@ class LoginController extends StateNotifier<LoginState> {
 
   void _validate() {
     if (state.userIdController.text.isNotEmpty &&
-        state.passwordController.text.isNotEmpty) {
+        state.passwordController.text.isNotEmpty &&
+        state.selectedBroker != null) {
       state = state.copyWith(isValid: true);
     } else {
       state = state.copyWith(isValid: false);
     }
+  }
+
+  Future fetchBrokerList() async {
+    _loginRepository.fetchBrokers(onSuccess: (listData) {
+      state = state.copyWith(brokers: listData, filteredBroker: listData);
+    });
   }
 
   Future login(BuildContext context) async {
@@ -59,6 +68,7 @@ class LoginController extends StateNotifier<LoginState> {
       final LoginRequesteModel loginRequestModel = LoginRequesteModel(
         userName: state.userIdController.text.toLowerCase(),
         password: state.passwordController.text,
+        broker: state.selectedBroker?.id ?? '',
       );
 
       ViewUtil.showAlertDialog(
@@ -116,6 +126,17 @@ class LoginController extends StateNotifier<LoginState> {
 
   void changePasswordFocus(bool isfocused) {
     state = state.copyWith(isPasswordFocused: isfocused);
+  }
+
+  void searchBroker(String text) {
+    final brokers = state.brokers?.where((element) {
+      return element.name?.toLowerCase().contains(text.toLowerCase()) == true;
+    });
+    state = state.copyWith(filteredBroker: brokers?.toList());
+  }
+
+  void setSelectedBroker(Broker broker) {
+    state = state.copyWith(selectedBroker: broker);
   }
 
   @override

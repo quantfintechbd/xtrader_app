@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/utils/extension.dart';
+import 'package:xtrader_app/utils/styles/k_colors.dart';
 
 import '../../../../constant/constant_key.dart';
+import '../model/quotes_details_response.dart';
 import '../repository/quotes_interface.dart';
 import '../repository/quotes_repository.dart';
 import 'state/quotes_state.dart';
@@ -58,10 +60,38 @@ class QuotesController extends StateNotifier<QuotesState> {
     }
   }
 
+  QuotesColors getColor(Quotes item) {
+    final lastsymbol = state.previousData
+        ?.where((element) => element.symbol == item.symbol)
+        .toList();
+
+    if (lastsymbol == null || lastsymbol.isEmpty) {
+      return QuotesColors(KColor.primary.color, KColor.primary.color);
+    } else {
+      Color askColor = lastsymbol.first.ask.toString().parseToDouble() >
+                  item.ask.toString().parseToDouble() ==
+              true
+          ? KColor.red.color
+          : KColor.primary.color;
+      Color bidColor = lastsymbol.first.ask.toString().parseToDouble() >
+                  item.bid.toString().parseToDouble() ==
+              true
+          ? KColor.red.color
+          : KColor.primary.color;
+      return QuotesColors(askColor, bidColor);
+    }
+  }
+
   @override
   void dispose() {
     "dispose".log();
 
     super.dispose();
   }
+}
+
+class QuotesColors {
+  final Color askColor, bidColor;
+
+  QuotesColors(this.askColor, this.bidColor);
 }

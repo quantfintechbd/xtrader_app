@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/module/symbol/common_components/plus_minus_component.dart';
 import 'package:xtrader_app/utils/extension.dart';
-import 'package:xtrader_app/utils/styles/k_colors.dart';
 
 import 'gradiant_box.dart';
 

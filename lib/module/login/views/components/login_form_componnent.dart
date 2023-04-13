@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/constant/app_url.dart';
 import 'package:xtrader_app/global/widget/global_image_loader.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/module/login/controller/login_controller.dart';
@@ -40,52 +41,53 @@ class LoginFormComponent extends ConsumerWidget {
             },
             child: Row(
               children: [
-                // Padding(
-                //   padding: EdgeInsets.symmetric(vertical: 10.h),
-                //   child: GlobalText(
-                //     str: "Select Broker",
-                //     fontWeight: FontWeight.w500,
-                //     color: KColor.textHintColor.color,
-                //     fontSize: 15.sp,
-                //   ),
-                // ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GlobalText(
-                      str: "Select Broker",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12.sp,
-                      color: KColor.primary.color,
-                      textAlign: TextAlign.left,
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        GlobalImageLoader(
-                          imagePath:
-                              "https://www.cse.com.bd/upload_trec/8f38e7bedef0511f2715b1acef3e24f0.jpg",
-                          imageFor: ImageFor.network,
-                          width: 26,
-                          height: 26,
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        GlobalText(
-                          str: "Base Capital Ltd",
+                state.selectedBroker == null
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: GlobalText(
+                          str: "Select Broker",
                           fontWeight: FontWeight.w500,
-                          fontSize: 16.sp,
-                          color: KColor.ob1a31.color,
+                          color: KColor.textHintColor.color,
+                          fontSize: 15.sp,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GlobalText(
+                            str: "Select Broker",
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12.sp,
+                            color: KColor.primary.color,
+                            textAlign: TextAlign.left,
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              GlobalImageLoader(
+                                imagePath:
+                                    "${AppUrl.baseImage.url}${state.selectedBroker?.icon}",
+                                imageFor: ImageFor.network,
+                                width: 26,
+                                height: 26,
+                              ),
+                              SizedBox(
+                                width: 5.w,
+                              ),
+                              GlobalText(
+                                str: state.selectedBroker?.name ?? '',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.sp,
+                                color: KColor.ob1a31.color,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                 Spacer(),
                 GlobalSvgLoader(
                     imagePath: KAssetName.arrowDown.imagePath,

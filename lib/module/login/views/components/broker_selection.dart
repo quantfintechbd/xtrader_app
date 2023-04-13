@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/constant/app_url.dart';
 import 'package:xtrader_app/global/widget/global_image_loader.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
+import 'package:xtrader_app/module/login/controller/login_controller.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
@@ -15,6 +18,8 @@ class BrokerSelectionSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read(loginProvider.notifier);
+    AppUrl.baseImage.url.log();
     return Container(
       decoration: BoxDecoration(
         color: KColor.popupBg.color,
@@ -63,6 +68,9 @@ class BrokerSelectionSheet extends StatelessWidget {
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                   fontSize: 16.sp),
+              onChanged: (value) {
+                controller.searchBroker(value);
+              },
               //controller: state.searchController,
               hintText: "Search",
               //labelText: "Search Here",
@@ -84,29 +92,37 @@ class BrokerSelectionSheet extends StatelessWidget {
             height: 20.h,
           ),
           Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(12.0),
-              itemBuilder: (context, index) {
-                return ListTile(
-                  onTap: () {
-                    Navigation.pop(context);
-                  },
-                  leading: GlobalImageLoader(
-                    imagePath:
-                        "https://www.cse.com.bd/upload_trec/8f38e7bedef0511f2715b1acef3e24f0.jpg",
-                    imageFor: ImageFor.network,
-                    width: 26,
-                    height: 26,
-                  ),
-                  minLeadingWidth: 5,
-                  title: GlobalText(
-                    str: "Base Capital Ltd",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.sp,
-                  ),
-                );
-              },
-            ),
+            child: Consumer(builder: (context, ref, snapshot) {
+              final state = ref.watch(loginProvider);
+              return ListView.builder(
+                padding: EdgeInsets.all(12.0),
+                itemCount: state.filteredBroker?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      if (state.filteredBroker?[index] != null) {
+                        controller
+                            .setSelectedBroker(state.filteredBroker![index]);
+                        Navigation.pop(context);
+                      }
+                    },
+                    leading: GlobalImageLoader(
+                      imagePath:
+                          "${AppUrl.baseImage.url}${state.filteredBroker?[index].icon}",
+                      imageFor: ImageFor.network,
+                      width: 26,
+                      height: 26,
+                    ),
+                    minLeadingWidth: 5,
+                    title: GlobalText(
+                      str: state.filteredBroker?[index].name ?? '',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16.sp,
+                    ),
+                  );
+                },
+              );
+            }),
           ),
         ],
       ),

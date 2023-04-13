@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xtrader_app/utils/enum.dart';
+import 'package:xtrader_app/utils/extension.dart';
 
 class GlobalImageLoader extends StatelessWidget {
   const GlobalImageLoader({
@@ -18,6 +19,7 @@ class GlobalImageLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageFor == ImageFor.network) {
+      imagePath.log();
       return Image.network(
         imagePath,
         height: height,
@@ -36,5 +38,3 @@ class GlobalImageLoader extends StatelessWidget {
     }
   }
 }
-
- 

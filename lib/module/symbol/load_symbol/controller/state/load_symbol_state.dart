@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class LoadSymbolState {
   final int totalCount;
   final int startIndex, endIndex;

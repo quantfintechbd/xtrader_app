@@ -26,27 +26,6 @@ class QuotesScreen extends StatelessWidget {
       onFocusGained: () {
         controller.startTimer();
       },
-      // onVisibilityLost: () {
-      //   'Visibility Lost.'.log();
-      //   '\nIt means the widget is no longer visible within your app.'.log();
-      // },
-      // onVisibilityGained: () {
-      //   'Visibility Gained.'.log();
-      //   '\nIt means the widget is now visible within your app.'.log();
-      // },
-      // onForegroundLost: () {
-      //   'Foreground Lost.'.log();
-      //   '\nIt means, for example, that the user sent your app to the '.log();
-      //   'background by opening another app or turned off the device\'s '.log();
-      //   'screen while your widget was visible.'.log();
-      // },
-      // onForegroundGained: () {
-      //   'Foreground Gained.'.log();
-      //   '\nIt means, for example, that the user switched back to your app '
-      //       .log();
-      //   'or turned the device\'s screen back on while your widget was '.log();
-      //   'visible.'.log();
-      // },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
@@ -100,10 +79,12 @@ class QuotesScreen extends StatelessWidget {
                         : ListView.builder(
                             itemCount: state.data?.length ?? 0,
                             itemBuilder: (context, index) {
+                              final colors =
+                                  controller.getColor(state.data![index]);
                               return QuotesItemView(
                                 quotes: state.data![index],
-                                askColor: KColor.primary.color,
-                                bidColor: KColor.red.color,
+                                askColor: colors.askColor,
+                                bidColor: colors.bidColor,
                               );
                             })
                     : const Center(

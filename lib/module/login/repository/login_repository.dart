@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:xtrader_app/module/login/model/broker_list_response.dart';
 import 'package:xtrader_app/module/login/model/login_response_model.dart';
 
 import 'package:xtrader_app/module/login/model/login_request_model.dart';
@@ -28,5 +30,22 @@ class LoginRepository implements ILoginRepository {
       "repo : $error".log();
       throw Exception(error);
     });
+  }
+
+  @override
+  Future<void> fetchBrokers(
+      {required Function(List<Broker> response) onSuccess}) async {
+    await _loginApi.brokerList(onSuccess: (Response response) {
+      BrokerListResponse data = BrokerListResponse.fromJson(response.data);
+      if (data.globalResponse?.code == 200 && data.data != null) {
+        onSuccess(data.data!);
+      } else {
+        //throw Exception("Data is not available");
+      }
+    }).catchError((error, stackTrace) {
+      "repo : $error".log();
+      throw Exception(error);
+    });
+    ;
   }
 }

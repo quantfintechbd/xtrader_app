@@ -16,13 +16,13 @@ class GradiantBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            const Color(0xffC0C0C0),
-            const Color(0xffFFFFFF),
-            const Color(0xffC0C0C0),
+            Color(0xffC0C0C0),
+            Color(0xffFFFFFF),
+            Color(0xffC0C0C0),
           ],
         ),
         border: Border.all(

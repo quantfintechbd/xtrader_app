@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:xtrader_app/utils/enum.dart';
+import 'package:xtrader_app/utils/extension.dart';
 
 enum AppUrl {
   base,
@@ -16,6 +17,7 @@ enum AppUrl {
   tradePostion,
   getHistory,
   chartShow,
+  brokerList,
 }
 
 extension AppUrlExtention on AppUrl {
@@ -32,7 +34,7 @@ extension AppUrlExtention on AppUrl {
 
       case UrlLink.isDev:
         _baseUrl = "http://api.xtraderplatform.com/index.php";
-        _baseImageUrl = "";
+        _baseImageUrl = "http://api.xtraderplatform.com";
 
         break;
       case UrlLink.isLocalServer:
@@ -71,6 +73,8 @@ extension AppUrlExtention on AppUrl {
         return '/get-history';
       case AppUrl.chartShow:
         return '/chart-show';
+      case AppUrl.brokerList:
+        return '/broker-list';
     }
   }
 }

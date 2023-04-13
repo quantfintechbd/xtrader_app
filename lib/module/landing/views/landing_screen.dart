@@ -76,8 +76,7 @@ class LandingScreen extends StatelessWidget {
                   Spacer(),
                   GlobalButton(
                     onPressed: () {
-                      Navigation.pushAndRemoveUntil(context,
-                          appRoutes: AppRoutes.login);
+                      Navigation.push(context, appRoutes: AppRoutes.login);
                     },
                     buttonText: "Get Started",
                     btnHeight: 55.h,

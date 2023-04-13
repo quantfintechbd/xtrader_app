@@ -28,4 +28,21 @@ class LoginApi {
       throw Exception(error);
     });
   }
+
+  Future brokerList({
+    required onSuccess(Response response),
+  }) async {
+    await _apiClient
+        .request(
+            method: Method.GET,
+            url: AppUrl.brokerList.url,
+            isPopGlobalDialog: true,
+            onSuccessFunction: await (Response response) {
+              onSuccess(response);
+            })
+        .catchError((error, stackTrace) {
+      "api on error ${error}".log();
+      throw Exception(error);
+    });
+  }
 }
