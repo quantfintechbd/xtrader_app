@@ -45,7 +45,7 @@ class TradesController extends StateNotifier<TradesState> {
           positionLoading: false,
         );
         if (shouldLoad) {
-          Future.delayed(Duration(seconds: 5), () {
+          Future.delayed(Duration(microseconds: 500), () {
             refresh();
           });
         }

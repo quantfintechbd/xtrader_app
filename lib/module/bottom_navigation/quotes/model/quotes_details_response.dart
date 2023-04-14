@@ -1,4 +1,7 @@
+import 'package:intl/intl.dart';
 import 'package:xtrader_app/global/model/global_response.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/model/socket_response_item.dart';
+import 'package:xtrader_app/utils/extension.dart';
 
 class QuotesDetailsResponse {
   List<Quotes>? data;
@@ -72,6 +75,58 @@ class Quotes {
     data['Difference'] = this.difference;
     data['Time'] = this.time;
     return data;
+  }
+
+  Quotes quotesFrom(SocketResponseItem item) {
+    return Quotes(
+      symbol: symbol,
+      bid: item.bid,
+      ask: item.ask,
+      bidHigh: item.bid.toString().parseToDouble() >
+              bidHigh.toString().parseToDouble()
+          ? item.bid
+          : bidHigh,
+      bidLow: item.bid.toString().parseToDouble() <
+              bidLow.toString().parseToDouble()
+          ? item.bid
+          : bidLow,
+      askHigh: item.ask.toString().parseToDouble() >
+              askHigh.toString().parseToDouble()
+          ? item.ask
+          : askHigh,
+      askLow: item.ask.toString().parseToDouble() <
+              askLow.toString().parseToDouble()
+          ? item.ask
+          : askLow,
+      priceClose: priceClose,
+      priceOpen: priceOpen,
+      difference: getDifference(item),
+      time: DateFormat('MM/dd HH:mm:ss').format(
+        DateTime.now(),
+      ),
+    );
+  }
+
+  String getDifference(SocketResponseItem item) {
+    switch (int.parse(item.digits ?? "0")) {
+      case 5:
+        return ((item.ask.toString().parseToDouble() -
+                    item.bid.toString().parseToDouble()) *
+                10000)
+            .toStringAsFixed(2);
+      case 3:
+        return ((item.ask.toString().parseToDouble() -
+                    item.bid.toString().parseToDouble()) *
+                100)
+            .toStringAsFixed(2);
+      case 2:
+        return ((item.ask.toString().parseToDouble() -
+                    item.bid.toString().parseToDouble()) *
+                10)
+            .toStringAsFixed(2);
+      default:
+        return '0.00';
+    }
   }
 }
 

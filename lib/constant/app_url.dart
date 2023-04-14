@@ -5,6 +5,7 @@ import 'package:xtrader_app/utils/extension.dart';
 
 enum AppUrl {
   base,
+  webSocketUrl,
   baseImage,
   login,
   totalSymbol,
@@ -23,7 +24,7 @@ enum AppUrl {
 extension AppUrlExtention on AppUrl {
   static String _baseUrl = "";
   static String _baseImageUrl = "";
-
+  static String _webSocketUrl = "";
   static void setUrl(UrlLink urlLink) {
     switch (urlLink) {
       case UrlLink.isLive:
@@ -35,6 +36,7 @@ extension AppUrlExtention on AppUrl {
       case UrlLink.isDev:
         _baseUrl = "http://api.xtraderplatform.com/index.php";
         _baseImageUrl = "http://api.xtraderplatform.com";
+        _webSocketUrl = 'wss://ws1.xtraderplatform.com:8088';
 
         break;
       case UrlLink.isLocalServer:
@@ -50,6 +52,8 @@ extension AppUrlExtention on AppUrl {
         return "$_baseUrl";
       case AppUrl.baseImage:
         return "$_baseImageUrl";
+      case AppUrl.webSocketUrl:
+        return _webSocketUrl;
       case AppUrl.login:
         return "/login";
 

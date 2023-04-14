@@ -45,6 +45,7 @@ class ViewUtil {
       builder: (BuildContext context) {
         // return object of type Dialog.
         return AlertDialog(
+          backgroundColor: KColor.popupBg.color,
           title: GlobalText(
             str: "Connection Error",
             fontWeight: FontWeight.w500,

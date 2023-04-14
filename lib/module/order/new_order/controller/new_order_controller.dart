@@ -55,30 +55,8 @@ class NewOrderController extends StateNotifier<NewOrderState> {
     state = state.copyWith(symbol: details, dropdownvalue: 'Instant Execution');
   }
 
-  bool shouldLoadData = true;
-  Timer? timer;
-  void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      "Timer".log();
-      if (state.quotes != null) {
-        state.dataset.add(
-          QuotesChartData(
-            time: DateTime.now().microsecondsSinceEpoch.toDouble(),
-            bid: state.quotes?.bid?.toString().parseToDouble() ?? 0.0,
-            ask: state.quotes?.ask?.toString().parseToDouble() ?? 0.0,
-          ),
-        );
-        state = state.copyWith(dataset: state.dataset);
-      }
-    });
-    loadQuote();
-    shouldLoadData = true;
-  }
-
   void stopTimer() {
-    timer?.cancel();
-    timer = null;
-    shouldLoadData = false;
+    _neworderRepository.stopListening();
   }
 
   void validate() {
@@ -96,12 +74,6 @@ class NewOrderController extends StateNotifier<NewOrderState> {
     } else {
       state = state.copyWith(isValid: false);
     }
-
-    // if (state.dropdownvalue != 'Instant Execution') {
-    //   state = state.copyWith(
-    //       isValid: state.priceController.text.isNotEmpty &&
-    //           state.priceController.text.parseToDouble() > 0.0);
-    // }
   }
 
   void onchanged(String value) {
@@ -151,11 +123,23 @@ class NewOrderController extends StateNotifier<NewOrderState> {
         },
         onSuccess: (value) {
           state = state.copyWith(quotes: value);
-          if (shouldLoadData) {
-            Future.delayed(Duration(seconds: 3), () {
-              loadQuote();
-            });
-          }
+        });
+  }
+
+  void startListening() {
+    _neworderRepository.socketData(
+        symbol: state.symbol ?? '',
+        onSuccess: (data) {
+          data.log();
+          state.dataset.add(
+            QuotesChartData(
+              bid: data.bid.toString().parseToDouble(),
+              ask: data.ask.toString().parseToDouble(),
+              time: data.time.toString().parseToDouble(),
+            ),
+          );
+          state = state.copyWith(
+              quotes: state.quotes?.quotesFrom(data), dataset: state.dataset);
         });
   }
 }

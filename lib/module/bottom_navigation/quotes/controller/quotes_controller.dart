@@ -25,15 +25,13 @@ class QuotesController extends StateNotifier<QuotesState> {
           const QuotesState(isSymbols: true),
         );
 
-  bool shouldLoadData = true;
   void startTimer() {
     loadData();
-    shouldLoadData = true;
   }
 
   void stopTimer() {
+    _quotesRepository.stopListening();
     state = state.copyWith(data: List.empty());
-    shouldLoadData = false;
   }
 
   Future loadData() async {
@@ -49,11 +47,6 @@ class QuotesController extends StateNotifier<QuotesState> {
             final oldData = state.data;
             state = state.copyWith(
                 isSymbols: true, data: listData, previousData: oldData);
-            Future.delayed(const Duration(seconds: 5), () {
-              if (shouldLoadData) {
-                loadData();
-              }
-            });
           });
     } else {
       state = state.copyWith(isSymbols: false, data: List.empty());
@@ -80,6 +73,24 @@ class QuotesController extends StateNotifier<QuotesState> {
           : KColor.primary.color;
       return QuotesColors(askColor, bidColor);
     }
+  }
+
+  void startListeningSocket() {
+    _quotesRepository.socketData(onSuccess: (list) {
+      final oldList = state.data;
+      List<Quotes> newList = [];
+      oldList?.forEach((element) {
+        final incoming = list.where((item) => element.symbol == item.symbol);
+
+        if (incoming.isNotEmpty) {
+          final newQuotes = newList.add(element.quotesFrom(incoming.first));
+        } else {
+          newList.add(element);
+        }
+      });
+      state =
+          state.copyWith(isSymbols: true, data: newList, previousData: oldList);
+    });
   }
 
   @override

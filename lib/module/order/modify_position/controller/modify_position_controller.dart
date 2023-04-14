@@ -22,7 +22,7 @@ final modifyPostionProvider = StateNotifierProvider.autoDispose<
 class ModifyPositionController extends StateNotifier<ModifyOrderState> {
   final IModifyPositionRepository _modifypositionRepository =
       ModifyPositionRepository();
-  Timer? timer;
+
   ModifyPositionController()
       : super(
           ModifyOrderState(
@@ -92,29 +92,8 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
     }
   }
 
-  bool shouldLoadData = true;
-  void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      "Timer".log();
-      if (state.quotes != null) {
-        state.dataset.add(
-          QuotesChartData(
-            time: DateTime.now().microsecondsSinceEpoch.toDouble(),
-            bid: state.quotes?.bid?.toString().parseToDouble() ?? 0.0,
-            ask: state.quotes?.ask?.toString().parseToDouble() ?? 0.0,
-          ),
-        );
-        state = state.copyWith(dataset: state.dataset);
-      }
-    });
-    loadQuote();
-    shouldLoadData = true;
-  }
-
   void stopTimer() {
-    timer?.cancel();
-    timer = null;
-    shouldLoadData = false;
+    _modifypositionRepository.stopListening();
   }
 
   Future loadQuote() async {
@@ -125,11 +104,23 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
         onSuccess: (value) {
           // state.dataset.add(value);
           state = state.copyWith(quotes: value);
-          if (shouldLoadData) {
-            Future.delayed(Duration(seconds: 3), () {
-              loadQuote();
-            });
-          }
+        });
+  }
+
+  void startListening() {
+    _modifypositionRepository.socketData(
+        symbol: state.details?.symbol ?? '',
+        onSuccess: (data) {
+          data.log();
+          state.dataset.add(
+            QuotesChartData(
+              bid: data.bid.toString().parseToDouble(),
+              ask: data.ask.toString().parseToDouble(),
+              time: data.time.toString().parseToDouble(),
+            ),
+          );
+          state = state.copyWith(
+              quotes: state.quotes?.quotesFrom(data), dataset: state.dataset);
         });
   }
 }

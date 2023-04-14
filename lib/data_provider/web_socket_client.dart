@@ -1,28 +1,38 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:xtrader_app/constant/app_url.dart';
 
-class WebSocketClient extends StateNotifier<WebSocketState> {
-  WebSocketClient()
-      : super(
-          WebSocketState(
-            data: [],
-          ),
-        ) {}
+final SocketClient sharedSocketClient = SocketClient();
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
+class SocketClient {
+  static final SocketClient _singleton = SocketClient._internal();
+  late IOWebSocketChannel _channel;
+  factory SocketClient() {
+    return _singleton;
   }
-}
+  SocketClient._internal();
 
-class WebSocketState {
-  final dynamic data;
-
-  WebSocketState({required this.data});
-
-  WebSocketState copyWith(dynamic? data) {
-    return WebSocketState(
-      data: data ?? this.data,
+  void connectAndSratListening({
+    required Function(dynamic data) onData,
+    required Function() onDone,
+    required Function(dynamic error) onError,
+  }) {
+    _channel = IOWebSocketChannel.connect(
+      Uri.parse(AppUrl.webSocketUrl.url), //wss://ws.postman-echo.com/raw
     );
+    _channel.stream.listen((data) {
+      onData(data);
+    }, onDone: () {
+      onDone();
+    }, onError: (error) {
+      onError(error);
+    });
+  }
+
+  void sendMessage(String message) {
+    _channel.sink.add(message);
+  }
+
+  void closeConnection() {
+    _channel.sink.close();
   }
 }

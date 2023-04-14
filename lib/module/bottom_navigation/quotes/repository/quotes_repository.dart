@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:xtrader_app/constant/constant_key.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
+import 'package:xtrader_app/data_provider/web_socket_client.dart';
 import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/quotes/repository/quotes_api.dart';
+import 'package:xtrader_app/utils/extension.dart';
 
+import '../model/socket_response_item.dart';
 import 'quotes_interface.dart';
 
 class QuotesRepository implements IQuotesRepository {
@@ -30,5 +35,27 @@ class QuotesRepository implements IQuotesRepository {
         .catchError((Object v) {
       throw Exception(v);
     });
+  }
+
+  @override
+  void socketData({required Function(List<SocketResponseItem> p1) onSuccess}) {
+    sharedSocketClient.connectAndSratListening(
+        onData: (data) {
+          List<SocketResponseItem> list = [];
+          List<dynamic> dataList = json.decode(data);
+
+          dataList.forEach((mapData) {
+            Map<String, dynamic> map = mapData;
+            list.add(SocketResponseItem.fromJson(map));
+          });
+          onSuccess(list);
+        },
+        onDone: () {},
+        onError: (e) {});
+  }
+
+  @override
+  void stopListening() {
+    sharedSocketClient.closeConnection();
   }
 }

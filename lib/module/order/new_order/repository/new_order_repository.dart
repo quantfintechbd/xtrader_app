@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:xtrader_app/data_provider/web_socket_client.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/model/socket_response_item.dart';
 import 'package:xtrader_app/module/order/new_order/model/new_order_request.dart';
 
 import 'package:xtrader_app/module/order/modify_position/model/modify_order_response.dart';
@@ -52,5 +56,29 @@ class NewOrderRepository implements INewOrderRepository {
         .catchError((Object v) {
       throw Exception(v);
     });
+  }
+
+  @override
+  void socketData({
+    required String symbol,
+    required Function(SocketResponseItem p1) onSuccess,
+  }) {
+    sharedSocketClient.connectAndSratListening(
+        onData: (data) {
+          List<dynamic> dataList = json.decode(data);
+          for (var mapData in dataList) {
+            Map<String, dynamic> map = mapData;
+            if (mapData['Symbol'] == symbol) {
+              onSuccess(SocketResponseItem.fromJson(map));
+            }
+          }
+        },
+        onDone: () {},
+        onError: (e) {});
+  }
+
+  @override
+  void stopListening() {
+    sharedSocketClient.closeConnection();
   }
 }

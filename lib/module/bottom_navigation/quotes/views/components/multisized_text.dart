@@ -13,7 +13,7 @@ class MultisizedText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: text.length > 5 ? text.substring(0, text.length - 3) : '',
+        text: text.length > 4 ? text.substring(0, text.length - 3) : '',
         style: KTextStyle.customTextStyle(
           color: KColor.white.color,
           fontSize: 14,

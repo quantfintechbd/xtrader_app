@@ -44,7 +44,8 @@ class NewOrderScreen extends StatelessWidget {
         controller.stopTimer();
       },
       onFocusGained: () {
-        controller.startTimer();
+        controller.loadQuote();
+        controller.startListening();
       },
       child: Scaffold(
         backgroundColor: KColor.scafoldBg.color,

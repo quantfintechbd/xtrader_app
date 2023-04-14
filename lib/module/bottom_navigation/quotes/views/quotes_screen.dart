@@ -25,6 +25,7 @@ class QuotesScreen extends StatelessWidget {
       },
       onFocusGained: () {
         controller.startTimer();
+        controller.startListeningSocket();
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),

@@ -49,7 +49,8 @@ class ModifyPositionScreen extends StatelessWidget {
           controller.stopTimer();
         },
         onFocusGained: () {
-          controller.startTimer();
+          controller.loadQuote();
+          controller.startListening();
         },
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),

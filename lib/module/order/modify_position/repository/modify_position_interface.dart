@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/model/socket_response_item.dart';
 import 'package:xtrader_app/module/order/modify_position/model/modify_order_response.dart';
 import 'package:xtrader_app/module/order/modify_position/model/modify_request.dart';
 
@@ -15,4 +16,9 @@ abstract class IModifyPositionRepository {
     required Map<String, dynamic> symbols,
     required Function(Quotes) onSuccess,
   });
+  void socketData({
+    required String symbol,
+    required Function(SocketResponseItem) onSuccess,
+  });
+  void stopListening();
 }

@@ -133,7 +133,6 @@ class GlobalAppDrawer extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                context.read(quotesProvider.notifier).shouldLoadData = false;
                 Navigation.pop(context);
 
                 Navigation.pushAndRemoveUntil(context,
