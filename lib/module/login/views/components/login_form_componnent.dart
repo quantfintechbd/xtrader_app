@@ -29,6 +29,7 @@ class LoginFormComponent extends ConsumerWidget {
       children: [
         Container(
           padding: EdgeInsets.all(10),
+          height: 60.h,
           decoration: BoxDecoration(
             color: KColor.white.color,
             borderRadius: BorderRadius.circular(8.r),
@@ -42,14 +43,11 @@ class LoginFormComponent extends ConsumerWidget {
             child: Row(
               children: [
                 state.selectedBroker == null
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.h),
-                        child: GlobalText(
-                          str: "Select Broker",
-                          fontWeight: FontWeight.w500,
-                          color: KColor.textHintColor.color,
-                          fontSize: 15.sp,
-                        ),
+                    ? GlobalText(
+                        str: "Select Broker",
+                        fontWeight: FontWeight.w500,
+                        color: KColor.textHintColor.color,
+                        fontSize: 15.sp,
                       )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,8 +70,8 @@ class LoginFormComponent extends ConsumerWidget {
                                 imagePath:
                                     "${AppUrl.baseImage.url}${state.selectedBroker?.icon}",
                                 imageFor: ImageFor.network,
-                                width: 26,
-                                height: 26,
+                                width: 20.w,
+                                height: 20.h,
                               ),
                               SizedBox(
                                 width: 5.w,

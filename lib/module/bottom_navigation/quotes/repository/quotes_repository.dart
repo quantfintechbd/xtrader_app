@@ -39,7 +39,7 @@ class QuotesRepository implements IQuotesRepository {
 
   @override
   void socketData({required Function(List<SocketResponseItem> p1) onSuccess}) {
-    sharedSocketClient.connectAndSratListening(
+    SocketClient().connectAndSratListening(
         onData: (data) {
           List<SocketResponseItem> list = [];
           List<dynamic> dataList = json.decode(data);
@@ -56,6 +56,6 @@ class QuotesRepository implements IQuotesRepository {
 
   @override
   void stopListening() {
-    sharedSocketClient.closeConnection();
+    SocketClient().closeConnection();
   }
 }

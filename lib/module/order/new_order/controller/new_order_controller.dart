@@ -127,19 +127,24 @@ class NewOrderController extends StateNotifier<NewOrderState> {
   }
 
   void startListening() {
-    _neworderRepository.socketData(
-        symbol: state.symbol ?? '',
-        onSuccess: (data) {
-          data.log();
-          state.dataset.add(
-            QuotesChartData(
-              bid: data.bid.toString().parseToDouble(),
-              ask: data.ask.toString().parseToDouble(),
-              time: data.time.toString().parseToDouble(),
-            ),
-          );
-          state = state.copyWith(
-              quotes: state.quotes?.quotesFrom(data), dataset: state.dataset);
-        });
+    if (mounted) {
+      _neworderRepository.socketData(
+          symbol: state.symbol ?? '',
+          onSuccess: (data) {
+            if (mounted) {
+              data.log();
+              state.dataset.add(
+                QuotesChartData(
+                  bid: data.bid.toString().parseToDouble(),
+                  ask: data.ask.toString().parseToDouble(),
+                  time: data.time.toString().parseToDouble(),
+                ),
+              );
+              state = state.copyWith(
+                  quotes: state.quotes?.quotesFrom(data),
+                  dataset: state.dataset);
+            }
+          });
+    }
   }
 }

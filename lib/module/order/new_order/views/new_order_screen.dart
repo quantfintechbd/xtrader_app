@@ -45,6 +45,7 @@ class NewOrderScreen extends StatelessWidget {
       },
       onFocusGained: () {
         controller.loadQuote();
+
         controller.startListening();
       },
       child: Scaffold(

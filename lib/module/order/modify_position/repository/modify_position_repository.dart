@@ -65,7 +65,7 @@ class ModifyPositionRepository implements IModifyPositionRepository {
     required String symbol,
     required Function(SocketResponseItem p1) onSuccess,
   }) {
-    sharedSocketClient.connectAndSratListening(
+    SocketClient().connectAndSratListening(
         onData: (data) {
           List<dynamic> dataList = json.decode(data);
           for (var mapData in dataList) {
@@ -81,6 +81,6 @@ class ModifyPositionRepository implements IModifyPositionRepository {
 
   @override
   void stopListening() {
-    sharedSocketClient.closeConnection();
+    SocketClient().closeConnection();
   }
 }

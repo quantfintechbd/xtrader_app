@@ -12,8 +12,7 @@ import '../repository/quotes_interface.dart';
 import '../repository/quotes_repository.dart';
 import 'state/quotes_state.dart';
 
-final quotesProvider =
-    StateNotifierProvider.autoDispose<QuotesController, QuotesState>(
+final quotesProvider = StateNotifierProvider<QuotesController, QuotesState>(
   (ref) => QuotesController(),
 );
 
@@ -30,8 +29,8 @@ class QuotesController extends StateNotifier<QuotesState> {
   }
 
   void stopTimer() {
-    _quotesRepository.stopListening();
-    state = state.copyWith(data: List.empty());
+    // _quotesRepository.stopListening();
+    // state = state.copyWith(data: List.empty());
   }
 
   Future loadData() async {
@@ -76,21 +75,23 @@ class QuotesController extends StateNotifier<QuotesState> {
   }
 
   void startListeningSocket() {
-    _quotesRepository.socketData(onSuccess: (list) {
-      final oldList = state.data;
-      List<Quotes> newList = [];
-      oldList?.forEach((element) {
-        final incoming = list.where((item) => element.symbol == item.symbol);
+    if (mounted) {
+      _quotesRepository.socketData(onSuccess: (list) {
+        final oldList = state.data;
+        List<Quotes> newList = [];
+        oldList?.forEach((element) {
+          final incoming = list.where((item) => element.symbol == item.symbol);
 
-        if (incoming.isNotEmpty) {
-          final newQuotes = newList.add(element.quotesFrom(incoming.first));
-        } else {
-          newList.add(element);
-        }
+          if (incoming.isNotEmpty) {
+            final newQuotes = newList.add(element.quotesFrom(incoming.first));
+          } else {
+            newList.add(element);
+          }
+        });
+        state = state.copyWith(
+            isSymbols: true, data: newList, previousData: oldList);
       });
-      state =
-          state.copyWith(isSymbols: true, data: newList, previousData: oldList);
-    });
+    }
   }
 
   @override

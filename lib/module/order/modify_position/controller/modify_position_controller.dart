@@ -111,16 +111,17 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
     _modifypositionRepository.socketData(
         symbol: state.details?.symbol ?? '',
         onSuccess: (data) {
-          data.log();
-          state.dataset.add(
-            QuotesChartData(
-              bid: data.bid.toString().parseToDouble(),
-              ask: data.ask.toString().parseToDouble(),
-              time: data.time.toString().parseToDouble(),
-            ),
-          );
-          state = state.copyWith(
-              quotes: state.quotes?.quotesFrom(data), dataset: state.dataset);
+          if (mounted) {
+            state.dataset.add(
+              QuotesChartData(
+                bid: data.bid.toString().parseToDouble(),
+                ask: data.ask.toString().parseToDouble(),
+                time: data.time.toString().parseToDouble(),
+              ),
+            );
+            state = state.copyWith(
+                quotes: state.quotes?.quotesFrom(data), dataset: state.dataset);
+          }
         });
   }
 }

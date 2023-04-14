@@ -13,68 +13,71 @@ class ScaleComponent extends StatelessWidget {
   final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 1,
-          child: InkWell(
-            onTap: () {
-              calculate("-0.1");
-            },
-            child: GradiantBox(
-              text: "-0.1",
-              radius: BorderRadius.only(
-                topLeft: Radius.circular(8.r),
-                bottomLeft: Radius.circular(8.r),
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 1,
+            child: InkWell(
+              onTap: () {
+                calculate("-0.1");
+              },
+              child: GradiantBox(
+                text: "-0.1",
+                radius: BorderRadius.only(
+                  topLeft: Radius.circular(8.r),
+                  bottomLeft: Radius.circular(8.r),
+                ),
               ),
             ),
           ),
-        ),
-        Expanded(
-          flex: 1,
-          child: InkWell(
-            onTap: () {
-              calculate("-0.01");
-            },
-            child: const GradiantBox(
-              text: "-0.01",
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: OrderTextField(
-            hintText: 'Volume',
-            controller: controller,
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: InkWell(
-            onTap: () {
-              calculate("0.01");
-            },
-            child: const GradiantBox(
-              text: "+0.01",
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: InkWell(
-            onTap: () {
-              calculate("0.1");
-            },
-            child: GradiantBox(
-              text: "+0.1",
-              radius: BorderRadius.only(
-                topRight: Radius.circular(8.r),
-                bottomRight: Radius.circular(8.r),
+          Expanded(
+            flex: 1,
+            child: InkWell(
+              onTap: () {
+                calculate("-0.01");
+              },
+              child: const GradiantBox(
+                text: "-0.01",
               ),
             ),
           ),
-        ),
-      ],
+          Expanded(
+            flex: 2,
+            child: OrderTextField(
+              hintText: 'Volume',
+              controller: controller,
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: InkWell(
+              onTap: () {
+                calculate("0.01");
+              },
+              child: const GradiantBox(
+                text: "+0.01",
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: InkWell(
+              onTap: () {
+                calculate("0.1");
+              },
+              child: GradiantBox(
+                text: "+0.1",
+                radius: BorderRadius.only(
+                  topRight: Radius.circular(8.r),
+                  bottomRight: Radius.circular(8.r),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

@@ -22,56 +22,59 @@ class PlusMinusComponent extends StatefulWidget {
 class _PlusMinusComponentState extends State<PlusMinusComponent> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 1,
-          child: InkWell(
-            onTap: () {
-              setState(() {
-                final double currentValue = widget.controller.text.isNotEmpty
-                    ? widget.controller.text.parseToDouble()
-                    : widget.value;
-                final double newValue = currentValue - 0.00001;
-                widget.controller.text = newValue.toStringAsFixed(5);
-              });
-            },
-            child: GradiantBox(
-              text: "-",
-              radius: BorderRadius.only(
-                  topLeft: Radius.circular(8.r),
-                  bottomLeft: Radius.circular(8.r)),
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 1,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  final double currentValue = widget.controller.text.isNotEmpty
+                      ? widget.controller.text.parseToDouble()
+                      : widget.value;
+                  final double newValue = currentValue - 0.00001;
+                  widget.controller.text = newValue.toStringAsFixed(5);
+                });
+              },
+              child: GradiantBox(
+                text: "-",
+                radius: BorderRadius.only(
+                    topLeft: Radius.circular(8.r),
+                    bottomLeft: Radius.circular(8.r)),
+              ),
             ),
           ),
-        ),
-        Expanded(
-          flex: 3,
-          child: OrderTextField(
-            hintText: widget.hintText,
-            controller: widget.controller,
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: InkWell(
-            onTap: () {
-              setState(() {
-                final double currentValue = widget.controller.text.isNotEmpty
-                    ? widget.controller.text.parseToDouble()
-                    : widget.value;
-                final double newValue = currentValue + 0.00001;
-                widget.controller.text = newValue.toStringAsFixed(5);
-              });
-            },
-            child: GradiantBox(
-              text: "+",
-              radius: BorderRadius.only(
-                  topRight: Radius.circular(8.r),
-                  bottomRight: Radius.circular(8.r)),
+          Expanded(
+            flex: 3,
+            child: OrderTextField(
+              hintText: widget.hintText,
+              controller: widget.controller,
             ),
           ),
-        ),
-      ],
+          Expanded(
+            flex: 1,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  final double currentValue = widget.controller.text.isNotEmpty
+                      ? widget.controller.text.parseToDouble()
+                      : widget.value;
+                  final double newValue = currentValue + 0.00001;
+                  widget.controller.text = newValue.toStringAsFixed(5);
+                });
+              },
+              child: GradiantBox(
+                text: "+",
+                radius: BorderRadius.only(
+                    topRight: Radius.circular(8.r),
+                    bottomRight: Radius.circular(8.r)),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -88,7 +91,7 @@ class OrderTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 45.h,
+      //height: 45.h,
       decoration: BoxDecoration(
         color: KColor.white.color,
         border: Border.symmetric(

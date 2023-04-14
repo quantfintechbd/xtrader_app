@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +19,7 @@ final tradesProvider =
 
 class TradesController extends StateNotifier<TradesState> {
   final ITradesRepository _tradesRepository = TradesRepository();
-
+  Timer? _timer;
   TradesController()
       : super(const TradesState(
           tradePositionData: {},
@@ -25,77 +27,76 @@ class TradesController extends StateNotifier<TradesState> {
           detailsLoading: false,
           shouldLoad: true,
         ));
-  bool shouldLoad = true;
+
   void refresh() {
     fetchTradesPostion();
     fetchTradeDetails(state.currentSelction ?? '7 Days');
   }
 
-  void stopLoading() {
-    state = state.copyWith(shouldLoad: false);
-    shouldLoad = false;
-  }
-
   void fetchTradesPostion() async {
-    state = state.copyWith(positionLoading: true);
-    await _tradesRepository.fetchTradesPosition(
-      onsuccess: (data) {
-        state = state.copyWith(
-          tradePositionData: data.toJson(),
-          positionLoading: false,
-        );
-        if (shouldLoad) {
-          Future.delayed(Duration(microseconds: 500), () {
-            refresh();
-          });
-        }
-      },
-    ).catchError((_) {
-      state = state.copyWith(positionLoading: false);
-    });
+    if (mounted) {
+      state = state.copyWith(positionLoading: true);
+      await _tradesRepository.fetchTradesPosition(
+        onsuccess: (data) {
+          if (mounted) {
+            state = state.copyWith(
+              tradePositionData: data.toJson(),
+              positionLoading: false,
+            );
+          }
+        },
+      ).catchError((_) {
+        state = state.copyWith(positionLoading: false);
+      });
+    }
   }
 
   void fetchTradeDetails(String selection) async {
-    selection.log();
-    int days = 0;
-    state = state.copyWith(currentSelction: selection);
-    switch (selection) {
-      case '7 Days':
-        days = 7;
-        break;
-      case '15 Days':
-        days = 15;
-        break;
-      case '1 Month':
-        days = 30;
-        break;
-      case '1 year':
-        days = 365;
-        break;
-      default:
-        days = 7;
-        break;
-    }
+    if (mounted) {
+      selection.log();
+      int days = 0;
 
-    state = state.copyWith(detailsLoading: true);
-    await _tradesRepository
-        .fetchDetails(
-      numberOfdays: days.toString(),
-      onSuccess: (listData) {
-        double profits = listData
-            .map((e) => double.parse(e.profit ?? '0.0'))
-            .reduce((a, b) => a + b);
-        profits.log();
-        state = state.copyWith(
-          tradeDetails: listData,
-          totalProfit: profits,
-          detailsLoading: false,
-        );
-      },
-    )
-        .catchError((_) {
-      state = state.copyWith(detailsLoading: false);
-    });
+      switch (selection) {
+        case '7 Days':
+          days = 7;
+          break;
+        case '15 Days':
+          days = 15;
+          break;
+        case '1 Month':
+          days = 30;
+          break;
+        case '1 year':
+          days = 365;
+          break;
+        default:
+          days = 7;
+          break;
+      }
+
+      state = state.copyWith(detailsLoading: true);
+      await _tradesRepository
+          .fetchDetails(
+        numberOfdays: days.toString(),
+        onSuccess: (listData) {
+          if (mounted) {
+            state = state.copyWith(currentSelction: selection);
+            double profits = listData
+                .map((e) => double.parse(e.profit ?? '0.0'))
+                .reduce((a, b) => a + b);
+            profits.log();
+            state = state.copyWith(
+              tradeDetails: listData,
+              totalProfit: profits,
+              detailsLoading: false,
+            );
+          }
+        },
+      )
+          .catchError((_) {
+        state = state.copyWith(detailsLoading: false);
+      });
+    }
   }
 
   Future closeOrder(String position, BuildContext context) async {
@@ -106,7 +107,7 @@ class TradesController extends StateNotifier<TradesState> {
         .closeOrder(
             postion: position,
             onSuccess: (data) {
-              refresh();
+              // refresh();
               Navigation.pop(context);
               ViewUtil.showAlertDialog(
                 barrierDismissible: false,
@@ -123,5 +124,10 @@ class TradesController extends StateNotifier<TradesState> {
         .catchError((Object v) {
       Navigation.pop(context);
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/utils/extension.dart';
 
 import '../../../../../utils/styles/styles.dart';
@@ -16,7 +17,7 @@ class MultisizedText extends StatelessWidget {
         text: text.length > 4 ? text.substring(0, text.length - 3) : '',
         style: KTextStyle.customTextStyle(
           color: KColor.white.color,
-          fontSize: 14,
+          fontSize: 14.sp,
           fontWeight: FontWeight.w500,
         ),
         children: [
@@ -26,7 +27,7 @@ class MultisizedText extends StatelessWidget {
                 : '',
             style: KTextStyle.customTextStyle(
               color: KColor.white.color,
-              fontSize: 26,
+              fontSize: 26.sp,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -34,7 +35,7 @@ class MultisizedText extends StatelessWidget {
             text: text.substring(text.length - 1),
             style: KTextStyle.customTextStyle(
               color: KColor.white.color,
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
             ),
           ),

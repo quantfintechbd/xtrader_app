@@ -63,7 +63,7 @@ class NewOrderRepository implements INewOrderRepository {
     required String symbol,
     required Function(SocketResponseItem p1) onSuccess,
   }) {
-    sharedSocketClient.connectAndSratListening(
+    SocketClient().connectAndSratListening(
         onData: (data) {
           List<dynamic> dataList = json.decode(data);
           for (var mapData in dataList) {
@@ -79,6 +79,6 @@ class NewOrderRepository implements INewOrderRepository {
 
   @override
   void stopListening() {
-    sharedSocketClient.closeConnection();
+    SocketClient().closeConnection();
   }
 }

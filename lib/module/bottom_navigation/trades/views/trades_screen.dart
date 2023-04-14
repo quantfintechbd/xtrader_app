@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,18 +15,22 @@ import 'package:xtrader_app/utils/styles/styles.dart';
 import 'components/summery_item_view.dart';
 
 class TradesScreen extends StatelessWidget {
-  const TradesScreen({Key? key}) : super(key: key);
-
+  TradesScreen({Key? key}) : super(key: key);
+  Timer? _timer;
   @override
   Widget build(BuildContext context) {
     final controller = context.read(tradesProvider.notifier);
+    final state = context.read(tradesProvider);
     final bottomControler = context.read(bottomNavigationProvider.notifier);
     return FocusDetector(
       onFocusGained: () {
-        controller.refresh();
+        _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+          controller.fetchTradesPostion();
+          controller.fetchTradeDetails(state.currentSelction ?? '7 Days');
+        });
       },
       onFocusLost: () {
-        controller.stopLoading();
+        _timer?.cancel();
       },
       child: RefreshIndicator(
         onRefresh: () async {
@@ -94,15 +100,19 @@ class TradesScreen extends StatelessWidget {
                             : KColor.primary.color);
 
                     bottomControler.setAppBarTitleWidget(
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: GlobalText(
-                            str: dataState.totalProfit == null
-                                ? ''
-                                : "${dataState.totalProfit!.toStringAsFixed(2)} USD",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: KColor.white.color),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: 15.w),
+                            child: GlobalText(
+                                str: dataState.totalProfit == null
+                                    ? ''
+                                    : "${dataState.totalProfit!.toStringAsFixed(2)} USD",
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20.sp,
+                                color: KColor.white.color),
+                          ),
+                        ],
                       ),
                     );
                   },

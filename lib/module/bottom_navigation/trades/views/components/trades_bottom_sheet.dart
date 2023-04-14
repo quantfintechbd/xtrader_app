@@ -27,7 +27,7 @@ class TradesBottomSheet extends StatelessWidget {
           topLeft: Radius.circular(10.r),
         ),
       ),
-      height: context.height * 0.4,
+      height: context.height * 0.45,
       child: Column(
         children: [
           Padding(

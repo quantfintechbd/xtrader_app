@@ -31,12 +31,11 @@ class GradiantBox extends StatelessWidget {
         ),
         borderRadius: radius,
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 12.h),
+      child: Center(
         child: GlobalText(
           str: text,
           fontWeight: FontWeight.w500,
-          fontSize: 14.sp,
+          fontSize: 16.sp,
           color: KColor.mineShaftCommmon.color,
           textAlign: TextAlign.center,
         ),
