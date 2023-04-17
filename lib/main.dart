@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //localization
@@ -20,6 +22,15 @@ import 'package:xtrader_app/utils/theme/theme_controller.dart';
 import 'package:xtrader_app/utils/theme/theme_util.dart';
 import 'constant/constant_key.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initServices();
@@ -30,7 +41,7 @@ void main() async {
       DeviceOrientation.portraitDown,
     ],
   );
-
+  HttpOverrides.global = new MyHttpOverrides();
   runApp(ProviderScope(child: MyApp()));
 }
 

@@ -25,6 +25,7 @@ class SocketClient {
       Uri.parse(AppUrl.webSocketUrl.url), //wss://ws.postman-echo.com/raw
     );
     _channel.stream.listen((data) {
+      //data.log();
       onData(data);
     }, onDone: () {
       onDone();
