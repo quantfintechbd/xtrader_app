@@ -36,9 +36,9 @@ class SocketClient {
         borderRadius: BorderRadius.all(
           Radius.circular(20.r),
         ),
-        content: ErrorDialog(
-          erroMsg: error.toString(),
-          title: "Websocket Error!",
+        content: const ErrorDialog(
+          erroMsg: 'Market data disconnected!', //error.toString(),
+          title: "Connection Error!",
         ),
       );
       onError(error);
