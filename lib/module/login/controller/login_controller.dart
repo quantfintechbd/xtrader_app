@@ -96,10 +96,23 @@ class LoginController extends StateNotifier<LoginState> {
             Navigation.pop(context);
             state.userIdController.clear();
             state.passwordController.clear();
-            "hrlr".log();
+            final List<String> symbols =
+                PrefHelper.getStringList(AppConstant.LOCAL_SYMBOLS.key);
+            if (symbols.isEmpty) {
+              PrefHelper.setStringList(AppConstant.LOCAL_SYMBOLS.key, [
+                'EURUSD',
+                "GBPUSD",
+                "USDJPY",
+                'AUDUSD',
+                'USDCHF',
+                'USDCAD',
+                'GOLD',
+                'BTCUSD',
+              ]);
+            }
             Navigation.pushAndRemoveUntil(
               context,
-              appRoutes: AppRoutes.loadSymbol,
+              appRoutes: AppRoutes.bottomNavigation,
             );
             state = state.copyWith(isValid: false);
           } catch (e) {

@@ -69,8 +69,8 @@ class QuotesItemView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ColordContainer(
-                          color: askColor,
-                          string: quotes.ask ?? '',
+                          color: bidColor,
+                          string: quotes.bid ?? '',
                         ),
                         SizedBox(
                           height: 2.h,
@@ -85,7 +85,7 @@ class QuotesItemView extends StatelessWidget {
                             ),
                             Spacer(),
                             GlobalText(
-                              str: quotes.askLow ?? '',
+                              str: quotes.bidLow ?? '',
                               fontWeight: FontWeight.w400,
                               fontSize: 10.sp,
                               color: KColor.scondaryTextColor.color,
@@ -103,8 +103,8 @@ class QuotesItemView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         ColordContainer(
-                          color: bidColor,
-                          string: quotes.bid ?? '',
+                          color: askColor,
+                          string: quotes.ask ?? '',
                         ),
                         SizedBox(
                           height: 2.h,
@@ -120,7 +120,7 @@ class QuotesItemView extends StatelessWidget {
                             ),
                             Spacer(),
                             GlobalText(
-                              str: quotes.bidHigh ?? '',
+                              str: quotes.askHigh ?? '',
                               fontWeight: FontWeight.w400,
                               fontSize: 10.sp,
                               color: KColor.scondaryTextColor.color,

@@ -21,6 +21,7 @@ import 'package:xtrader_app/utils/styles/k_text_style.dart';
 import 'package:xtrader_app/utils/theme/theme_controller.dart';
 import 'package:xtrader_app/utils/theme/theme_util.dart';
 import 'constant/constant_key.dart';
+import 'module/bottom_navigation/bottom_navigation_bar/views/bottom_navigation_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -41,7 +42,7 @@ void main() async {
       DeviceOrientation.portraitDown,
     ],
   );
-  HttpOverrides.global = new MyHttpOverrides();
+  HttpOverrides.global = MyHttpOverrides();
   runApp(ProviderScope(child: MyApp()));
 }
 
@@ -127,7 +128,7 @@ class MyApp extends StatelessWidget {
         });
       },
       child: PrefHelper.isLoggedIn()
-          ? const LoadSymbolScreen()
+          ? const BottomNavigationScreen()
           : const LandingScreen(),
     );
   }

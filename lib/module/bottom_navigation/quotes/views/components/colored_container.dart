@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:xtrader_app/utils/extension.dart';
 
 import 'multisized_text.dart';
 
@@ -18,9 +19,9 @@ class ColordContainer extends StatelessWidget {
       decoration:
           BoxDecoration(color: color, borderRadius: BorderRadius.circular(4.r)),
       child: Padding(
-        padding: EdgeInsets.only(top: 6, bottom: 15, right: 20.w, left: 20.w),
+        padding: EdgeInsets.only(top: 6.h, bottom: 15.h),
         child: SizedBox(
-          width: 150.w,
+          width: context.width,
           height: 25.h,
           child: MultisizedText(
             text: string,

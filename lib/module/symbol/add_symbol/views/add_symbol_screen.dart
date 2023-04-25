@@ -20,7 +20,6 @@ class AddSymbolScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.read(addSymbolProvider.notifier);
     final state = context.read(addSymbolProvider);
-    Future(() => controller.makeUnAttendedData());
 
     return Scaffold(
       backgroundColor: KColor.scafoldBg.color,
@@ -64,32 +63,37 @@ class AddSymbolScreen extends StatelessWidget {
             Expanded(
               child: Consumer(builder: (context, ref, snapshot) {
                 final state = ref.watch(addSymbolProvider);
-                return ListView.separated(
-                    itemCount: state.unAttended.length,
-                    separatorBuilder: (context, index) {
-                      return Divider(
-                        height: 1,
-                        color: KColor.separator.color,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        onTap: () {
-                          controller.addLocal(state.unAttended[index]);
+                return state.isLoading
+                    ? Center(
+                        child: centerCircularProgress(
+                            progressColor: KColor.primary.color),
+                      )
+                    : ListView.separated(
+                        itemCount: state.unAttended.length,
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            height: 1,
+                            color: KColor.separator.color,
+                          );
                         },
-                        contentPadding: EdgeInsets.zero,
-                        leading: GlobalSvgLoader(
-                          imagePath: KAssetName.addGreen.imagePath,
-                          svgFor: SvgFor.asset,
-                        ),
-                        title: GlobalText(
-                          str: state.unAttended[index],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.sp,
-                        ),
-                        minLeadingWidth: 10,
-                      );
-                    });
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            onTap: () {
+                              controller.addLocal(state.unAttended[index]);
+                            },
+                            contentPadding: EdgeInsets.zero,
+                            leading: GlobalSvgLoader(
+                              imagePath: KAssetName.addGreen.imagePath,
+                              svgFor: SvgFor.asset,
+                            ),
+                            title: GlobalText(
+                              str: state.unAttended[index],
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                            ),
+                            minLeadingWidth: 10,
+                          );
+                        });
               }),
             ),
           ],

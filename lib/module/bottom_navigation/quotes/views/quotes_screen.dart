@@ -48,7 +48,7 @@ class QuotesScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: GlobalText(
-                    str: "ASK",
+                    str: "BID",
                     fontWeight: FontWeight.w400,
                     fontSize: 14.sp,
                     color: KColor.stroke.color,
@@ -57,7 +57,7 @@ class QuotesScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: GlobalText(
-                    str: "BID",
+                    str: "ASK",
                     fontWeight: FontWeight.w400,
                     fontSize: 14.sp,
                     color: KColor.stroke.color,
@@ -82,11 +82,15 @@ class QuotesScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final colors =
                                   controller.getColor(state.data![index]);
-                              return QuotesItemView(
-                                quotes: state.data![index],
-                                askColor: colors.askColor,
-                                bidColor: colors.bidColor,
-                              );
+                              return state.data![index].ask?.isNotEmpty ==
+                                          true &&
+                                      state.data![index].bid?.isNotEmpty == true
+                                  ? QuotesItemView(
+                                      quotes: state.data![index],
+                                      askColor: colors.askColor,
+                                      bidColor: colors.bidColor,
+                                    )
+                                  : Container();
                             })
                     : const Center(
                         child: GlobalText(
