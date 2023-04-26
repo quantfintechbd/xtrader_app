@@ -1,4 +1,4 @@
-package com.example.xtrader_app
+package com.mausum.xtraderApp
 
 import io.flutter.embedding.android.FlutterActivity
 
