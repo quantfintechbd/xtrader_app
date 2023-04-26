@@ -13,13 +13,13 @@ import 'package:xtrader_app/utils/styles/k_text_style.dart';
 
 import '../../../../utils/styles/k_colors.dart';
 
-class AddSymbolScreen extends StatelessWidget {
+class AddSymbolScreen extends ConsumerWidget {
   const AddSymbolScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final controller = context.read(addSymbolProvider.notifier);
-    final state = context.read(addSymbolProvider);
+    final state = ref.watch(addSymbolProvider);
 
     return Scaffold(
       backgroundColor: KColor.scafoldBg.color,
@@ -31,73 +31,97 @@ class AddSymbolScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            GlobalTextFormField(
-              style: KTextStyle.customTextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.sp),
-              controller: state.searchController,
-              hintText: "Search",
-              //labelText: "Search Here",
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 10.h),
-                child: GlobalSvgLoader(
-                  imagePath: KAssetName.search.imagePath,
-                  svgFor: SvgFor.asset,
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: KColor.stroke.color, width: 1),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Expanded(
-              child: Consumer(builder: (context, ref, snapshot) {
-                final state = ref.watch(addSymbolProvider);
-                return state.isLoading
-                    ? Center(
-                        child: centerCircularProgress(
-                            progressColor: KColor.primary.color),
-                      )
-                    : ListView.separated(
-                        itemCount: state.unAttended.length,
-                        separatorBuilder: (context, index) {
-                          return Divider(
-                            height: 1,
-                            color: KColor.separator.color,
-                          );
+        child: state.isLoading
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  GlobalText(
+                    str: "Loading Symbols...",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  LinearProgressIndicator(
+                    value: state.totalCount > 0
+                        ? state.remoteSymbols.length / state.totalCount
+                        : 0.0,
+                    backgroundColor: KColor.reverseDark.color,
+                    semanticsLabel: 'Linear progress indicator',
+                  ),
+                  Spacer(),
+                  GlobalText(
+                    str:
+                        "Loading ${state.endIndex} of ${state.totalCount} symbols",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12.sp,
+                    color: KColor.scondaryTextColor.color,
+                  ),
+                ],
+              )
+            : Column(
+                children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  GlobalTextFormField(
+                    style: KTextStyle.customTextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.sp),
+                    controller: state.searchController,
+                    hintText: "Search",
+                    //labelText: "Search Here",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.w, horizontal: 10.h),
+                      child: GlobalSvgLoader(
+                        imagePath: KAssetName.search.imagePath,
+                        svgFor: SvgFor.asset,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: KColor.stroke.color, width: 1),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Expanded(
+                      child: ListView.separated(
+                    itemCount: state.unAttended.length,
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        height: 1,
+                        color: KColor.separator.color,
+                      );
+                    },
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        onTap: () {
+                          controller.addLocal(state.unAttended[index]);
                         },
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            onTap: () {
-                              controller.addLocal(state.unAttended[index]);
-                            },
-                            contentPadding: EdgeInsets.zero,
-                            leading: GlobalSvgLoader(
-                              imagePath: KAssetName.addGreen.imagePath,
-                              svgFor: SvgFor.asset,
-                            ),
-                            title: GlobalText(
-                              str: state.unAttended[index],
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                            ),
-                            minLeadingWidth: 10,
-                          );
-                        });
-              }),
-            ),
-          ],
-        ),
+                        contentPadding: EdgeInsets.zero,
+                        leading: GlobalSvgLoader(
+                          imagePath: KAssetName.addGreen.imagePath,
+                          svgFor: SvgFor.asset,
+                        ),
+                        title: GlobalText(
+                          str: state.unAttended[index],
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.sp,
+                        ),
+                        minLeadingWidth: 10,
+                      );
+                    },
+                  )),
+                ],
+              ),
       ),
     );
   }

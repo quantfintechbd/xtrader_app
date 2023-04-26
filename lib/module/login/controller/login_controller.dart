@@ -57,7 +57,7 @@ class LoginController extends StateNotifier<LoginState> {
 
   Future fetchBrokerList() async {
     _loginRepository.fetchBrokers(onSuccess: (listData) {
-      state = state.copyWith(brokers: listData, filteredBroker: listData);
+      state = state.copyWith(brokers: listData, filteredBroker: []);
     });
   }
 
@@ -142,10 +142,14 @@ class LoginController extends StateNotifier<LoginState> {
   }
 
   void searchBroker(String text) {
-    final brokers = state.brokers?.where((element) {
-      return element.name?.toLowerCase().contains(text.toLowerCase()) == true;
-    });
-    state = state.copyWith(filteredBroker: brokers?.toList());
+    if (text.length > 2) {
+      final brokers = state.brokers?.where((element) {
+        return element.name?.toLowerCase().contains(text.toLowerCase()) == true;
+      });
+      state = state.copyWith(filteredBroker: brokers?.toList());
+    } else {
+      state = state.copyWith(filteredBroker: []);
+    }
   }
 
   void setSelectedBroker(Broker broker) {

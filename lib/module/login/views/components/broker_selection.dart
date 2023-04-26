@@ -43,6 +43,8 @@ class BrokerSelectionSheet extends StatelessWidget {
                 Spacer(),
                 InkWell(
                   onTap: () {
+                    controller.searchBroker("");
+
                     Navigation.pop(context);
                   },
                   child: GlobalSvgLoader(
@@ -103,6 +105,7 @@ class BrokerSelectionSheet extends StatelessWidget {
                       if (state.filteredBroker?[index] != null) {
                         controller
                             .setSelectedBroker(state.filteredBroker![index]);
+                        controller.searchBroker("");
                         Navigation.pop(context);
                       }
                     },
