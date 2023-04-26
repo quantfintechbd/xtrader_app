@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET" /> 
 
    <application
-        android:label="xtrader_app"
+        android:label="TopTrader"
         android:name="${applicationName}"
         android:icon="@mipmap/xtrade_app_icon"
         android:allowBackup="false"
