@@ -183,20 +183,20 @@ class LoginFormComponent extends ConsumerWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 16.h,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            GlobalText(
-              str: "Forgot Password?",
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              decoration: TextDecoration.underline,
-            )
-          ],
-        ),
+        // SizedBox(
+        //   height: 16.h,
+        // ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.end,
+        //   children: [
+        //     GlobalText(
+        //       str: "Forgot Password?",
+        //       fontWeight: FontWeight.w500,
+        //       fontSize: 14,
+        //       decoration: TextDecoration.underline,
+        //     )
+        //   ],
+        // ),
       ],
     );
   }

@@ -23,10 +23,10 @@ class HistoryController extends StateNotifier<HistoryState> {
             details: [],
           ),
         ) {
-    fetchHistory('7 Days');
+    fetchHistory('Today');
   }
   Future<void> refresh() async {
-    fetchHistory(state.currentSelction ?? '7 Days');
+    fetchHistory(state.currentSelction ?? 'Today');
   }
 
   void fetchHistory(String selection) async {
@@ -34,6 +34,9 @@ class HistoryController extends StateNotifier<HistoryState> {
     int days = 0;
     state = state.copyWith(currentSelction: selection);
     switch (selection) {
+      case 'Today':
+        days = 1;
+        break;
       case '7 Days':
         days = 7;
         break;

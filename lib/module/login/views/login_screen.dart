@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     TextSpan(
                       text:
-                          'Powered by\nM15 Platform v1.3.025 | Copywrite 2023 qTrader\n',
+                          'Powered by\nTopTrader v1.3.025 | Copywrite 2023 xTrader\n',
                       style: KTextStyle.customTextStyle(
                           color: KColor.scondaryTextColor.color),
                     ),

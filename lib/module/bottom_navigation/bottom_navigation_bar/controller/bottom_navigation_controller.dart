@@ -29,8 +29,8 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
       : super(
           BottomNavigationState(
               selectedTab: 0,
-              dropdownvalue: '7 Days',
-              historyFilterValue: '7 Days'),
+              dropdownvalue: 'Today',
+              historyFilterValue: 'Today'),
         );
 
   void changeTap(int value) {

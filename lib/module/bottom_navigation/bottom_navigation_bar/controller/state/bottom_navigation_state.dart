@@ -46,6 +46,7 @@ class BottomNavigationState {
   }
 
   var items = [
+    'Today',
     '7 Days',
     '15 Days',
     '1 Month',

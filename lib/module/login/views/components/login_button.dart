@@ -18,39 +18,39 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Don’t have an account yet? ",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: KColor.textColorDark.color,
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'Register Now ',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: KColor.secondary.color,
-                      decoration: TextDecoration.underline,
-                    ),
-                    recognizer: TapGestureRecognizer()..onTap = () {},
-                  ),
-                ],
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Text.rich(
+        //       TextSpan(
+        //         children: [
+        //           TextSpan(
+        //             text: "Don’t have an account yet? ",
+        //             style: TextStyle(
+        //               fontSize: 16.sp,
+        //               fontWeight: FontWeight.w500,
+        //               color: KColor.textColorDark.color,
+        //             ),
+        //           ),
+        //           TextSpan(
+        //             text: 'Register Now ',
+        //             style: TextStyle(
+        //               fontSize: 16.sp,
+        //               fontWeight: FontWeight.w500,
+        //               color: KColor.secondary.color,
+        //               decoration: TextDecoration.underline,
+        //             ),
+        //             recognizer: TapGestureRecognizer()..onTap = () {},
+        //           ),
+        //         ],
+        //       ),
+        //       textAlign: TextAlign.center,
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(
+        //   height: 10.h,
+        // ),
         Consumer(builder: (context, ref, snap) {
           final state = ref.watch(loginProvider);
           final controller = ref.read(loginProvider.notifier);
