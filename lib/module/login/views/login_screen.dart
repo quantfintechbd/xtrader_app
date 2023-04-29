@@ -75,20 +75,20 @@ class LoginScreen extends StatelessWidget {
                       style: KTextStyle.customTextStyle(
                           color: KColor.scondaryTextColor.color),
                     ),
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Developed by ',
-                          style: KTextStyle.customTextStyle(
-                              color: KColor.scondaryTextColor.color),
-                        ),
-                        TextSpan(
-                          text: 'Bangladesh IT',
-                          style: KTextStyle.customTextStyle(
-                              color: KColor.primary.color),
-                        )
-                      ],
-                    ),
+                    // TextSpan(
+                    //   children: [
+                    //     TextSpan(
+                    //       text: 'Developed by ',
+                    //       style: KTextStyle.customTextStyle(
+                    //           color: KColor.scondaryTextColor.color),
+                    //     ),
+                    //     TextSpan(
+                    //       text: 'Bangladesh IT',
+                    //       style: KTextStyle.customTextStyle(
+                    //           color: KColor.primary.color),
+                    //     )
+                    //   ],
+                    // ),
                   ],
                 ),
                 textAlign: TextAlign.center,
