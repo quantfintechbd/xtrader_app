@@ -16,6 +16,8 @@ class ChartsScreen extends ConsumerWidget {
     final state = ref.watch(bottomNavigationProvider);
     final userName = PrefHelper.getString(AppConstant.USER_NAME.key);
     final token = PrefHelper.getString(AppConstant.TOKEN.key);
+    "Selected Symbol".log();
+    state.selectedSymbol?.log();
     InAppWebViewController? webViewController;
     InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(

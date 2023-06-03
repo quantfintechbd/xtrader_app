@@ -48,7 +48,7 @@ class ErrorDialog extends StatelessWidget {
               Spacer(),
               InkWell(
                 onTap: () {
-                  Navigation.pop(Navigation.key.currentContext);
+                  //  Navigation.pop(Navigation.key.currentContext);
                   if (callbackAction != null) {
                     callbackAction!;
                   }

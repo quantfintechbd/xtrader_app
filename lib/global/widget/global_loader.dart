@@ -15,7 +15,7 @@ class GlobalLoader extends StatelessWidget {
         const CircularProgressIndicator.adaptive(),
         SizedBox(width: 10.w),
         GlobalText(
-          str: text ?? "",
+          str: text ?? "Loading",
           color: KColor.mineShaftCommmon.color,
           fontWeight: FontWeight.w500,
         )

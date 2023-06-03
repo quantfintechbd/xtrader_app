@@ -156,7 +156,7 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
       case 1:
         return GlobalAppbar(
           isShowMenubar: true,
-          title: "Chart ${state.selectedSymbol}",
+          title: "Chart ${state.selectedSymbol ?? "AUDCAD"}",
           actions: [
             GestureDetector(
               onTap: () {
@@ -167,7 +167,7 @@ class BottomNavigationController extends StateNotifier<BottomNavigationState> {
                 );
               },
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: GlobalSvgLoader(
                   imagePath: KAssetName.add.imagePath,
                   svgFor: SvgFor.asset,
