@@ -95,19 +95,22 @@ class HistoryDetails {
   String? positionID;
   String? swap;
   String? time;
+  String? closeTime;
 
-  HistoryDetails(
-      {this.symbol,
-      this.action,
-      this.actionValue,
-      this.volume,
-      this.commission,
-      this.priceSL,
-      this.priceTP,
-      this.profit,
-      this.positionID,
-      this.swap,
-      this.time});
+  HistoryDetails({
+    this.symbol,
+    this.action,
+    this.actionValue,
+    this.volume,
+    this.commission,
+    this.priceSL,
+    this.priceTP,
+    this.profit,
+    this.positionID,
+    this.swap,
+    this.time,
+    this.closeTime,
+  });
 
   HistoryDetails.fromJson(Map<String, dynamic> json) {
     symbol = json['Symbol'];
@@ -121,6 +124,7 @@ class HistoryDetails {
     positionID = json['PositionID'].toString();
     swap = json['Swap'].toString();
     time = json['Time'];
+    closeTime = json['CloseTime'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -136,6 +140,7 @@ class HistoryDetails {
     data['PositionID'] = this.positionID;
     data['Swap'] = this.swap;
     data['Time'] = this.time;
+    data['CloseTime'] = this.closeTime;
     return data;
   }
 }

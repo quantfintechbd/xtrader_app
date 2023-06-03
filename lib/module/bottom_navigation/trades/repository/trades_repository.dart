@@ -5,6 +5,7 @@ import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_position
 import 'package:xtrader_app/module/bottom_navigation/trades/repository/trades_api.dart';
 import 'package:xtrader_app/utils/extension.dart';
 
+import '../model/close_order_request.dart';
 import 'trades_interface.dart';
 
 class TradesRepository implements ITradesRepository {
@@ -48,11 +49,12 @@ class TradesRepository implements ITradesRepository {
   }
 
   @override
-  Future closeOrder(
-      {required String postion,
-      required Function(GlobalResponse data) onSuccess}) async {
+  Future closeOrder({
+    required CloseOrderRequest requestModel,
+    required Function(GlobalResponse data) onSuccess,
+  }) async {
     await _tradesApi.closeOrder(
-        map: {'position': postion},
+        map: requestModel.toMap(),
         onSuccess: (Response response) {
           GlobalResponse result = GlobalResponse.fromJson(response.data);
 

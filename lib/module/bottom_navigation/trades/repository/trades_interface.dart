@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xtrader_app/global/model/global_response.dart';
+import 'package:xtrader_app/module/bottom_navigation/trades/model/close_order_request.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_details_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/model/trade_position_response.dart';
 
@@ -11,7 +12,7 @@ abstract class ITradesRepository {
       {required String numberOfdays,
       required Function(List<TradeDetails> data) onSuccess});
   Future closeOrder({
-    required String postion,
+    required CloseOrderRequest requestModel,
     required Function(GlobalResponse data) onSuccess,
   });
 }

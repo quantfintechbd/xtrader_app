@@ -5,11 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/global_loader.dart';
 import 'package:xtrader_app/module/bottom_navigation/trades/controller/state/trades_state.dart';
+import 'package:xtrader_app/module/bottom_navigation/trades/model/close_order_request.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/view_util.dart';
 
 import '../../../../global/widget/error_dialog.dart';
+import '../model/trade_details_response.dart';
 import '../repository/trades_interface.dart';
 import '../repository/trades_repository.dart';
 
@@ -99,13 +101,22 @@ class TradesController extends StateNotifier<TradesState> {
     }
   }
 
-  Future closeOrder(String position, BuildContext context) async {
+  Future closeOrder(
+    BuildContext context, {
+    required TradeDetails details,
+  }) async {
     ViewUtil.showAlertDialog(
       content: const GlobalLoader(),
     );
+    final CloseOrderRequest model = CloseOrderRequest(
+      position: details.position ?? "",
+      symbol: details.symbol ?? "",
+      volume: details.volume ?? "",
+      action: details.action ?? "",
+    );
     _tradesRepository
         .closeOrder(
-            postion: position,
+            requestModel: model,
             onSuccess: (data) {
               // refresh();
               Navigation.pop(context);

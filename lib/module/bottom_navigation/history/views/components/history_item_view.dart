@@ -59,7 +59,7 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                           height: 5.h,
                         ),
                         GlobalText(
-                          str: widget.details.time ?? '',
+                          str: widget.details.closeTime ?? '',
                           fontWeight: FontWeight.w400,
                           fontSize: 13.sp,
                           color: KColor.sixA6a6a.color,
@@ -146,9 +146,9 @@ class _HistoryItemViewState extends State<HistoryItemView> {
                           SizedBox(
                             height: 6.h,
                           ),
-                          const DTItem(
-                            title: "",
-                            value: '',
+                          DTItem(
+                            title: "Time",
+                            value: widget.details.time ?? '',
                           ),
                         ],
                       ),

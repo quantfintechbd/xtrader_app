@@ -32,7 +32,7 @@ class HistoryScreen extends ConsumerWidget {
                           progressColor: KColor.primary.color),
                     )
                   : ListView(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children: [
                         for (int x = 0;
                             x < state.historySummery.entries.length;
@@ -73,7 +73,7 @@ class HistoryScreen extends ConsumerWidget {
                         progressColor: KColor.primary.color),
                   )
                 : ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: state.details.length,
                     shrinkWrap: true,
                     itemBuilder: ((context, index) {

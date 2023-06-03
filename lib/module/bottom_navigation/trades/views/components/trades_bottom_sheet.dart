@@ -94,7 +94,10 @@ class TradesBottomSheet extends StatelessWidget {
               final controller = ref.watch(tradesProvider.notifier);
               return InkWell(
                 onTap: () {
-                  controller.closeOrder(details.position ?? '', context);
+                  controller.closeOrder(
+                    context,
+                    details: details,
+                  );
                   Navigation.pop(context);
                 },
                 child: GlobalText(

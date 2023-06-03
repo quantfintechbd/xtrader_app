@@ -39,7 +39,7 @@ class BottomNavigationState {
       selectedTab: selectedTab ?? this.selectedTab,
       dropdownvalue: dropdownvalue ?? this.dropdownvalue,
       historyFilterValue: historyFilterValue ?? this.historyFilterValue,
-      selectedSymbol: selectedSymbol ?? 'AUDCAD',
+      selectedSymbol: selectedSymbol ?? this.selectedSymbol,
       appbarBg: appbarBg ?? this.appbarBg,
       appBarTitleWidget: appBarTitleWidget ?? this.appBarTitleWidget,
     );

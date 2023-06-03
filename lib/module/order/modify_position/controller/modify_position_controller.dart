@@ -53,7 +53,7 @@ class ModifyPositionController extends StateNotifier<ModifyOrderState> {
 
   void validate() {
     state = state.copyWith(
-        isValid: state.slController.text.isNotEmpty &&
+        isValid: state.slController.text.isNotEmpty ||
             state.tpController.text.isNotEmpty);
   }
 

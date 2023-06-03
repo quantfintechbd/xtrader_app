@@ -225,7 +225,7 @@ class ModifyPositionScreen extends StatelessWidget {
                 child: Consumer(builder: (context, ref, snapshot) {
                   final state = ref.watch(modifyPostionProvider);
                   return GlobalButton(
-                    onPressed: state.slController.text.isNotEmpty &&
+                    onPressed: state.slController.text.isNotEmpty ||
                             state.tpController.text.isNotEmpty
                         ? () {
                             controller.modifyResponse(context);
