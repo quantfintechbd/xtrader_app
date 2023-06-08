@@ -5,7 +5,7 @@ import 'package:xtrader_app/module/bottom_navigation/history/repository/history_
 import 'history_interface.dart';
 
 class HistoryRepository implements IHistoryRepository {
-  HistoryApi _historyApi = HistoryApi();
+  final HistoryApi _historyApi = HistoryApi();
   @override
   Future fetchHistory({
     required String numberOfdays,

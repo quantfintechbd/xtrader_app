@@ -1,10 +1,8 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
 import 'package:xtrader_app/module/bottom_navigation/history/model/history_response.dart';
-import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/styles/styles.dart';
 

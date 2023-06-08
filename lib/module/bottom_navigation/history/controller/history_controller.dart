@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xtrader_app/module/bottom_navigation/history/controller/state/history_state.dart';
 import 'package:xtrader_app/utils/extension.dart';

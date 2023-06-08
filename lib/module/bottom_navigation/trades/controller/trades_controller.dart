@@ -114,6 +114,8 @@ class TradesController extends StateNotifier<TradesState> {
       volume: details.volume ?? "",
       action: details.action ?? "",
     );
+    "/close-order".log();
+    model.log();
     _tradesRepository
         .closeOrder(
             requestModel: model,

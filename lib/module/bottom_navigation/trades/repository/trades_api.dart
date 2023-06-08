@@ -48,6 +48,8 @@ class TradesApi {
   Future closeOrder(
       {required Map<String, dynamic> map,
       required Function(Response response) onSuccess}) async {
+    "Close Order".log();
+    map.log();
     await _apiClient
         .request(
             method: Method.POST,
