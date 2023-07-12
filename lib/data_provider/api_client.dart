@@ -66,8 +66,7 @@ class ApiClient {
     String? fileKeyName,
     required Function(
       Response response,
-    )
-        onSuccessFunction,
+    ) onSuccessFunction,
   }) async {
     final tokenHeader = <String, String>{
       HttpHeaders.contentTypeHeader: AppConstant.MULTIPART_FORM_DATA.key
@@ -107,6 +106,7 @@ class ApiClient {
     String? savePath,
     Map<String, String>? extraHeaders,
     required Function(Response response) onSuccessFunction,
+    bool? shouldShowError,
   }) async {
     //use this for extra header
     final tokenHeader = <String, String>{
@@ -131,6 +131,7 @@ class ApiClient {
         savePath: savePath,
         onReceiveProgress: onReceiveProgress,
         onSuccessFunction: onSuccessFunction,
+        shouldShowError: shouldShowError,
       );
     } else {
       _handleNoInternet(
@@ -154,6 +155,7 @@ class ApiClient {
     String? savePath,
     void Function(int, int)? onReceiveProgress,
     required Function(Response response)? onSuccessFunction,
+    bool? shouldShowError,
   }) async {
     Response response;
     try {
@@ -191,12 +193,13 @@ class ApiClient {
       _handleResponse(
         response: response,
         onSuccessFunction: onSuccessFunction,
+        shouldShowError: shouldShowError,
       );
 
       // Handle Error type if dio catches anything.
     } on DioError catch (e) {
       e.log();
-      _handleDioError(e);
+      _handleDioError(e, shouldShowError);
       rethrow;
     } catch (e) {
       "dioErrorCatch $e".log();
@@ -261,29 +264,32 @@ class ApiClient {
     }
   }
 
-  void _handleDioError(DioError error) {
-    switch (error.type) {
-      case DioErrorType.connectionTimeout:
-        ViewUtil.SSLSnackbar("Time out delay ");
-        break;
-      case DioErrorType.receiveTimeout:
-        ViewUtil.SSLSnackbar("Server is not responded properly");
-        break;
-      case DioErrorType.unknown:
-        ViewUtil.SSLSnackbar("Server is not responded properly");
-        break;
-      case DioErrorType.badResponse:
-        ViewUtil.SSLSnackbar("Internal Responses error");
-        break;
-      default:
-        ViewUtil.SSLSnackbar("Something went wrong");
-        break;
+  void _handleDioError(DioError error, bool? shouldShowError) {
+    if (shouldShowError == true) {
+      switch (error.type) {
+        case DioErrorType.connectionTimeout:
+          ViewUtil.SSLSnackbar("Time out delay ");
+          break;
+        case DioErrorType.receiveTimeout:
+          ViewUtil.SSLSnackbar("Server is not responded properly");
+          break;
+        case DioErrorType.unknown:
+          ViewUtil.SSLSnackbar("Server is not responded properly");
+          break;
+        case DioErrorType.badResponse:
+          ViewUtil.SSLSnackbar("Internal Responses error");
+          break;
+        default:
+          ViewUtil.SSLSnackbar("Something went wrong");
+          break;
+      }
     }
   }
 
   Future<void> _handleResponse({
     required Response response,
     required Function(Response response)? onSuccessFunction,
+    bool? shouldShowError,
   }) async {
     if (response.statusCode == 200) {
       final Map data = json.decode(response.toString());
@@ -305,31 +311,35 @@ class ApiClient {
         // );
       } else {
         //Where error occured then pop the global dialog
-        response.statusCode?.log();
-        code.log();
-        isPopDialog?.log();
 
+        shouldShowError?.log();
         String? erroMsg;
 
         erroMsg = data["error"] ?? data['message'];
-        erroMsg.toString().log();
+
         if (erroMsg == 'Expired token') {
           _logout();
         } else {
-          ViewUtil.showAlertDialog(
-            barrierDismissible: false,
-            contentPadding: EdgeInsets.zero,
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.r),
-            ),
-            content: ErrorDialog(erroMsg: erroMsg.toString()),
-          ).then((value) {
-            if (isPopDialog == true || isPopDialog == null) {
-              Navigator.pop(Navigation.key.currentContext!);
-            }
-          });
+          if (shouldShowError == true) {
+            erroMsg.toString().log();
+            ViewUtil.showAlertDialog(
+              barrierDismissible: false,
+              contentPadding: EdgeInsets.zero,
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.r),
+              ),
+              content: ErrorDialog(erroMsg: erroMsg.toString()),
+            ).then((value) {
+              if (isPopDialog == true || isPopDialog == null) {
+                Navigator.pop(Navigation.key.currentContext!);
+              }
+            });
+          }
+
           if (isPopDialog == false) {
             throw Exception();
+          } else if (shouldShowError != true) {
+            Navigator.pop(Navigation.key.currentContext!);
           }
         }
       }

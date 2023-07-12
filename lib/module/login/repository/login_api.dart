@@ -20,6 +20,7 @@ class LoginApi {
             url: AppUrl.login.url,
             params: map,
             isPopGlobalDialog: true,
+            shouldShowError: true,
             onSuccessFunction: await (Response response) {
               onSuccess(response);
             })

@@ -92,6 +92,10 @@ class LoginController extends StateNotifier<LoginState> {
               AppConstant.NAME.key,
               loginData.name ?? "",
             );
+            PrefHelper.setString(
+              AppConstant.SOOCKET_URL.key,
+              loginData.socket ?? '',
+            );
             loginSuccess = true;
             Navigation.pop(context);
             state.userIdController.clear();

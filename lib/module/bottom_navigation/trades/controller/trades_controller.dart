@@ -112,9 +112,9 @@ class TradesController extends StateNotifier<TradesState> {
       position: details.position ?? "",
       symbol: details.symbol ?? "",
       volume: details.volume ?? "",
-      action: details.action ?? "",
+      action: details.action?.toLowerCase() == 'buy' ? "1" : '0',
     );
-    "/close-order".log();
+    "/close-order ${model.toMap()}".log();
     model.log();
     _tradesRepository
         .closeOrder(

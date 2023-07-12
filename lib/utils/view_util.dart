@@ -29,6 +29,7 @@ class ViewUtil {
           textColor: btnName == null ? Colors.transparent : KColor.white.color,
           onPressed: onPressed ?? () {},
         ),
+        duration: const Duration(seconds: 3),
       ),
     );
   }

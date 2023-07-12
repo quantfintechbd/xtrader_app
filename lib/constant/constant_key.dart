@@ -34,7 +34,8 @@ enum AppConstant {
   BN,
   FONTFAMILY,
   REMOTE_SYMBOLS,
-  LOCAL_SYMBOLS
+  LOCAL_SYMBOLS,
+  SOOCKET_URL,
 }
 
 extension AppConstantExtention on AppConstant {
@@ -112,6 +113,8 @@ extension AppConstantExtention on AppConstant {
         return "REMOTE_SYMBOLS";
       case AppConstant.LOCAL_SYMBOLS:
         return "LOCAL_SYMBOLS";
+      case AppConstant.SOOCKET_URL:
+        return 'SOCKET_URL';
       default:
         return "";
     }

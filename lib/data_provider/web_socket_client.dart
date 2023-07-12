@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:xtrader_app/constant/app_url.dart';
+import 'package:xtrader_app/constant/constant_key.dart';
+import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/global/widget/error_dialog.dart';
 import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/view_util.dart';
@@ -21,8 +23,10 @@ class SocketClient {
     required Function() onDone,
     required Function(dynamic error) onError,
   }) {
+    final wsUrl = PrefHelper.getString(AppConstant.SOOCKET_URL.key);
     _channel = IOWebSocketChannel.connect(
-      Uri.parse(AppUrl.webSocketUrl.url), //wss://ws.postman-echo.com/raw
+      Uri.parse(
+          wsUrl), //wss://ws.postman-echo.com/raw//AppUrl.webSocketUrl.url)
     );
     _channel.stream.listen((data) {
       //data.log();

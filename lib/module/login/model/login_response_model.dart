@@ -24,6 +24,7 @@ class LoginData {
   String? token;
   String? username;
   String? name;
+  String? socket;
 
   LoginData({this.token, this.username, this.name});
 
@@ -31,6 +32,7 @@ class LoginData {
     token = json['token'];
     username = json['username'];
     name = json['name'];
+    socket = json['socket'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +40,7 @@ class LoginData {
     data['token'] = this.token;
     data['username'] = this.username;
     data['name'] = this.name;
+    data['socket'] = this.socket;
     return data;
   }
 }

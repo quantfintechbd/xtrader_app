@@ -171,7 +171,7 @@ class _TradesItemViewState extends State<TradesItemView> {
                           ),
                           DTItem(
                             title: "ID",
-                            value: widget.tradeDetails.expertPositionID ?? '',
+                            value: widget.tradeDetails.position ?? '',
                           )
                         ],
                       ),
