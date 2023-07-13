@@ -350,6 +350,7 @@ class ApiClient {
     PrefHelper.setString(AppConstant.TOKEN.key, '');
     PrefHelper.setString(AppConstant.USER_NAME.key, '');
     PrefHelper.setString(AppConstant.NAME.key, '');
+    PrefHelper.setString(AppConstant.SOOCKET_URL.key, '');
     Navigation.pushAndRemoveUntil(Navigation.key.currentContext!,
         appRoutes: AppRoutes.login);
   }

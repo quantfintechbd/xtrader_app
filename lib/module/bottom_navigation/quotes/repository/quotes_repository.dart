@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:xtrader_app/constant/constant_key.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/data_provider/web_socket_client.dart';
+import 'package:xtrader_app/module/bottom_navigation/quotes/model/another_socket_response_item.dart';
 import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';
 import 'package:xtrader_app/module/bottom_navigation/quotes/repository/quotes_api.dart';
 import 'package:xtrader_app/utils/extension.dart';
@@ -42,12 +43,25 @@ class QuotesRepository implements IQuotesRepository {
     SocketClient().connectAndSratListening(
         onData: (data) {
           List<SocketResponseItem> list = [];
-          List<dynamic> dataList = json.decode(data);
+          try {
+            List<dynamic> dataList = json.decode(data);
 
-          dataList.forEach((mapData) {
-            Map<String, dynamic> map = mapData;
-            list.add(SocketResponseItem.fromJson(map));
-          });
+            dataList.forEach((mapData) {
+              Map<String, dynamic> map = mapData;
+              list.add(SocketResponseItem.fromJson(map));
+            });
+          } catch (e) {
+            try {
+              final item = json.decode(data);
+              list.add(
+                AnotherSocketResponseItem.fromJson(item).socketResponseItem,
+              );
+            } catch (error) {
+              "Socket Data Parse error".log();
+              error.log();
+            }
+          }
+
           onSuccess(list);
         },
         onDone: () {},

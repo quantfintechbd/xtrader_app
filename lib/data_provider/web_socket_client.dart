@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:xtrader_app/constant/app_url.dart';
 import 'package:xtrader_app/constant/constant_key.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/global/widget/error_dialog.dart';
@@ -29,7 +28,6 @@ class SocketClient {
           wsUrl), //wss://ws.postman-echo.com/raw//AppUrl.webSocketUrl.url)
     );
     _channel.stream.listen((data) {
-      //data.log();
       onData(data);
     }, onDone: () {
       onDone();

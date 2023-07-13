@@ -9,7 +9,9 @@ import 'package:xtrader_app/module/order/modify_position/model/modify_request.da
 
 import 'package:xtrader_app/module/order/modify_position/model/modify_order_response.dart';
 import 'package:xtrader_app/module/order/modify_position/repository/modify_position_api.dart';
+import 'package:xtrader_app/utils/extension.dart';
 
+import '../../../bottom_navigation/quotes/model/another_socket_response_item.dart';
 import 'modify_position_interface.dart';
 
 class ModifyPositionRepository implements IModifyPositionRepository {
@@ -67,11 +69,25 @@ class ModifyPositionRepository implements IModifyPositionRepository {
   }) {
     SocketClient().connectAndSratListening(
         onData: (data) {
-          List<dynamic> dataList = json.decode(data);
-          for (var mapData in dataList) {
-            Map<String, dynamic> map = mapData;
-            if (mapData['Symbol'] == symbol) {
-              onSuccess(SocketResponseItem.fromJson(map));
+          try {
+            List<dynamic> dataList = json.decode(data);
+
+            for (var mapData in dataList) {
+              Map<String, dynamic> map = mapData;
+              if (mapData['Symbol'] == symbol) {
+                onSuccess(SocketResponseItem.fromJson(map));
+              }
+            }
+          } catch (e) {
+            try {
+              final item = AnotherSocketResponseItem.fromJson(json.decode(data))
+                  .socketResponseItem;
+              if (item.symbol == symbol) {
+                onSuccess(item);
+              }
+            } catch (error) {
+              "Socket Data Parse error".log();
+              error.log();
             }
           }
         },
