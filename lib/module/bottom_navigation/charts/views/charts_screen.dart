@@ -12,13 +12,13 @@ class ChartsScreen extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final contoller = ref.read(bottomNavigationProvider.notifier);
+    final _ = ref.read(bottomNavigationProvider.notifier);
     final state = ref.watch(bottomNavigationProvider);
     final userName = PrefHelper.getString(AppConstant.USER_NAME.key);
     final token = PrefHelper.getString(AppConstant.TOKEN.key);
     "Selected Symbol".log();
     state.selectedSymbol?.log();
-    InAppWebViewController? webViewController;
+    // InAppWebViewController? webViewController;
     InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(
           useShouldOverrideUrlLoading: true,

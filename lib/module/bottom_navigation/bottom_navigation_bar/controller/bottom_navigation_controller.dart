@@ -11,8 +11,6 @@ import 'package:xtrader_app/utils/navigation.dart';
 import 'package:xtrader_app/utils/styles/k_assets.dart';
 import 'package:xtrader_app/utils/styles/k_colors.dart';
 
-import '../repository/bottom_navigation_interface.dart';
-import '../repository/bottom_navigation_repository.dart';
 import 'state/bottom_navigation_state.dart';
 
 final bottomNavigationProvider =
