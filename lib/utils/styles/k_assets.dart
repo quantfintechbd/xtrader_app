@@ -36,7 +36,7 @@ extension AssetsExtention on KAssetName {
   String get imagePath {
     String _rootPath = 'assets';
     String _svgDir = '$_rootPath/svg';
-    String _imageDir = '$_rootPath/images';
+    // String _imageDir = '$_rootPath/images';
 
     switch (this) {
       case KAssetName.landingBackground:

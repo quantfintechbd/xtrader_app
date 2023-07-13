@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:xtrader_app/constant/constant_key.dart';
-import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/data_provider/web_socket_client.dart';
 import 'package:xtrader_app/module/bottom_navigation/quotes/model/another_socket_response_item.dart';
 import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';

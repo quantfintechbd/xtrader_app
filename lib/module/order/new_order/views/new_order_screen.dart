@@ -1,15 +1,11 @@
-import 'dart:ffi';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:intl/intl.dart';
 import 'package:xtrader_app/global/widget/global_button.dart';
 import 'package:xtrader_app/global/widget/global_dropdown.dart';
 import 'package:xtrader_app/global/widget/global_text.dart';
-import 'package:xtrader_app/module/bottom_navigation/quotes/model/quotes_details_response.dart';
 import 'package:xtrader_app/module/order/new_order/controller/new_order_controller.dart';
 import 'package:xtrader_app/module/symbol/common_components/plus_minus_component.dart';
 import 'package:xtrader_app/utils/extension.dart';

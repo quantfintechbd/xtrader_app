@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class LoginRequesteModel {
   String userName, password, broker;
   LoginRequesteModel({
