@@ -1,7 +1,6 @@
 import 'dart:core';
 
 import 'package:xtrader_app/utils/enum.dart';
-import 'package:xtrader_app/utils/extension.dart';
 
 enum AppUrl {
   base,

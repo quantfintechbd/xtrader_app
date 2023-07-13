@@ -4,7 +4,6 @@ import 'package:web_socket_channel/io.dart';
 import 'package:xtrader_app/constant/constant_key.dart';
 import 'package:xtrader_app/data_provider/pref_helper.dart';
 import 'package:xtrader_app/global/widget/error_dialog.dart';
-import 'package:xtrader_app/utils/extension.dart';
 import 'package:xtrader_app/utils/view_util.dart';
 
 //final SocketClient sharedSocketClient = SocketClient();

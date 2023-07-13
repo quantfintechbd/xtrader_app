@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xtrader_app/global/widget/global_app_bar/global_appbar.dart';
 import 'package:xtrader_app/global/widget/global_svg_loader.dart';
 import 'package:xtrader_app/module/bottom_navigation/charts/views/charts_screen.dart';
 import 'package:xtrader_app/module/bottom_navigation/history/views/history_screen.dart';
@@ -8,7 +7,6 @@ import 'package:xtrader_app/module/bottom_navigation/quotes/views/quotes_screen.
 import 'package:xtrader_app/module/bottom_navigation/trades/views/trades_screen.dart';
 import 'package:xtrader_app/utils/enum.dart';
 import 'package:xtrader_app/utils/styles/k_assets.dart';
-import 'package:xtrader_app/utils/styles/k_colors.dart';
 
 @immutable
 class BottomNavigationState {
@@ -45,14 +43,14 @@ class BottomNavigationState {
     );
   }
 
-  var items = [
+  final items = [
     'Today',
     '7 Days',
     '15 Days',
     '1 Month',
     '1 year',
   ];
-  List<BottomNavigationBarItem> barItems = [
+  final List<BottomNavigationBarItem> barItems = [
     BottomNavigationBarItem(
       label: 'Quotes',
       icon: GlobalSvgLoader(

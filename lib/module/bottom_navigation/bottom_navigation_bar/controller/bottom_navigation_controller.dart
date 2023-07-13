@@ -20,8 +20,8 @@ final bottomNavigationProvider =
         (ref) => BottomNavigationController());
 
 class BottomNavigationController extends StateNotifier<BottomNavigationState> {
-  final IBottomNavigationRepository _bottomnavigationRepository =
-      BottomNavigationRepository();
+  // final IBottomNavigationRepository _bottomnavigationRepository =
+  //BottomNavigationRepository();
 
   BottomNavigationController()
       : super(

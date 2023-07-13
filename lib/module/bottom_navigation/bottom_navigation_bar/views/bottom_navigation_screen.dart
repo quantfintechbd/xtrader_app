@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xtrader_app/global/widget/app_drawer.dart';
-import 'package:xtrader_app/global/widget/global_app_bar/global_appbar.dart';
-import 'package:xtrader_app/global/widget/global_svg_loader.dart';
-import 'package:xtrader_app/utils/app_routes.dart';
-import 'package:xtrader_app/utils/enum.dart';
-import 'package:xtrader_app/utils/navigation.dart';
 
 import '../../../../utils/styles/styles.dart';
 import '../controller/bottom_navigation_controller.dart';
